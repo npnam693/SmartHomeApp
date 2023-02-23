@@ -1,9 +1,9 @@
-import {View, Text, StyleSheet } from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react';
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Switch } from '@rneui/themed';
-
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 const typeDevice = {
@@ -17,15 +17,15 @@ const typeDevice = {
     }
 }
 
-export default function ControlDevice({type, data}) {
-    type = 'light'
+export default function ControlDevice({ navigation }) {
+    let type = 'light'
     const [checked, setChecked] = useState(false);
     const toggleSwitch = () => {
         setChecked(!checked);
       };
       
     return (
-        <View style = {styles.container}>
+        <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('Device')}>
             <View style = {styles.leftContainer}>
                 <View style = {styles.iconContainer}>
                     {typeDevice[type].icon}
@@ -45,7 +45,7 @@ export default function ControlDevice({type, data}) {
                 </View>
             </View>
 
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -68,6 +68,9 @@ const styles = StyleSheet.create({
         
         borderRadius: 30,
         elevation: 7,
+
+        marginTop: 20
+        
     },
 
     leftContainer : {
