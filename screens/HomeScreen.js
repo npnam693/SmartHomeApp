@@ -9,7 +9,7 @@ import GeneralInfo from '../components/GeneralInfo';
 export default function HomeScreen({navigation}){
     return (
         <View style = {{display: 'flex', justifyContent: 'center', alignItems:'center', flexDirection:'column', width: '100%'}} >
-            <GeneralInfo />
+            <GeneralInfo navigation = {navigation}/>
             <ScrollView style = {{width: '100%', height:ScreenHeight - 190}}>
                 <View style={{alignSelf: 'center'}}>
                 <ControlDevice navigation = {navigation}/>

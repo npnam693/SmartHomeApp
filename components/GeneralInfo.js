@@ -1,8 +1,8 @@
-import {View, Text, StyleSheet, Image, Dimensions} from 'react-native'
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native'
 import { ScreenWidth } from '@rneui/base';
 
 import IconOcticons from 'react-native-vector-icons/Octicons'
-export default function GeneralInfo() {
+export default function GeneralInfo({ navigation }) {
     return (
         <View style = {styles.container}>
             <View style = {{ width: ScreenWidth - 80 }}>
@@ -14,7 +14,13 @@ export default function GeneralInfo() {
                             <Text style = {{fontSize: 16, fontWeight: '700'}}>Sunny</Text>
                         </View>
                     </View>
-                    <Notification />
+                    <TouchableOpacity onPress = {() => navigation.navigate('Notification')}>
+                        <View style = {styles.notification}>
+                            <View style={{width: '100%', alignItems:'center'}}>
+                                <IconOcticons name = 'bell-fill' size={20} color = 'white'/>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <Text style={{width: '100%', fontSize: 14, fontWeight:'600'}}>General Infomation</Text>
                 <View style = {{flexDirection: 'row', width:'100%', justifyContent:'space-between'}}>
@@ -33,16 +39,6 @@ export default function GeneralInfo() {
                         <Text>Light Intensity</Text>
                     </View>
                 </View>
-            </View>
-        </View>
-    )
-}
-
-function Notification(){
-    return (
-        <View style = {styles.notification}>
-            <View style={{width: '100%', alignItems:'center'}}>
-                <IconOcticons name = 'bell-fill' size={20} color = 'white'/>
             </View>
         </View>
     )
