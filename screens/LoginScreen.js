@@ -1,10 +1,10 @@
-import { Image, View, Text, TextInput, StyleSheet } from "react-native"
+import { Image, View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
 export default function LoginScreen({ navigation }){
     return (
         <View>
-            <Image source = {require('../assets/images/IntroLogin.png')} style={{width: ScreenWidth, height: 400, marginTop: 20}}/>
+            <Image source = {require('../assets/images/IntroLogin.png')} style={{width: ScreenWidth, height: 356, marginTop: 30}}/>
             <View style = {styles.inputContainer}>
                 <TextInput
                     placeholder = {'Enter your email'}
@@ -30,21 +30,23 @@ export default function LoginScreen({ navigation }){
                     }}
                 />
                 <Text style = {styles.forgetPass}>Forget Password ?</Text>
-                <Button radius={'sm'} type="solid" 
-                    buttonStyle={{ backgroundColor: "#E6FFFA", marginTop: 40, borderWidth: 1, borderColor:'#fff'}}
+                <Button  type="solid" 
+                    buttonStyle={{ backgroundColor: "#00B5D8", marginVertical: 40, borderRadius: 8, height: 48}}
                     titleStyle={{ color: 'black', marginHorizontal: 20 }}
                 >
                     Login
                 </Button>
 
-                <Text style = {[styles.forgetPass, {marginRight: 'auto', color: '#333'}]}>Don't have a account?</Text>
-                <Button radius={'sm'} type="solid" 
-                    buttonStyle={{ backgroundColor: "#E6FFFA", borderWidth: 1, borderColor:'#fff'}}
-                    titleStyle={{ color: 'black', marginHorizontal: 20 }}
-                    onPress = {() => navigation.navigate('Signup')}
-                >
-                    SIGN UP
-                </Button>
+                <View style = {styles.registerContainer}>
+                    <Text styles = {styles.forgetPass}>Don't have a account? </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                        <Text style = {{color: '#FF8A14', fontWeight:'600'}}>Register Now</Text>
+                    </TouchableOpacity>
+                </View>
+
+                    
+
+            
 
             </View>
         </View>
@@ -59,9 +61,13 @@ const styles = StyleSheet.create({
         padding: 30,
     },
     forgetPass: {
-        // width: '100%',
         marginLeft: 'auto',
         color: '#1EA0E9',
         fontWeight: "600",
+    },
+    registerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 })

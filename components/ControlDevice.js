@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import IconMaterial from 'react-native-vector-icons/MaterialIcons'
 import { Switch } from '@rneui/themed';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -13,12 +14,17 @@ const typeDevice = {
     },
     fan: {
         name : 'Smart Fan',
-        icon : <Icon name = "fan" size = {42} color = '#75A7F7'/>
+        icon : <Icon name = "fan" size = {38} color = '#75A7F7'/>
+    },
+    door: {
+        name : 'Smart Door',    
+        icon : <Icon name = "door-open" size = {38} color = '#75A7F7'/>
+        
     }
 }
 
 export default function ControlDevice({ navigation }) {
-    let type = 'light'
+    let type = 'door'
     const [checked, setChecked] = useState(false);
     const toggleSwitch = () => {
         setChecked(!checked);

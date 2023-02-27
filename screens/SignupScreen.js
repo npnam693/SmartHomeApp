@@ -58,8 +58,9 @@ export default function SignupScreen(){
                     }}
                 />
                 
-                <Button radius={'sm'} type="solid" 
-                    buttonStyle={{ backgroundColor: "#E6FFFA", marginTop: 40}}
+
+                <Button  type="solid" 
+                    buttonStyle={{ backgroundColor: "#00B5D8", marginVertical: 40, borderRadius: 8, height: 48}}
                     titleStyle={{ color: 'black', marginHorizontal: 20 }}
                 >
                     Agree and Register
