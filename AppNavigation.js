@@ -37,6 +37,7 @@ function SettingStackScreen({ navigation}){
     return (
         <SettingStack.Navigator>
             <SettingStack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false }}  />
+            <SettingStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}  />
         </SettingStack.Navigator>
     )
 }
@@ -72,16 +73,15 @@ export default function AppNavigation() {
         }
 
           barStyle = {{backgroundColor: 'red', paddingHorizontal: 20}}
-
         >
-            <Tab.Screen name="SettingTab" component={VisualizationStackScreen} 
-              options={{headerShown: false, tabBarShowLabel: false}}
-            />
-            <Tab.Screen name="HomeTab" component={HomeStackScreen}  
-              options={{headerShown: false, tabBarShowLabel: false}}  />
-            <Tab.Screen name="VisualizationTab" component={SettingStackScreen} 
-              options={{headerShown: false, tabBarShowLabel: false}}
-            />
+          <Tab.Screen name="VisualizationTab" component={VisualizationStackScreen} 
+            options={{headerShown: false, tabBarShowLabel: false}}
+          />
+          <Tab.Screen name="HomeTab" component={HomeStackScreen}  
+            options={{headerShown: false, tabBarShowLabel: false}}  />
+          <Tab.Screen name="SettingTab" component={SettingStackScreen} 
+            options={{headerShown: false, tabBarShowLabel: false}}
+          />
         </Tab.Navigator>
     )
 } 

@@ -23,7 +23,7 @@ export default function GeneralInfo({ navigation }) {
                     </TouchableOpacity>
                 </View>
                 <Text style={{width: '100%', fontSize: 14, fontWeight:'600'}}>General Infomation</Text>
-                <View style = {{flexDirection: 'row', width:'100%', justifyContent:'space-between'}}>
+                <View style = {{flexDirection: 'row', width:'100%', justifyContent:'space-between', alignItems:'flex-end'}}>
                     <View style={{flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
                         <Text style ={styles.temparatureText}>31
                             <View style = {styles.tempO}></View>
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center', 
         display: 'flex',
         height: 190,
+        paddingTop: 20,
     },
     notification: {
         width: 40,

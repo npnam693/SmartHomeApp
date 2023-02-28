@@ -36,18 +36,12 @@ export default function LoginScreen({ navigation }){
                 >
                     Login
                 </Button>
-
                 <View style = {styles.registerContainer}>
                     <Text styles = {styles.forgetPass}>Don't have a account? </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
                         <Text style = {{color: '#FF8A14', fontWeight:'600'}}>Register Now</Text>
                     </TouchableOpacity>
                 </View>
-
-                    
-
-            
-
             </View>
         </View>
     )

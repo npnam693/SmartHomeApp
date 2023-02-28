@@ -1,6 +1,5 @@
-import { Text, View, StyleSheet} from "react-native"
+import { Text, View, StyleSheet, ScrollView} from "react-native"
 import NotificationItem from "../components/NotificationItem"
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export default function NotificationScreen({ navigation }) {
     return (
@@ -9,11 +8,19 @@ export default function NotificationScreen({ navigation }) {
                 <Text style = {styles.textHeader}>Recomanded</Text>
                 <Text style = {styles.textHeader}>General</Text>
             </View>
-
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
+            <ScrollView style = {{width: '100%'}}>
+                <NotificationItem />
+                <NotificationItem />
+                <NotificationItem />
+                <NotificationItem />
+                <NotificationItem />
+                <NotificationItem />
+                <NotificationItem />
+                <NotificationItem />
+                <NotificationItem />
+                <NotificationItem />
+                <NotificationItem />
+            </ScrollView>
         </View>
     )
 }
@@ -25,10 +32,10 @@ const styles = StyleSheet.create({
     },
     headerTab : {
         width: '100%',
+        padding: 30,
         flexDirection: 'row',
         alignItems: "flex-start",
         justifyContent: "flex-start",
-        padding: 30,
         paddingTop: 16,
         paddingBottom: 6,
         backgroundColor:'#C9C6C6'
