@@ -18,7 +18,7 @@ function HomeStackScreen({ navigation }) {
       <HomeStack.Navigator>
         <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
         <HomeStack.Screen name="DeviceScreen" component={DeviceScreen}  options={{ headerShown: false }} />
-        <HomeStack.Screen name="NotificationScreen" component={NotificationScreen} options={{ headerShown: false }} >
+        <HomeStack.Screen name="NotificationScreen" component={NotificationScreen} >
         </HomeStack.Screen>
       </HomeStack.Navigator>
     )
@@ -70,7 +70,10 @@ export default function AppNavigation() {
             }
           )
         }
-      >
+
+          barStyle = {{backgroundColor: 'red', paddingHorizontal: 20}}
+
+        >
             <Tab.Screen name="SettingTab" component={VisualizationStackScreen} 
               options={{headerShown: false, tabBarShowLabel: false}}
             />

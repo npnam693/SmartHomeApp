@@ -14,7 +14,7 @@ export default function GeneralInfo({ navigation }) {
                             <Text style = {{fontSize: 16, fontWeight: '700'}}>Sunny</Text>
                         </View>
                     </View>
-                    <TouchableOpacity onPress = {() => navigation.navigate('Notification')}>
+                    <TouchableOpacity onPress = {() => navigation.navigate('NotificationScreen')}>
                         <View style = {styles.notification}>
                             <View style={{width: '100%', alignItems:'center'}}>
                                 <IconOcticons name = 'bell-fill' size={20} color = 'white'/>

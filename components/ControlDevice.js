@@ -1,13 +1,10 @@
 import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import IconMaterial from 'react-native-vector-icons/MaterialIcons'
 import { Switch } from '@rneui/themed';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
-const typeDevice = {
+export const typeDevice = {
     light: {
         name : 'Smart Light',
         icon : <Icon name = "lightbulb-variant-outline" size = {42} color = '#75A7F7'/>
@@ -31,7 +28,7 @@ export default function ControlDevice({ navigation }) {
       };
       
     return (
-        <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('Device')}>
+        <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('DeviceScreen')}>
             <View style = {styles.leftContainer}>
                 <View style = {styles.iconContainer}>
                     {typeDevice[type].icon}
