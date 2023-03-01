@@ -1,14 +1,14 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 import HomeScreen from './screens/HomeScreen';
 import DeviceScreen from './screens/DeviceScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import NotificationScreen from './screens/NotificationScreen';
-
+import { Button } from '@rneui/base';
 const HomeStack = createNativeStackNavigator()
 const VisualizationStack = createNativeStackNavigator()
 const SettingStack = createNativeStackNavigator()
@@ -17,7 +17,11 @@ function HomeStackScreen({ navigation }) {
     return (
       <HomeStack.Navigator>
         <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
-        <HomeStack.Screen name="DeviceScreen" component={DeviceScreen}  options={{ headerShown: false }} />
+        <HomeStack.Screen name="DeviceScreen" component={DeviceScreen}  
+          options= {{
+            title: 'Name Device'
+          }}
+        />
         <HomeStack.Screen name="NotificationScreen" component={NotificationScreen} >
         </HomeStack.Screen>
       </HomeStack.Navigator>
@@ -26,9 +30,18 @@ function HomeStackScreen({ navigation }) {
 
 function VisualizationStackScreen({navigation}){
     return (
-        <VisualizationStack.Navigator>
+        <VisualizationStack.Navigator
+          screenOptions={{
+            headerTransparent: true,
+            headerStyle: { backgroundColor: 'transparent' },
+          }}
+        >
             <VisualizationStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
-            <VisualizationStack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false }}/>
+            <VisualizationStack.Screen name="SignupScreen" component={SignupScreen} 
+              options={{ 
+                headerTitle: (props) => <View style = {{backgroundColor:'red'}}></View>,
+              }}
+            />
         </VisualizationStack.Navigator>
     )
 }
@@ -36,7 +49,8 @@ function VisualizationStackScreen({navigation}){
 function SettingStackScreen({ navigation}){
     return (
         <SettingStack.Navigator>
-            <SettingStack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false }}  />
+            <SettingStack.Screen name="SignupScreen" component={SignupScreen} 
+            />
             <SettingStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}  />
         </SettingStack.Navigator>
     )
