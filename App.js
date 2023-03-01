@@ -5,8 +5,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AppNavigation from './AppNavigation';
 
-
-
 export default function App() {
   return (
     <NavigationContainer>

@@ -1,7 +1,13 @@
 import { Image, View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
+import { useState } from "react"
 export default function LoginScreen({ navigation }){
+    const [data, setData] = useState({
+        username: '',
+        password: '',
+    })
+    console.log(data)
     return (
         <View>
             <Image source = {require('../assets/images/IntroLogin.png')} style={{width: ScreenWidth, height: 356, marginTop: 30}}/>
@@ -17,6 +23,8 @@ export default function LoginScreen({ navigation }){
                         paddingHorizontal: 20,
                         marginBottom: 22,
                     }}
+                    value = {data.username}
+                    onChangeText={(input) => setData({...data, username: input})}
                 />
                 <TextInput
                     placeholder = {'Enter your password'}
@@ -28,6 +36,9 @@ export default function LoginScreen({ navigation }){
                         fontSize: 15,
                         paddingHorizontal: 20,
                     }}
+                    textContentType = 'password'
+                    value = {data.password}
+                    onChangeText = {(input) => setData({...data, password: input})}
                 />
                 <Text style = {styles.forgetPass}>Forget Password ?</Text>
                 <Button  type="solid" 

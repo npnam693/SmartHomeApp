@@ -26,7 +26,7 @@ function HomeStackScreen({ navigation }) {
         </HomeStack.Screen>
       </HomeStack.Navigator>
     )
-}
+} 
 
 function VisualizationStackScreen({navigation}){
     return (

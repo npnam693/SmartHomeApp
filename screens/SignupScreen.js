@@ -1,7 +1,15 @@
 import { Image, View, Text, TextInput, StyleSheet } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
+import { useState } from "react"
 export default function SignupScreen(){
+    const [data, setData] = useState({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    })
+    console.log(data)
     return (
         <View>
             <Image source = {require('../assets/images/IntroSignup.png')} style={{width: ScreenWidth, height: 284, marginTop: 20}}/>
@@ -18,6 +26,8 @@ export default function SignupScreen(){
                         paddingHorizontal: 20,
                         marginBottom: 22,
                     }}
+                    value = {data.username}
+                    onChangeText={(input) => setData({...data, username: input})}
                 />
                 <TextInput
                     placeholder = {'Email'}
@@ -31,6 +41,8 @@ export default function SignupScreen(){
                         paddingHorizontal: 20,
                         marginBottom: 22,
                     }}
+                    value = {data.email}
+                    onChangeText={(input) => setData({...data, email: input})}
                 />
                 <TextInput
                     placeholder = {'Password'}
@@ -44,6 +56,8 @@ export default function SignupScreen(){
                         paddingHorizontal: 20,
                         marginBottom: 22,
                     }}
+                    value = {data.password}
+                    onChangeText={(input) => setData({...data, password: input})}
                 />
                 <TextInput
                     placeholder = {'Confirm Password'}
@@ -56,6 +70,8 @@ export default function SignupScreen(){
                         fontSize: 15,
                         paddingHorizontal: 20,
                     }}
+                    value = {data.confirmPassword}
+                    onChangeText={(input) => setData({...data, confirmPassword: input})}
                 />
                 
 
