@@ -6,10 +6,10 @@ export default function SettingScreen() {
     return (
         <View style = {styles.container}>
                 <Image source={{uri:'https://avatoon.net/wp-content/uploads/2022/07/Cartoon-Avatar-White-Background-300x300.png'}} 
-                    style = {{width: 130, height: 130, borderRadius: 110, borderWidth: 1, borderColor:'#60F1D4'}}
+                    style = {{width: 130, height: 130, borderRadius: 110, borderWidth: 1, borderColor:'#00B5D8'}}
                 />
                 <Text style = {{fontSize: 20, fontWeight: '600', color: '#10101'}}>Nguyen Phi Nam</Text>
-                <Text style = {{fontSize: 14, fontWeight: '400', color: '#fffff'}}>nguyenphinam2k2@example.com</Text>
+                <Text style = {{fontSize: 14, fontWeight: '400', color: '#666'}}>nguyenphinam2k2@example.com</Text>
                 <View style = {styles.option}>
                     <SettingSquare type = "SHARE_KEY" />
                     <SettingSquare type = "FACE_RECOGNITION" />

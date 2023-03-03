@@ -47,7 +47,6 @@ export default function ControlDevice({ navigation }) {
                     <Text style = {{color: '#9A9B9E'}}>Auto</Text>
                 </View>
             </View>
-
         </TouchableOpacity>
     )
 }
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: 'white',
         justifyContent: 'space-between',
-        shadowColor: "#000",
+        shadowColor: "#00B5D8",
         shadowOffset: {
             width: 0,
             height: 3,

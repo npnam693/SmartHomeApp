@@ -5,11 +5,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AppNavigation from './AppNavigation';
 
+import PinScreen from './screens/PinScreen';
+
 export default function App() {
   return (
-    <NavigationContainer>
-      <AppNavigation />
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <AppNavigation />
+    // </NavigationContainer>
+    <PinScreen />
   );
 }
 

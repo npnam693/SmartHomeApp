@@ -68,7 +68,19 @@ export default function AppNavigation() {
                 size = 24
                 if (route.name === "HomeTab") {
                     return (
-                        <View style={{backgroundColor:'#75A7F7', padding: 8, borderRadius: 20}}>
+                        <View style={{backgroundColor:'#75A7F7', padding: 10, 
+                          borderRadius: 40,
+                          shadowColor: "#00B5D8",
+                          shadowOffset: {
+                              width: 0,
+                              height: 2,
+                          },
+                          shadowOpacity: 0.29,
+                          shadowRadius: 4.65,
+                          
+                          borderRadius: 30,
+                          elevation: 7,
+                  }}>
                             <Ionicons name = 'home' size={size} color={color} />
                         </View>
                     )
@@ -82,11 +94,10 @@ export default function AppNavigation() {
             },
             tabBarActiveTintColor: '#3E4F88',
             tabBarInactiveTintColor: '#D2E0EE',
-            }
+            tabBarStyle: {height: 60}
+          }
           )
         }
-
-          barStyle = {{backgroundColor: 'red', paddingHorizontal: 20}}
         >
           <Tab.Screen name="VisualizationTab" component={VisualizationStackScreen} 
             options={{headerShown: false, tabBarShowLabel: false}}
