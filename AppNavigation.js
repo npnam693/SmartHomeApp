@@ -8,7 +8,9 @@ import DeviceScreen from './screens/DeviceScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import NotificationScreen from './screens/NotificationScreen';
-import { Button } from '@rneui/base';
+import SettingScreen from './screens/SettingScreen';
+
+
 const HomeStack = createNativeStackNavigator()
 const VisualizationStack = createNativeStackNavigator()
 const SettingStack = createNativeStackNavigator()
@@ -49,9 +51,7 @@ function VisualizationStackScreen({navigation}){
 function SettingStackScreen({ navigation}){
     return (
         <SettingStack.Navigator>
-            <SettingStack.Screen name="SignupScreen" component={SignupScreen} 
-            />
-            <SettingStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}  />
+            <SettingStack.Screen name="SettingScreen" component={SettingScreen} options={{ headerShown: false }}/>
         </SettingStack.Navigator>
     )
 }
