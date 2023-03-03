@@ -19,7 +19,6 @@ export default function HomeScreen({navigation}){
                 <ControlDevice navigation = {navigation}/>
                 </View>
             </ScrollView>
-
         </View>
     )
 }

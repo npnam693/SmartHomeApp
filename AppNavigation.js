@@ -9,6 +9,7 @@ import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import NotificationScreen from './screens/NotificationScreen';
 import SettingScreen from './screens/SettingScreen';
+import PinScreen from './screens/PinScreen';
 
 
 const HomeStack = createNativeStackNavigator()
@@ -38,12 +39,13 @@ function VisualizationStackScreen({navigation}){
             headerStyle: { backgroundColor: 'transparent' },
           }}
         >
-            <VisualizationStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
-            <VisualizationStack.Screen name="SignupScreen" component={SignupScreen} 
-              options={{ 
-                headerTitle: (props) => <View style = {{backgroundColor:'red'}}></View>,
-              }}
-            />
+          <VisualizationStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
+          <VisualizationStack.Screen name="SignupScreen" component={SignupScreen} 
+            options={{ 
+              headerTitle: (props) => <View style = {{backgroundColor:'red'}}></View>,
+            }}
+          />
+          <VisualizationStack.Screen name="PinScreen" component={PinScreen} options={{ headerShown: false }}/>
         </VisualizationStack.Navigator>
     )
 }

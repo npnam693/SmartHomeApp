@@ -6,12 +6,14 @@ import  Icon  from "react-native-vector-icons/Ionicons";
 
 export default function PinScreen() {
   const [pinCode, setPinCode] = useState('');
-  const textInputRef = useRef();
+  const textInputRef = useRef(null);
   
   useEffect(() => {
-    textInputRef.current.focus();
+    setTimeout(() => {
+      textInputRef.current.focus(), 1000
+      console.log('GOOO')
+    })
   }, []);
-
 
   const handlePinChange = (value) => {
     // Chỉ cho phép nhập chữ số và không quá 4 ký tự
@@ -21,9 +23,11 @@ export default function PinScreen() {
     }
     setPinCode(onlyDigits);
   };
-  
   const handleClickSubmitPIN = () => {
     console.log(pinCode)
+  }
+  const handleClickLogout = () => {
+    console.log('Log Out')
   }
   return (
     <View style={styles.container}>
@@ -35,9 +39,11 @@ export default function PinScreen() {
           <Text style = {{fontSize: 18, fontWeight: '600', color: '#10101'}}>Nguyen Phi Nam</Text>
           <Text style = {{fontSize: 12, fontWeight: '400', color: '#666'}}>nguyenphinam2k2@example.com</Text>
         </View>
-        <View style = {styles.logout}>
-            <Icon name = "exit" size = {28} color = '#75A7F7' style={{left: 3}}/>
-        </View>
+        <TouchableOpacity onPress={handleClickLogout}>
+          <View style = {styles.logout}>
+              <Icon name = "exit" size = {28} color = '#75A7F7' style={{left: 3}}/>
+          </View>
+        </TouchableOpacity>
       </View>
       <Text style = {styles.welcomeText}>Welcome back,</Text>
       <Text style = {styles.welcomeText}>Enter PIN code to continue.</Text>

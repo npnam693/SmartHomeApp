@@ -7,9 +7,13 @@ export default function LoginScreen({ navigation }){
         username: '',
         password: '',
     })
-    console.log(data)
+    
+    const handleClickLogin = () => {
+        console.log(data)
+        navigation.navigate('PinScreen')
+    }
     return (
-        <View>
+        <View style = {styles.container}>
             <Image source = {require('../assets/images/IntroLogin.png')} style={{width: ScreenWidth, height: 356, marginTop: 30}}/>
             <View style = {styles.inputContainer}>
                 <TextInput
@@ -44,6 +48,7 @@ export default function LoginScreen({ navigation }){
                 <Button  type="solid" 
                     buttonStyle={{ backgroundColor: "#00B5D8", marginVertical: 40, borderRadius: 8, height: 48}}
                     titleStyle={{ color: 'black', marginHorizontal: 20 }}
+                    onPress={handleClickLogin}
                 >
                     Login
                 </Button>
@@ -59,8 +64,7 @@ export default function LoginScreen({ navigation }){
 }
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
-        alignItems: 'center',
+        backgroundColor:'white'
     },
     inputContainer: {
         padding: 30,
