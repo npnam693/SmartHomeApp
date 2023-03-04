@@ -26,10 +26,18 @@ export default function SettingScreen({ navigation }) {
                 </TouchableOpacity>
             </View >
             <View style={[styles.options,{flexDirection: 'column', marginTop: 20}]}>
-                <SettingRectangle type = "PROFILE" />
-                <SettingRectangle type = "NOTIFICATION" />
-                <SettingRectangle type = "SUPPORT" />
-                <SettingRectangle type = "LOGOUT" />
+                <TouchableOpacity>
+                    <SettingRectangle type = "PROFILE" />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <SettingRectangle type = "NOTIFICATION" />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <SettingRectangle type = "SUPPORT" />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <SettingRectangle type = "LOGOUT" />
+                </TouchableOpacity>
             </View>
         </View>
     )

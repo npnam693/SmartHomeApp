@@ -28,16 +28,10 @@ const styles = StyleSheet.create({
     container: {
         height: 120,
         width: 150,
-        shadowColor: "#00B5D8",
+        borderColor: "#00B5D8",
+        borderWidth: 1,
         padding: 10,
 
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        shadowOpacity: 0.29,
-        shadowRadius: 2.65,
-        elevation: 2,
         
         borderRadius: 10,
         marginBottom: 10,
