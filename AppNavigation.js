@@ -10,16 +10,15 @@ import SignupScreen from './screens/SignupScreen';
 import NotificationScreen from './screens/NotificationScreen';
 import SettingScreen from './screens/SettingScreen';
 import PinScreen from './screens/PinScreen';
+import VisualiaztionScreen from './screens/Visualization';
 
 import AddFace from './screens/Setting/AddFace';
 import FaceRegconition from './screens/Setting/FaceRegconition';
 
-
-
-
 const HomeStack = createNativeStackNavigator()
 const VisualizationStack = createNativeStackNavigator()
 const SettingStack = createNativeStackNavigator()
+
 
 function HomeStackScreen({ navigation }) {
     return (
@@ -35,33 +34,20 @@ function HomeStackScreen({ navigation }) {
       </HomeStack.Navigator>
     )
 } 
-
 function VisualizationStackScreen({navigation}){
     return (
-        <VisualizationStack.Navigator
-          screenOptions={{
-            headerTransparent: true,
-            headerStyle: { backgroundColor: 'transparent' },
-          }}
-        >
-          <VisualizationStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
-          <VisualizationStack.Screen name="SignupScreen" component={SignupScreen} 
-            options={{ 
-              headerTitle: (props) => <View style = {{backgroundColor:'red'}}></View>,
-            }}
-          />
-          <VisualizationStack.Screen name="PinScreen" component={PinScreen} options={{ headerShown: false }}/>
+        <VisualizationStack.Navigator>
+          <VisualizationStack.Screen name="VisualiaztionScreen" component={VisualiaztionScreen} options={{ headerShown: false }}/>
         </VisualizationStack.Navigator>
     )
 }
-
 function SettingStackScreen({ navigation}){
     return (
       <SettingStack.Navigator>
-            <SettingStack.Screen name="SettingScreen" component={SettingScreen} options={{ headerShown: false }}/>
-            <SettingStack.Screen name="AddFace" component={AddFace} />
-            <SettingStack.Screen name="FaceRegconition" component={FaceRegconition} />
-        </SettingStack.Navigator>
+        <SettingStack.Screen name="SettingScreen" component={SettingScreen} options={{ headerShown: false }}/>
+        <SettingStack.Screen name="AddFace" component={AddFace} />
+        <SettingStack.Screen name="FaceRegconition" component={FaceRegconition} />
+      </SettingStack.Navigator>
     )
 }
 
@@ -70,6 +56,8 @@ const Tab = createBottomTabNavigator();
 
 export default function AppNavigation() {
     return (
+
+
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {

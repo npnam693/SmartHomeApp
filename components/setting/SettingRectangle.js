@@ -25,9 +25,16 @@ export default function SettingRectangle({type}) {
     console.log(type)
     return (
         <View style = {{width: ScreenWidth - 32, height: 64,
-            backgroundColor:'#DBDBDB', flexDirection: 'row', alignItems:'center',
+            backgroundColor:'#EBF8FF', flexDirection: 'row', alignItems:'center',
             padding: 12, marginLeft: 4, borderRadius: 12, marginBottom: 12,
-            
+            shadowColor: "#000",
+            shadowOffset: {
+                width: 0,
+                height: 1,
+            },
+            shadowOpacity: 0.1,
+            shadowRadius: 3,
+            elevation: 3,
             }}>
             <View style = {{backgroundColor: '#D2E0EE', width: 40,  height: 40,  
                             borderRadius: 30, alignItems: 'center', 

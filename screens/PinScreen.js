@@ -15,7 +15,7 @@ export default function PinScreen({navigation}) {
   useEffect(() => {
       setTimeout(() => {
         textInputRef.current.focus()
-      }, 1000)
+      }, 2000)
         
       const fetchUser = async () => {
         try {

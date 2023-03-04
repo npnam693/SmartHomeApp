@@ -10,7 +10,10 @@ export default function LoginScreen({ navigation }){
         password: '',
     })
     const handleClickLogin = () => {
-        console.log(data)
+        if (data.email == '' || data.password == '') {
+            alert('Please fill all fields')
+        }
+
         axios.post('http://10.0.2.2:3000/api/users/login', {
             email: data.email, password: data.password
         })
