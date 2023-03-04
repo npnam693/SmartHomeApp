@@ -2,6 +2,7 @@ import { Image, View, Text, TextInput, StyleSheet, TouchableOpacity } from "reac
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
 import { useState } from "react"
+import axios from 'axios'
 export default function LoginScreen({ navigation }){
     const [data, setData] = useState({
         username: '',

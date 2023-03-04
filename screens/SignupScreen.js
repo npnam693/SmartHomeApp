@@ -2,14 +2,34 @@ import { Image, View, Text, TextInput, StyleSheet } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
 import { useState } from "react"
+import axios from 'axios';
+
 export default function SignupScreen(){
     const [data, setData] = useState({
-        username: "",
+        name: "",
         email: "",
         password: "",
         confirmPassword: "",
     })
-    console.log(data)
+
+    const handleClickSubmit = ({name, email, password, confirmPassword}) => {
+        if (password != confirmPassword) {
+            console.log('password mismatch')
+            return
+        }
+        
+        console.log(name, email, password, confirmPassword)
+        
+        axios.get('http://localhost:3000/api/users')
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    }
+
+
     return (
         <View>
             <Image source = {require('../assets/images/IntroSignup.png')} style={{width: ScreenWidth, height: 284, marginTop: 20}}/>
@@ -78,6 +98,7 @@ export default function SignupScreen(){
                 <Button  type="solid" 
                     buttonStyle={{ backgroundColor: "#00B5D8", marginVertical: 40, borderRadius: 8, height: 48}}
                     titleStyle={{ color: 'black', marginHorizontal: 20 }}
+                    onPress={() => handleClickSubmit(data)}
                 >
                     Agree and Register
                 </Button>
