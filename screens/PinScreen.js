@@ -10,9 +10,8 @@ export default function PinScreen() {
   
   useEffect(() => {
     setTimeout(() => {
-      textInputRef.current.focus(), 1000
-      console.log('GOOO')
-    })
+      textInputRef.current.focus()
+    }, 1000)
   }, []);
 
   const handlePinChange = (value) => {

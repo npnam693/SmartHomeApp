@@ -63,9 +63,6 @@ export default function LoginScreen({ navigation }){
     )
 }
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor:'white'
-    },
     inputContainer: {
         padding: 30,
     },

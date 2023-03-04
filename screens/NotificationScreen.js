@@ -9,17 +9,17 @@ export default function NotificationScreen({ navigation }) {
                 <Text style = {styles.textHeader}>General</Text>
             </View>
             <ScrollView style = {{width: '100%'}}>
-                <NotificationItem />
-                <NotificationItem />
-                <NotificationItem />
-                <NotificationItem />
-                <NotificationItem />
-                <NotificationItem />
-                <NotificationItem />
-                <NotificationItem />
-                <NotificationItem />
-                <NotificationItem />
-                <NotificationItem />
+                {
+                    Array(5).fill(0).map((item, index) => {
+                        if (index % 2 == 0) {
+                            return <NotificationItem bgColor = '#DBDBDB' key={index}/>
+                        }   
+                        else {
+                            return <NotificationItem bgColor = '#EBF8FF'key ={index}/>
+                        }
+                    })
+                }
+
             </ScrollView>
         </View>
     )

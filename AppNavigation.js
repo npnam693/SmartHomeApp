@@ -11,6 +11,11 @@ import NotificationScreen from './screens/NotificationScreen';
 import SettingScreen from './screens/SettingScreen';
 import PinScreen from './screens/PinScreen';
 
+import AddFace from './screens/Setting/AddFace';
+import FaceRegconition from './screens/Setting/FaceRegconition';
+
+
+
 
 const HomeStack = createNativeStackNavigator()
 const VisualizationStack = createNativeStackNavigator()
@@ -52,8 +57,10 @@ function VisualizationStackScreen({navigation}){
 
 function SettingStackScreen({ navigation}){
     return (
-        <SettingStack.Navigator>
+      <SettingStack.Navigator>
             <SettingStack.Screen name="SettingScreen" component={SettingScreen} options={{ headerShown: false }}/>
+            <SettingStack.Screen name="AddFace" component={AddFace} />
+            <SettingStack.Screen name="FaceRegconition" component={FaceRegconition} />
         </SettingStack.Navigator>
     )
 }

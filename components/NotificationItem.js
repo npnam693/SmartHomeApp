@@ -1,5 +1,4 @@
 import { Text, View, StyleSheet, Image } from "react-native"
-import { ScreenWidth } from "@rneui/base"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const getIconNoti = (type, mode) =>  {
@@ -22,11 +21,11 @@ const getIconNoti = (type, mode) =>  {
     }
 }
 
-export default function NotificationItem({type, actor}) {
+export default function NotificationItem({type, actor, bgColor}) {
     type = 'fan'
     actor = "Nguyen Phi Nam"
     return (
-        <View style = {styles.container}>
+        <View style = {[styles.container, {backgroundColor:bgColor}]}>
             <View style = {styles.containerDevice}>
                 {getIconNoti(type, 1).icon}
             </View>
