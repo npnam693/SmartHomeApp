@@ -17,7 +17,6 @@ export default function FaceRegconition({navigation}) {
                 <FaceItem /> 
                 <FaceItem /> 
                 <FaceItem /> 
-                <FaceItem /> 
             </View>
 
 

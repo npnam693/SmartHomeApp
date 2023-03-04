@@ -1,41 +1,56 @@
-import { Image, View, Text, TextInput, StyleSheet } from "react-native"
+import { Image, View, Text, TextInput, StyleSheet, ScrollView } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
 import { useState } from "react"
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+
 import axios from 'axios';
 
-export default function SignupScreen(){
+
+export default function SignupScreen({navigation}){
     const [data, setData] = useState({
         name: "",
         email: "",
         password: "",
         confirmPassword: "",
+        homeID: "",
     })
 
-    const handleClickSubmit = ({name, email, password, confirmPassword}) => {
-        if (password != confirmPassword) {
-            console.log('password mismatch')
+    const handleClickSubmit = () => {
+        if (data.name == "" || data.email == "" || data.password == "" || data.confirmPassword == "") {
+            alert('You have to fill full the fields')
             return
         }
         
-        console.log(name, email, password, confirmPassword)
-        
-        axios.get('http://localhost:3000/api/users')
+        if (data.password != data.confirmPassword) {
+            alert('You need to confirm the correct password')
+            return
+        }
+        console.log(data)        
+        axios.post('http://10.0.2.2:3000/api/users', {
+            name: data.name, email: data.email, password: data.password, homeID: data.homeID
+        })
           .then(response => {
             console.log(response.data);
+            console.log(JSON.stringify(response.data))
+            AsyncStorage.setItem('userData', JSON.stringify(response.data))
+            navigation.navigate('PinScreen')
           })
           .catch(error => {
-            console.log(error);
+            alert(error.response.data.message);
           });
     }
 
-
     return (
-        <View>
+        <ScrollView>
             <Image source = {require('../assets/images/IntroSignup.png')} style={{width: ScreenWidth, height: 284, marginTop: 20}}/>
             <View style = {styles.inputContainer}>
+                <KeyboardAwareScrollView extraScrollHeight={300}>
                 <TextInput
-                    placeholder = {'Username'}
+                    placeholder = {'Name'}
                     style={{
                         backgroundColor : "#D3D3D3",
                         height: 48,
@@ -44,11 +59,13 @@ export default function SignupScreen(){
                         color: '#333',
                         fontSize: 15,
                         paddingHorizontal: 20,
-                        marginBottom: 22,
+                        marginBottom: 14,
+
                     }}
-                    value = {data.username}
-                    onChangeText={(input) => setData({...data, username: input})}
+                    value = {data.name}
+                    onChangeText={(input) => setData({...data, name: input})}
                 />
+            </KeyboardAwareScrollView>
                 <TextInput
                     placeholder = {'Email'}
                     style={{
@@ -59,51 +76,74 @@ export default function SignupScreen(){
                         color: '#333',
                         fontSize: 15,
                         paddingHorizontal: 20,
-                        marginBottom: 22,
+                        marginBottom: 14,
                     }}
                     value = {data.email}
                     onChangeText={(input) => setData({...data, email: input})}
                 />
-                <TextInput
-                    placeholder = {'Password'}
-                    style={{
-                        backgroundColor : "#D3D3D3",
-                        height: 48,
-                        borderRadius: 8,
-                        padding: 10,
-                        color: '#333',
-                        fontSize: 15,
-                        paddingHorizontal: 20,
-                        marginBottom: 22,
-                    }}
-                    value = {data.password}
-                    onChangeText={(input) => setData({...data, password: input})}
-                />
-                <TextInput
-                    placeholder = {'Confirm Password'}
-                    style={{
-                        backgroundColor : "#D3D3D3",
-                        height: 48,
-                        borderRadius: 8,
-                        padding: 10,
-                        color: '#333',
-                        fontSize: 15,
-                        paddingHorizontal: 20,
-                    }}
-                    value = {data.confirmPassword}
-                    onChangeText={(input) => setData({...data, confirmPassword: input})}
-                />
+                <KeyboardAwareScrollView extraScrollHeight={300}>
+                    <TextInput
+                        placeholder = {'Password'}
+                        style={{
+                            backgroundColor : "#D3D3D3",
+                            height: 48,
+                            borderRadius: 8,
+                            padding: 10,
+                            color: '#333',
+                            fontSize: 15,
+                            paddingHorizontal: 20,
+                            marginBottom: 14,
+                        }}
+                        value = {data.password}
+                        onChangeText={(input) => setData({...data, password: input})}
+                    />
+                </KeyboardAwareScrollView>
+                <KeyboardAwareScrollView extraScrollHeight={100}>
+                    <TextInput
+                        placeholder = {'Confirm Password'}
+                        style={{
+                            backgroundColor : "#D3D3D3",
+                            height: 48,
+                            borderRadius: 8,
+                            padding: 10,
+                            color: '#333',
+                            fontSize: 15,
+                            paddingHorizontal: 20,
+                            marginBottom: 14,
+
+                        }}
+                        value = {data.confirmPassword}
+                        onChangeText={(input) => setData({...data, confirmPassword: input})}
+                    />
+                </KeyboardAwareScrollView>
                 
 
+                <KeyboardAwareScrollView extraScrollHeight={100}>
+                    <TextInput
+                        placeholder = {'Your Home key (You can ignore)'}
+                        style={{
+                            backgroundColor : "#D3D3D3",
+                            height: 48,
+                            borderRadius: 8,
+                            padding: 10,
+                            color: '#333',
+                            fontSize: 15,
+                            paddingHorizontal: 20,
+                        }}
+                        value = {data.homeID}
+                        onChangeText={(input) => setData({...data, homeID: input})}
+                    />
+                </KeyboardAwareScrollView>
+
                 <Button  type="solid" 
-                    buttonStyle={{ backgroundColor: "#00B5D8", marginVertical: 40, borderRadius: 8, height: 48}}
+                    buttonStyle={{ backgroundColor: "#00B5D8", borderRadius: 8, height: 48, marginTop: 20}}
                     titleStyle={{ color: 'black', marginHorizontal: 20 }}
-                    onPress={() => handleClickSubmit(data)}
+                    onPress={handleClickSubmit}
                 >
                     Agree and Register
                 </Button>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({

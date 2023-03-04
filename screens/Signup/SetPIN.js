@@ -5,25 +5,16 @@ import { Button } from '@rneui/themed';
 import  Icon  from "react-native-vector-icons/Ionicons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-const getData = async () => {
-  try {
-    const value = await AsyncStorage.getItem('userData')
-    if(value !== null) {
-      console.log('alololo', value)
-    }
-  } catch(e) {
-  }
-}
-
-export default function PinScreen() {
-  const [pinCode, setPinCode] = useState('');
-  const textInputRef = useRef(null);
+export default function SetPINScreen() {
+    const [pinCode, setPinCode] = useState('');
+    const textInputRef = useRef(null);
+    const textInputConfirmRef = useRef(null)
+    
     useEffect(() => {
-    setTimeout(() => {
-      textInputRef.current.focus()
-    }, 1000)
-  }, []);
+        setTimeout(() => {
+        textInputRef.current.focus()
+        }, 1000)
+    }, []);
 
   const handlePinChange = (value) => {
     // Chỉ cho phép nhập chữ số và không quá 4 ký tự
@@ -55,8 +46,8 @@ export default function PinScreen() {
           </View>
         </TouchableOpacity>
       </View>
-      <Text style = {styles.welcomeText}>Welcome back,</Text>
-      <Text style = {styles.welcomeText}>Enter PIN code to continue.</Text>
+      <Text style = {styles.welcomeText}>Welcome to IntelliHome, </Text>
+      <Text style = {styles.welcomeText}>Set a PIN code to get started.</Text>
         <TouchableOpacity onPress={() => textInputRef.current.focus()}>
           <View style = {{flexDirection: 'row', justifyContent:'space-between', width: ScreenWidth - 80, marginTop: 30}}>
             {
@@ -74,6 +65,25 @@ export default function PinScreen() {
           </View>
         </TouchableOpacity>
 
+        
+        <TouchableOpacity onPress={() => textInputRef.current.focus()}>
+          <View style = {{flexDirection: 'row', justifyContent:'space-between', width: ScreenWidth - 80, marginTop: 30}}>
+            {
+              Array(5).fill(1).map((i , index) => {
+                if (index > pinCode.length)
+                  return <View style = {styles.inputNot} key = {index}></View>
+                else if (index === pinCode.length)
+                  return <View style = {styles.inputNow} key = {index}></View>
+                else 
+                  return<View style = {styles.inputYes} key = {index}>
+                    <Icon name = "ellipse" size={28} />
+                  </View>
+              })
+            }
+          </View>
+        </TouchableOpacity>
+        
+        
         <View style = {{flexDirection: 'row', justifyContent:'space-around', width: '100%', marginTop: 20}}>
           <Button color="secondary" radius={'sm'}  containerStyle={{width: 100}}
             onPress = {() => setPinCode('')}
@@ -82,8 +92,19 @@ export default function PinScreen() {
             onPress = {handleClickSubmitPIN}
           >Next</Button>
         </View>
+        
         <TextInput
           ref={textInputRef}
+          keyboardType="numeric"
+          maxLength={5}
+          secureTextEntry={true}
+          style = {{opacity: 0}}
+          value={pinCode}
+          onChangeText={handlePinChange}
+        />
+
+        <TextInput
+          ref={textInputConfirmRef}
           keyboardType="numeric"
           maxLength={5}
           secureTextEntry={true}

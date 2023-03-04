@@ -9,7 +9,6 @@ export default function AddFace() {
     const [images, setImage] = useState([])
     const [data, setData] = useState('')
     const [numImg, setNumImg] = useState(5)
-
     const handleClickSubmitFace = () => {
         console.log('Submit Face')
     }
