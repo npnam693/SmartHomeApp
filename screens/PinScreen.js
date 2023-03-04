@@ -6,23 +6,27 @@ import  Icon  from "react-native-vector-icons/Ionicons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const getData = async () => {
-  try {
-    const value = await AsyncStorage.getItem('userData')
-    if(value !== null) {
-      console.log('alololo', value)
-    }
-  } catch(e) {
-  }
-}
-
-export default function PinScreen() {
+export default function PinScreen({navigation}) {
   const [pinCode, setPinCode] = useState('');
+  const [userData, setUserData] = useState();
+
   const textInputRef = useRef(null);
-    useEffect(() => {
-    setTimeout(() => {
-      textInputRef.current.focus()
-    }, 1000)
+
+  useEffect(() => {
+      setTimeout(() => {
+        textInputRef.current.focus()
+      }, 1000)
+        
+      const fetchUser = async () => {
+        try {
+            const value = await AsyncStorage.getItem('userData')
+            console.log(value)
+            if(value !== null) setUserData(JSON.parse(value))
+        } catch(e) {
+            console.log(e)
+        }
+      };
+      fetchUser();
   }, []);
 
   const handlePinChange = (value) => {
@@ -34,7 +38,10 @@ export default function PinScreen() {
     setPinCode(onlyDigits);
   };
   const handleClickSubmitPIN = () => {
-    console.log(pinCode)
+    if (pinCode != userData.pinCode) alert("PIN code is incorrect")
+    else {
+      navigation.navigate('HomeScreen')
+    }
   }
   const handleClickLogout = () => {
     console.log('Log Out')

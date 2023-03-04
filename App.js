@@ -1,8 +1,10 @@
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-
 import AppNavigation from './AppNavigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import SetPINScreen from './screens/Signup/SetPIN';
 
-import FaceRegconition from './screens/Setting/FaceRegconition';
+
+
 const MyTheme = {
   ...DefaultTheme,
   colors: {

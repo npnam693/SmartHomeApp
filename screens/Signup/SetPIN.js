@@ -3,48 +3,81 @@ import { View, Image, Text, StyleSheet, TextInput, TouchableOpacity } from 'reac
 import { ScreenWidth, } from '@rneui/base';
 import { Button } from '@rneui/themed';
 import  Icon  from "react-native-vector-icons/Ionicons";
+import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SetPINScreen() {
     const [pinCode, setPinCode] = useState('');
+    const [pinConfirmCode, setPinConfirmCode] = useState('');
+    const [userData, setUserData] = useState();
+
     const textInputRef = useRef(null);
     const textInputConfirmRef = useRef(null)
-    
+
     useEffect(() => {
         setTimeout(() => {
-        textInputRef.current.focus()
+            textInputRef.current.focus()
         }, 1000)
+        const fetchUser = async () => {
+            try {
+                const value = await AsyncStorage.getItem('userData')
+                if(value !== null) setUserData(JSON.parse(value))
+            } catch(e) {
+                console.log(e)
+            }
+        };
+
+        fetchUser();
     }, []);
 
-  const handlePinChange = (value) => {
-    // Chỉ cho phép nhập chữ số và không quá 4 ký tự
-    const onlyDigits = value.replace(/[^\d]/g, '');
-    if (onlyDigits.length > 5) {
-      return;
+    const handlePinChange = (value) => {
+        // Chỉ cho phép nhập chữ số và không quá 4 ký tự
+        const onlyDigits = value.replace(/[^\d]/g, '');
+        if (onlyDigits.length > 5) {
+        return;
+        }
+        setPinCode(onlyDigits);
+    };
+
+    const handlePinCofirmChange = (value) => {
+        // Chỉ cho phép nhập chữ số và không quá 4 ký tự
+        const onlyDigits = value.replace(/[^\d]/g, '');
+        if (onlyDigits.length > 5) {
+        return;
+        }
+        setPinConfirmCode(onlyDigits);
+    };
+
+    const handleClickSubmitPIN = () => {
+        if (pinCode != pinConfirmCode) {
+            alert("You need to confirm the correct PIN code.")
+            return
+        }
+        else {
+            axios.put('http://10.0.2.2:3000/api/users/setpin', {
+                _id: userData._id, pinCode: pinCode
+            })
+            .then(res => {
+            console.log(res.data)
+            }) 
+            .catch(err => {
+                console.log(err.response.data.message)
+            })
+        }
+
+
     }
-    setPinCode(onlyDigits);
-  };
-  const handleClickSubmitPIN = () => {
-    console.log(pinCode)
-  }
-  const handleClickLogout = () => {
-    console.log('Log Out')
-  }
+
   return (
     <View style={styles.container}>
       <View style = {styles.user}>
         <Image source={{uri:'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png'}} 
                     style = {{width: 60, height: 60, borderRadius: 10, borderWidth: 1, borderColor:'#BCE4FA'}}
         />
-        <View>
+        <View style = {{width: '100%', marginLeft: 20}}>
           <Text style = {{fontSize: 18, fontWeight: '600', color: '#10101'}}>Nguyen Phi Nam</Text>
           <Text style = {{fontSize: 12, fontWeight: '400', color: '#666'}}>nguyenphinam2k2@example.com</Text>
         </View>
-        <TouchableOpacity onPress={handleClickLogout}>
-          <View style = {styles.logout}>
-              <Icon name = "exit" size = {28} color = '#75A7F7' style={{left: 3}}/>
-          </View>
-        </TouchableOpacity>
       </View>
       <Text style = {styles.welcomeText}>Welcome to IntelliHome, </Text>
       <Text style = {styles.welcomeText}>Set a PIN code to get started.</Text>
@@ -66,13 +99,13 @@ export default function SetPINScreen() {
         </TouchableOpacity>
 
         
-        <TouchableOpacity onPress={() => textInputRef.current.focus()}>
+        <TouchableOpacity onPress={() => textInputConfirmRef.current.focus()}>
           <View style = {{flexDirection: 'row', justifyContent:'space-between', width: ScreenWidth - 80, marginTop: 30}}>
             {
               Array(5).fill(1).map((i , index) => {
-                if (index > pinCode.length)
+                if (index > pinConfirmCode.length)
                   return <View style = {styles.inputNot} key = {index}></View>
-                else if (index === pinCode.length)
+                else if (index === pinConfirmCode.length)
                   return <View style = {styles.inputNow} key = {index}></View>
                 else 
                   return<View style = {styles.inputYes} key = {index}>
@@ -86,7 +119,7 @@ export default function SetPINScreen() {
         
         <View style = {{flexDirection: 'row', justifyContent:'space-around', width: '100%', marginTop: 20}}>
           <Button color="secondary" radius={'sm'}  containerStyle={{width: 100}}
-            onPress = {() => setPinCode('')}
+            onPress = {() => {setPinCode(''); setPinConfirmCode('')}}
           >Remove</Button>
           <Button radius={'sm'} containerStyle={{width: 100}}
             onPress = {handleClickSubmitPIN}
@@ -109,8 +142,8 @@ export default function SetPINScreen() {
           maxLength={5}
           secureTextEntry={true}
           style = {{opacity: 0}}
-          value={pinCode}
-          onChangeText={handlePinChange}
+          value={pinConfirmCode}
+          onChangeText={handlePinCofirmChange}
         />
     </View>
   );
