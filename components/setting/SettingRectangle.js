@@ -22,7 +22,6 @@ const typeOption = {
 }
 
 export default function SettingRectangle({type}) {
-    console.log(type)
     return (
         <View style = {{width: ScreenWidth - 32, height: 64,
             backgroundColor:'#EBF8FF', flexDirection: 'row', alignItems:'center',

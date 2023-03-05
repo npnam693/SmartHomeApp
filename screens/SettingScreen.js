@@ -1,15 +1,16 @@
-import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native"
+import { Text, View, Image, TouchableOpacity, StyleSheet, Modal } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import SettingSquare from "../components/setting/SettingSquare"
 import SettingRectangle from "../components/setting/SettingRectangle"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContext from "../AuthContext";
-import { useContext  } from "react"
-
+import { useContext, useState } from "react"
+import QRCode from 'react-native-qrcode-svg';
 
 export default function SettingScreen({ navigation }) {
     const { isLoggedIn, logout, setUserData, userData } = useContext(AuthContext);
-    
+    const [modalVisible, setModalVisible] = useState(false);
+
     const handleClickLogout = () => {
         const removeData = async () => {
             try {
@@ -34,9 +35,45 @@ export default function SettingScreen({ navigation }) {
             <Text style = {{fontSize: 20, fontWeight: '600', color: '#10101'}}>{userData.name}</Text>
             <Text style = {{fontSize: 14, fontWeight: '400', color: '#666'}}>{userData.email}</Text>
             <View style = {styles.option}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => setModalVisible(true)}>
                     <SettingSquare type = "SHARE_KEY" />
                 </TouchableOpacity>
+
+                <Modal
+                    animationType="slide"
+                    // transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        setModalVisible(false);
+                    }}
+                    onBackdropPress={() => {
+                        console.log('alo')
+                        setModalVisible(false)}
+                    }
+                >
+                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#EBF8FF', margin: 'auto',
+                        flex: 1
+                    }}>
+
+
+                    <QRCode
+                        value={userData.home}
+                        size={200}
+                        color="black"
+                        backgroundColor="white"
+                        borderRadius={10}
+                        padding={10}
+                    />
+                    <Text style={{fontSize: 18, fontWeight: '400', marginTop: 30}}>Key: {userData.home}</Text>
+                    <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+                        <View style = {{backgroundColor:'#ed6474', borderRadius: 16, marginTop: 50, width: 100, height:40,
+                            alignItems: 'center', justifyContent:'center'
+                        }}>
+                            <Text style = {{color: 'white', fontWeight: '500', fontSize:18, }}>HIDE</Text>
+                        </View>
+                    </TouchableOpacity>
+                    </View>
+                </Modal>
                 <TouchableOpacity onPress={() => navigation.navigate('FaceRegconition')}>
                     <SettingSquare type = "FACE_RECOGNITION" />
                 </TouchableOpacity>
@@ -46,6 +83,7 @@ export default function SettingScreen({ navigation }) {
                 <TouchableOpacity>
                     <SettingSquare type = "ADD_DEVICE" />
                 </TouchableOpacity>
+            
             </View >
             <View style={[styles.options,{flexDirection: 'column', marginTop: 20}]}>
                 <TouchableOpacity>

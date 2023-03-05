@@ -23,7 +23,6 @@ const typeButton = {
     }
 }
 export default function SettingSquare({type}) {
-    console.log(type)
     return (
         <View style = {{alignItems:'center', justifyContent:'center', width: 76}}>
         
