@@ -2,13 +2,34 @@ import { Image, View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
-import { useState } from "react"
+import { useState, useContext, useEffect} from "react"
 import axios from 'axios'
+
+import AuthContext from "../AuthContext";
+
 export default function LoginScreen({ navigation }){
     const [data, setData] = useState({
         email: '',
         password: '',
     })
+    
+    const { isLoggedIn, login  } = useContext(AuthContext);
+    const [userData, setUserData] = useState()
+
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const value = await AsyncStorage.getItem('userData')
+            } catch(e) {
+                console.log(e)
+            }
+        };
+        fetchUser();
+    }, [isLoggedIn]);
+
+
+
     const handleClickLogin = () => {
         if (data.email == '' || data.password == '') {
             alert('Please fill all fields')
@@ -19,12 +40,14 @@ export default function LoginScreen({ navigation }){
         })
           .then(response => {
             AsyncStorage.setItem('userData', JSON.stringify(response.data))
-            navigation.navigate('PinScreen')
+            login()
+            navigation.navigate('TabNavigation')
           })
           .catch(error => {
             alert(error.response.data.message);
           });
     }
+
     return (
         <ScrollView style = {styles.container}>
             <Image source = {require('../assets/images/IntroLogin.png')} style={{width: ScreenWidth, height: 356, marginTop: 30}}/>

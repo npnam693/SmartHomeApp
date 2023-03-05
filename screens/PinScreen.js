@@ -1,51 +1,66 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { View, Image, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { ScreenWidth, } from '@rneui/base';
 import { Button } from '@rneui/themed';
 import  Icon  from "react-native-vector-icons/Ionicons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import AuthContext from '../AuthContext';
+export default function PinScreen() {
+    const navigation = useNavigation();
+    const [pinCode, setPinCode] = useState('');
+    // const [userData, setUserData] = useState();
+    const { isLoggedIn, logout, setUserData  } = useContext(AuthContext);
 
+    
+    const textInputRef = useRef(null);
 
-export default function PinScreen({navigation}) {
-  const [pinCode, setPinCode] = useState('');
-  const [userData, setUserData] = useState();
+    useEffect(() => {
+        setTimeout(() => {
+            textInputRef.current.focus()
+        }, 2000)
+            
+        const fetchUser = async () => {
+            try {
+                const value = await AsyncStorage.getItem('userData')
+                console.log(value)
+                if(value !== null) setUserData(JSON.parse(value))
+            } catch(e) {
+                console.log(e)
+            }
+        };
+        fetchUser();
+    }, []);
 
-  const textInputRef = useRef(null);
-
-  useEffect(() => {
-      setTimeout(() => {
-        textInputRef.current.focus()
-      }, 2000)
-        
-      const fetchUser = async () => {
-        try {
-            const value = await AsyncStorage.getItem('userData')
-            console.log(value)
-            if(value !== null) setUserData(JSON.parse(value))
-        } catch(e) {
-            console.log(e)
+    const handlePinChange = (value) => {
+        // Chỉ cho phép nhập chữ số và không quá 4 ký tự
+        const onlyDigits = value.replace(/[^\d]/g, '');
+        if (onlyDigits.length > 5) {
+        return;
         }
-      };
-      fetchUser();
-  }, []);
+        setPinCode(onlyDigits);
+    };
+    const handleClickSubmitPIN = () => {
 
-  const handlePinChange = (value) => {
-    // Chỉ cho phép nhập chữ số và không quá 4 ký tự
-    const onlyDigits = value.replace(/[^\d]/g, '');
-    if (onlyDigits.length > 5) {
-      return;
+        if (pinCode != userData.pinCode) alert("PIN code is incorrect")
+        else {
+          setPinCode('')
+          navigation.navigate('TabNavigation')
+        }
     }
-    setPinCode(onlyDigits);
-  };
-  const handleClickSubmitPIN = () => {
-    if (pinCode != userData.pinCode) alert("PIN code is incorrect")
-    else {
-      navigation.navigate('HomeScreen')
+    const handleClickLogout = () => {
+        const removeData = async () => {
+            try {
+                await AsyncStorage.removeItem('userData');
+                console.log('Dữ liệu đã được xoá!');
+              } catch (e) {
+                console.log('Lỗi khi xoá dữ liệu: ', e);
+              }
+          };
+          removeData()
+          logout()
+        navigation.navigate('LoginScreen')
     }
-  }
-  const handleClickLogout = () => {
-    console.log('Log Out')
-  }
   return (
     <View style={styles.container}>
       <View style = {styles.user}>

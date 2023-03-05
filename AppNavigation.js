@@ -1,8 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { View, Text } from 'react-native';
-
+import { View,  StyleSheet } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import DeviceScreen from './screens/DeviceScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -11,14 +10,49 @@ import NotificationScreen from './screens/NotificationScreen';
 import SettingScreen from './screens/SettingScreen';
 import PinScreen from './screens/PinScreen';
 import VisualiaztionScreen from './screens/Visualization';
-
+import SetPINScreen from './screens/Signup/SetPIN';
 import AddFace from './screens/Setting/AddFace';
 import FaceRegconition from './screens/Setting/FaceRegconition';
+
+import { useState, useEffect, useContext } from 'react';
+import AuthContext from './AuthContext';
+
 
 const HomeStack = createNativeStackNavigator()
 const VisualizationStack = createNativeStackNavigator()
 const SettingStack = createNativeStackNavigator()
+const AuthStack = createNativeStackNavigator()
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+function AuthStackScreen(){
+    const { isLoggedIn, userData } = useContext(AuthContext);
+    
+
+
+    useEffect(() => {
+        console.log('huhuhuhuuhuhu', isLoggedIn)
+        console.log(userData)
+    }, [isLoggedIn]);
+
+    if (userData)
+        return (
+            <AuthStack.Navigator>
+                <AuthStack.Screen name="PinScreen" component={PinScreen} options={{ headerShown: false }}/>
+            </AuthStack.Navigator>
+        )
+    else return (
+        <AuthStack.Navigator >
+        <AuthStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
+        <AuthStack.Screen name="SignupScreen" component={SignupScreen} 
+            options={{ 
+                headerTitle: (props) => <View style = {{backgroundColor:'red'}}></View>,
+            }}
+        />
+        <AuthStack.Screen name="SetPINScreen" component={SetPINScreen} options={{ headerShown: false }}/>
+    </AuthStack.Navigator>
+    )
+}
 
 function HomeStackScreen({ navigation }) {
     return (
@@ -53,57 +87,72 @@ function SettingStackScreen({ navigation}){
 
 const Tab = createBottomTabNavigator();
 
-
-export default function AppNavigation() {
+function TabNavigation() {
     return (
-
-
         <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-                let iconName 
-                size = 24
-                if (route.name === "HomeTab") {
-                    return (
-                        <View style={{backgroundColor:'#75A7F7', padding: 10, 
-                          borderRadius: 40,
-                          shadowColor: "#00B5D8",
-                          shadowOffset: {
-                              width: 0,
-                              height: 2,
-                          },
-                          shadowOpacity: 0.29,
-                          shadowRadius: 4.65,
-                          
-                          borderRadius: 30,
-                          elevation: 7,
-                  }}>
-                            <Ionicons name = 'home' size={size} color={color} />
-                        </View>
-                    )
-                }
-                else if (route.name === "SettingTab") {
-                    iconName = "ios-settings-sharp"
-                    size = 27
-                }
-                else iconName = 'bar-chart'
-                return <Ionicons name = {iconName} size={size} color={color} />
-            },
-            tabBarActiveTintColor: '#3E4F88',
-            tabBarInactiveTintColor: '#D2E0EE',
-            tabBarStyle: {height: 60}
-          }
-          )
-        }
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName 
+                    size = 24
+                    if (route.name === "HomeTab") {
+                        return (
+                            <View style={styles.tabbar}>
+                                <Ionicons name = 'home' size={size} color={color} />
+                            </View>
+                        )
+                    }
+                    else if (route.name === "SettingTab") {
+                        iconName = "ios-settings-sharp"
+                        size = 27
+                    }
+                    else iconName = 'bar-chart'
+                    return <Ionicons name = {iconName} size={size} color={color} />
+                },
+                tabBarActiveTintColor: '#3E4F88',
+                tabBarInactiveTintColor: '#D2E0EE',
+                tabBarStyle: {height: 60}
+            })}
+            initialRouteName="HomeTab"
         >
-          <Tab.Screen name="VisualizationTab" component={VisualizationStackScreen} 
-            options={{headerShown: false, tabBarShowLabel: false}}
-          />
-          <Tab.Screen name="HomeTab" component={HomeStackScreen}  
-            options={{headerShown: false, tabBarShowLabel: false}}  />
-          <Tab.Screen name="SettingTab" component={SettingStackScreen} 
-            options={{headerShown: false, tabBarShowLabel: false}}
-          />
+            <Tab.Screen name="VisualizationTab" component={VisualizationStackScreen} 
+                options={{headerShown: false, tabBarShowLabel: false}}
+            />
+            <Tab.Screen name="HomeTab" component={HomeStackScreen}  
+                options={{headerShown: false, tabBarShowLabel: false}}  />
+            <Tab.Screen name="SettingTab" component={SettingStackScreen} 
+                options={{headerShown: false, tabBarShowLabel: false}}
+            />
         </Tab.Navigator>
     )
 } 
+
+const Stack = createNativeStackNavigator()
+
+export default function AppNavigation() {
+    
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="AuthStackScreen" component={AuthStackScreen} options={{headerShown: false, tabBarShowLabel: false}}/>
+            <Stack.Screen name="TabNavigation" component={TabNavigation} />
+        </Stack.Navigator>
+    )
+}
+
+
+const styles = StyleSheet.create({
+  tabbar: {
+    backgroundColor:'#75A7F7', 
+    padding: 10, 
+    borderRadius: 40,
+    shadowColor: "#00B5D8",
+    shadowOffset: {
+        width: 0,
+        height: 2,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    
+    borderRadius: 30,
+    elevation: 7,
+  }
+})
