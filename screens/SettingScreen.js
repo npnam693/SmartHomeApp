@@ -8,7 +8,7 @@ import { useContext  } from "react"
 
 
 export default function SettingScreen({ navigation }) {
-    const { isLoggedIn, logout, setUserData } = useContext(AuthContext);
+    const { isLoggedIn, logout, setUserData, userData } = useContext(AuthContext);
     
     const handleClickLogout = () => {
         const removeData = async () => {
@@ -28,11 +28,11 @@ export default function SettingScreen({ navigation }) {
 
     return (
         <View style = {styles.container}>
-            <Image source={{uri:'https://avatoon.net/wp-content/uploads/2022/07/Cartoon-Avatar-White-Background-300x300.png'}} 
+            <Image source={{uri:'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png'}} 
                 style = {{width: 130, height: 130, borderRadius: 110, borderWidth: 1, borderColor:'#00B5D8'}}
             />
-            <Text style = {{fontSize: 20, fontWeight: '600', color: '#10101'}}>Nguyen Phi Nam</Text>
-            <Text style = {{fontSize: 14, fontWeight: '400', color: '#666'}}>nguyenphinam2k2@example.com</Text>
+            <Text style = {{fontSize: 20, fontWeight: '600', color: '#10101'}}>{userData.name}</Text>
+            <Text style = {{fontSize: 14, fontWeight: '400', color: '#666'}}>{userData.email}</Text>
             <View style = {styles.option}>
                 <TouchableOpacity>
                     <SettingSquare type = "SHARE_KEY" />

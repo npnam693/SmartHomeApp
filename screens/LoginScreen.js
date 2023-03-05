@@ -3,32 +3,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
 import { useState, useContext, useEffect} from "react"
-import axios from 'axios'
-
 import AuthContext from "../AuthContext";
+import axios from 'axios'
 
 export default function LoginScreen({ navigation }){
     const [data, setData] = useState({
         email: '',
         password: '',
     })
+
+    const { isLoggedIn, login } = useContext(AuthContext);
     
-    const { isLoggedIn, login  } = useContext(AuthContext);
-    const [userData, setUserData] = useState()
-
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const value = await AsyncStorage.getItem('userData')
-            } catch(e) {
-                console.log(e)
-            }
-        };
-        fetchUser();
-    }, [isLoggedIn]);
-
-
+    
 
     const handleClickLogin = () => {
         if (data.email == '' || data.password == '') {
@@ -38,14 +24,14 @@ export default function LoginScreen({ navigation }){
         axios.post('http://10.0.2.2:3000/api/users/login', {
             email: data.email, password: data.password
         })
-          .then(response => {
+        .then(response => {
             AsyncStorage.setItem('userData', JSON.stringify(response.data))
             login()
             navigation.navigate('TabNavigation')
-          })
-          .catch(error => {
+        })
+            .catch(error => {
             alert(error.response.data.message);
-          });
+        });
     }
 
     return (

@@ -9,28 +9,11 @@ import AuthContext from '../AuthContext';
 export default function PinScreen() {
     const navigation = useNavigation();
     const [pinCode, setPinCode] = useState('');
-    // const [userData, setUserData] = useState();
-    const { isLoggedIn, logout, setUserData  } = useContext(AuthContext);
 
-    
+    const {logout, setUserData, userData  } = useContext(AuthContext);
+
     const textInputRef = useRef(null);
 
-    useEffect(() => {
-        setTimeout(() => {
-            textInputRef.current.focus()
-        }, 2000)
-            
-        const fetchUser = async () => {
-            try {
-                const value = await AsyncStorage.getItem('userData')
-                console.log(value)
-                if(value !== null) setUserData(JSON.parse(value))
-            } catch(e) {
-                console.log(e)
-            }
-        };
-        fetchUser();
-    }, []);
 
     const handlePinChange = (value) => {
         // Chỉ cho phép nhập chữ số và không quá 4 ký tự
@@ -41,7 +24,6 @@ export default function PinScreen() {
         setPinCode(onlyDigits);
     };
     const handleClickSubmitPIN = () => {
-
         if (pinCode != userData.pinCode) alert("PIN code is incorrect")
         else {
           setPinCode('')
@@ -58,8 +40,9 @@ export default function PinScreen() {
               }
           };
           removeData()
+          setUserData(null)
           logout()
-        navigation.navigate('LoginScreen')
+          navigation.navigate('AuthStackScreen')
     }
   return (
     <View style={styles.container}>
@@ -68,8 +51,8 @@ export default function PinScreen() {
                     style = {{width: 60, height: 60, borderRadius: 10, borderWidth: 1, borderColor:'#BCE4FA'}}
         />
         <View>
-          <Text style = {{fontSize: 18, fontWeight: '600', color: '#10101'}}>Nguyen Phi Nam</Text>
-          <Text style = {{fontSize: 12, fontWeight: '400', color: '#666'}}>nguyenphinam2k2@example.com</Text>
+          <Text style = {{fontSize: 18, fontWeight: '600', color: '#10101'}}>{userData.name}</Text>
+          <Text style = {{fontSize: 12, fontWeight: '400', color: '#666'}}>{userData.email}</Text>
         </View>
         <TouchableOpacity onPress={handleClickLogout}>
           <View style = {styles.logout}>

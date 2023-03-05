@@ -22,35 +22,42 @@ const HomeStack = createNativeStackNavigator()
 const VisualizationStack = createNativeStackNavigator()
 const SettingStack = createNativeStackNavigator()
 const AuthStack = createNativeStackNavigator()
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 function AuthStackScreen(){
     const { isLoggedIn, userData } = useContext(AuthContext);
-    
-
 
     useEffect(() => {
         console.log('huhuhuhuuhuhu', isLoggedIn)
-        console.log(userData)
     }, [isLoggedIn]);
-
+    
+    console.log('datain component', userData)
+    
     if (userData)
         return (
-            <AuthStack.Navigator>
+            <AuthStack.Navigator
+            screenOptions={{
+                headerTransparent: true,
+                headerStyle: { backgroundColor: 'transparent' },
+              }}>
                 <AuthStack.Screen name="PinScreen" component={PinScreen} options={{ headerShown: false }}/>
             </AuthStack.Navigator>
         )
-    else return (
-        <AuthStack.Navigator >
-        <AuthStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
-        <AuthStack.Screen name="SignupScreen" component={SignupScreen} 
-            options={{ 
-                headerTitle: (props) => <View style = {{backgroundColor:'red'}}></View>,
-            }}
-        />
-        <AuthStack.Screen name="SetPINScreen" component={SetPINScreen} options={{ headerShown: false }}/>
-    </AuthStack.Navigator>
+        else return (
+            <AuthStack.Navigator 
+                screenOptions={{
+                headerTransparent: true,
+                headerStyle: { backgroundColor: 'transparent' },
+              }}
+              >
+                <AuthStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
+                <AuthStack.Screen name="SignupScreen" component={SignupScreen} 
+                options={{ 
+                    headerTitle: (props) => <View style = {{backgroundColor:'red'}}></View>,
+                }}
+                />
+                <AuthStack.Screen name="SetPINScreen" component={SetPINScreen} options={{ headerShown: false }}/>
+            </AuthStack.Navigator>
     )
 }
 
@@ -133,7 +140,7 @@ export default function AppNavigation() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="AuthStackScreen" component={AuthStackScreen} options={{headerShown: false, tabBarShowLabel: false}}/>
-            <Stack.Screen name="TabNavigation" component={TabNavigation} />
+            <Stack.Screen name="TabNavigation" component={TabNavigation} options={{headerShown: false}}/>
         </Stack.Navigator>
     )
 }

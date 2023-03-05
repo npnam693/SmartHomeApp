@@ -1,33 +1,30 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { View, Image, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { ScreenWidth, } from '@rneui/base';
 import { Button } from '@rneui/themed';
 import  Icon  from "react-native-vector-icons/Ionicons";
 import axios from 'axios';
+import AuthContext from '../../AuthContext';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function SetPINScreen() {
+export default function SetPINScreen({route}) {
+    const navigation = useNavigation()
     const [pinCode, setPinCode] = useState('');
     const [pinConfirmCode, setPinConfirmCode] = useState('');
-    const [userData, setUserData] = useState();
+
+    const { login } = useContext(AuthContext)
+    const { userID, userName, userEmail } = route.params;
+
 
     const textInputRef = useRef(null);
     const textInputConfirmRef = useRef(null)
 
+
     useEffect(() => {
         setTimeout(() => {
             textInputRef.current.focus()
-        }, 1000)
-        const fetchUser = async () => {
-            try {
-                const value = await AsyncStorage.getItem('userData')
-                if(value !== null) setUserData(JSON.parse(value))
-            } catch(e) {
-                console.log(e)
-            }
-        };
-
-        fetchUser();
+        }, 3000)
     }, []);
 
     const handlePinChange = (value) => {
@@ -49,23 +46,32 @@ export default function SetPINScreen() {
     };
 
     const handleClickSubmitPIN = () => {
+        login()
+
         if (pinCode != pinConfirmCode) {
             alert("You need to confirm the correct PIN code.")
             return
         }
         else {
             axios.put('http://10.0.2.2:3000/api/users/setpin', {
-                _id: userData._id, pinCode: pinCode
+                _id: userID, pinCode: pinCode
             })
             .then(res => {
-            console.log(res.data)
+                AsyncStorage.setItem('userData', JSON.stringify(res.data))
+                login()
+                navigation.navigate('TabNavigation')
             }) 
             .catch(err => {
-                console.log(err.response.data.message)
+                if (err.response) {
+                    alert (err.response.data.message)
+                    return
+                }
+                else {
+                    alert('Gặp lỗi');
+                    console.log(err)
+                }
             })
         }
-
-
     }
 
   return (
@@ -75,8 +81,8 @@ export default function SetPINScreen() {
                     style = {{width: 60, height: 60, borderRadius: 10, borderWidth: 1, borderColor:'#BCE4FA'}}
         />
         <View style = {{width: '100%', marginLeft: 20}}>
-          <Text style = {{fontSize: 18, fontWeight: '600', color: '#10101'}}>Nguyen Phi Nam</Text>
-          <Text style = {{fontSize: 12, fontWeight: '400', color: '#666'}}>nguyenphinam2k2@example.com</Text>
+          <Text style = {{fontSize: 18, fontWeight: '600', color: '#10101'}}>{userName}</Text>
+          <Text style = {{fontSize: 12, fontWeight: '400', color: '#666'}}>{userEmail}</Text>
         </View>
       </View>
       <Text style = {styles.welcomeText}>Welcome to IntelliHome, </Text>

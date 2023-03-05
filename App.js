@@ -18,18 +18,19 @@ export default function App() {
     const [userData, setUserData] = useState(null);
     
     const fetchUser = async () => {
-        try {
-            const value = await AsyncStorage.getItem('userData')
-            if (value != null) setUserData(JSON.parse(value))
+    
+    try {
+        const value = await AsyncStorage.getItem('userData')
+        if (value != null) setUserData(JSON.parse(value))
         } catch(e) {
             console.log(e)
         }
     };
-
+        
     useEffect(() => {
-      fetchUser();
+        fetchUser();
     }, [isLoggedIn]);
-
+        
 
     const login = () => {
         setIsLoggedIn(true);
@@ -42,8 +43,10 @@ export default function App() {
         console.log('trang thía đăng nhập đang là ', isLoggedIn)
     };
 
+    console.log(userData)
+
     return (
-      <AuthContext.Provider value={{ isLoggedIn, userData, setUserData, fetchUser, login, logout }}>
+      <AuthContext.Provider value={{ isLoggedIn, userData, setUserData, login, logout }}>
         <NavigationContainer theme={MyTheme}>
           <AppNavigation /> 
         </NavigationContainer>

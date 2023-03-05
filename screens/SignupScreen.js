@@ -1,12 +1,10 @@
 import { Image, View, Text, TextInput, StyleSheet, ScrollView } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import axios from 'axios';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignupScreen({navigation}){
     const [data, setData] = useState({
@@ -27,19 +25,26 @@ export default function SignupScreen({navigation}){
             alert('You need to confirm the correct password')
             return
         }
-        console.log(data)        
+
         axios.post('http://10.0.2.2:3000/api/users', {
             name: data.name, email: data.email, password: data.password, homeID: data.homeID
         })
-          .then(response => {
+        .then(response => {
             console.log(response.data);
-            console.log(JSON.stringify(response.data))
+            // setUserData(JSON.stringify(response.data))
             AsyncStorage.setItem('userData', JSON.stringify(response.data))
-            navigation.navigate('PinScreen')
-          })
-          .catch(error => {
-            alert(error.response.data.message);
-          });
+            navigation.navigate("SetPINScreen", {userID: response.data._id, userName: response.data.name, userEmail: response.data.email})
+        })
+        .catch(error => {
+            if (error.response) {
+                alert (error.response.data.message)
+                return
+            }
+            else {
+                alert('Gặp lỗi');
+                console.log(error)
+            }
+        });
     }
 
     return (
