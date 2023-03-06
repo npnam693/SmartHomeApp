@@ -5,6 +5,10 @@ import { Button } from "@rneui/base"
 import { useState, useContext, useEffect} from "react"
 import AuthContext from "../AuthContext";
 import axios from 'axios'
+import { io } from "socket.io-client";
+
+
+
 
 export default function LoginScreen({ navigation }){
     const [data, setData] = useState({
@@ -12,9 +16,8 @@ export default function LoginScreen({ navigation }){
         password: '',
     })
 
+
     const { isLoggedIn, login } = useContext(AuthContext);
-    
-    
 
     const handleClickLogin = () => {
         if (data.email == '' || data.password == '') {

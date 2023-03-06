@@ -54,8 +54,6 @@ export default function SettingScreen({ navigation }) {
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#EBF8FF', margin: 'auto',
                         flex: 1
                     }}>
-
-
                     <QRCode
                         value={userData.home}
                         size={200}
