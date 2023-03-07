@@ -5,7 +5,6 @@ import { Button } from "@rneui/base"
 import { useState, useContext, useEffect} from "react"
 import AuthContext from "../AuthContext";
 import axios from 'axios'
-import { io } from "socket.io-client";
 
 
 

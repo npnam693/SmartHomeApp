@@ -8,17 +8,20 @@ import axios from 'axios';
 export const typeDevice = {
     light: {
         name : 'Smart Light',
-        icon : <Icon name = "lightbulb-variant-outline" size = {42} color = '#75A7F7'/>,
+        iconTurn : <Icon name = "lightbulb-variant-outline" size = {42} color = '#75A7F7'/>,
+        iconOff : <Icon name = "lightbulb-variant-outline" size = {42} color = '#9A9B9E'/>,
         feedId: "smarthome-dadn.smart-light"
     },
     fan: {
         name : 'Smart Fan',
-        icon : <Icon name = "fan" size = {38} color = '#75A7F7'/>,
+        iconTurn : <Icon name = "fan" size = {38} color = '#75A7F7'/>,
+        iconOff : <Icon name = "fan" size = {38} color = '#9A9B9E'/>,
         feedId: "smarthome-dadn.smart-fan"
     },
     door: {
         name : 'Smart Door',    
-        icon : <Icon name = "door-open" size = {38} color = '#75A7F7'/>,
+        iconTurn : <Icon name = "door-open" size = {38} color = '#75A7F7'/>,
+        iconOff : <Icon name = "door-open" size = {38} color = '#9A9B9E'/>,
         feedId: "smarthome-dadn.smart-door"
     }
 }
@@ -47,7 +50,7 @@ export default function ControlDevice({ navigation, type }) {
         <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('DeviceScreen')}>
             <View style = {styles.leftContainer}>
                 <View style = {styles.iconContainer}>
-                    {typeDevice[type].icon}
+                    {checked ? typeDevice[type].iconTurn : typeDevice[type].iconOff }
                 </View>
                 <View>
                     <Text style = {styles.nameDevice}>{typeDevice[type].name}</Text>
