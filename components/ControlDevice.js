@@ -1,37 +1,59 @@
 import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Switch } from '@rneui/themed';
-
+import { io } from "socket.io-client";
+import axios from 'axios';
 
 export const typeDevice = {
     light: {
         name : 'Smart Light',
-        icon : <Icon name = "lightbulb-variant-outline" size = {42} color = '#75A7F7'/>
+        iconTurn : <Icon name = "lightbulb-variant-outline" size = {42} color = '#75A7F7'/>,
+        iconOff : <Icon name = "lightbulb-variant-outline" size = {42} color = '#9A9B9E'/>,
+        feedId: "smarthome-dadn.smart-light",
+        unitTitle: 'Light Insensity'
     },
     fan: {
         name : 'Smart Fan',
-        icon : <Icon name = "fan" size = {38} color = '#75A7F7'/>
+        iconTurn : <Icon name = "fan" size = {38} color = '#75A7F7'/>,
+        iconOff : <Icon name = "fan" size = {38} color = '#9A9B9E'/>,
+        feedId: "smarthome-dadn.smart-fan",
+        unitTitle: 'Number'
     },
     door: {
         name : 'Smart Door',    
-        icon : <Icon name = "door-open" size = {38} color = '#75A7F7'/>
-        
+        iconTurn : <Icon name = "door-open" size = {38} color = '#75A7F7'/>,
+        iconOff : <Icon name = "door-open" size = {38} color = '#9A9B9E'/>,
+        feedId: "smarthome-dadn.smart-door",
+        unitTitle: 'Status'
     }
 }
 
-export default function ControlDevice({ navigation }) {
-    let type = 'door'
+export default function ControlDevice({ navigation, type }) {
     const [checked, setChecked] = useState(false);
-    const toggleSwitch = () => {
-        setChecked(!checked);
-      };
-      
+    const socket = io("http://10.0.2.2:3000");
+    
+    socket.on(`toggle ${typeDevice[type].feedId}`, (msg) => {
+        console.log('ben client ngke toggle r')
+        if (msg == 1) setChecked(true)
+        else setChecked(false)
+    });
+
+    useEffect(()=> {
+        axios.get(`https://io.adafruit.com/api/v2/nguyenphinam2k2/feeds/${typeDevice[type].feedId}/data?limit=1`)
+            .then((res) => {
+                if (res.data[0].value == '0') setChecked(false)
+                else setChecked(true)
+            })
+            .catch((err) => console.log(err))
+    }, [])
+
+    
     return (
-        <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('DeviceScreen')}>
+        <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('DeviceScreen', {type})}>
             <View style = {styles.leftContainer}>
                 <View style = {styles.iconContainer}>
-                    {typeDevice[type].icon}
+                    {checked ? typeDevice[type].iconTurn : typeDevice[type].iconOff }
                 </View>
                 <View>
                     <Text style = {styles.nameDevice}>{typeDevice[type].name}</Text>
@@ -41,7 +63,11 @@ export default function ControlDevice({ navigation }) {
             <View style={styles.rightContainer}>
                 <Switch       
                     value={checked}
-                    onValueChange={(value) => setChecked(value)}
+                    onValueChange={(value) => {
+                        socket.emit('toggleswitch', value ? '1' : '0', typeDevice[type].feedId)
+                        console.log('alo')
+                        setChecked(value)
+                    }}
                 />
                 <View style = {styles.autoView}>
                     <Text style = {{color: '#9A9B9E'}}>Auto</Text>

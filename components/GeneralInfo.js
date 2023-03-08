@@ -25,9 +25,8 @@ export default function GeneralInfo({ navigation }) {
                 <Text style={{width: '100%', fontSize: 14, fontWeight:'600'}}>General Infomation</Text>
                 <View style = {{flexDirection: 'row', width:'100%', justifyContent:'space-between', alignItems:'flex-end'}}>
                     <View style={{flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
-                        <Text style ={styles.temparatureText}>31
-                            <View style = {styles.tempO}></View>
-                        </Text>
+                        <Text style ={styles.temparatureText}>31</Text>
+                        <View style = {styles.tempO}></View>
                         <Text>Temperature</Text>
                     </View>
                     <View style={{flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
@@ -53,6 +52,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         height: 190,
         paddingTop: 20,
+        borderBottomRightRadius: 30,
+        borderBottomLeftRadius: 30,
     },
     notification: {
         width: 40,
@@ -92,22 +93,24 @@ const styles = StyleSheet.create({
     humidityText: {
         color : '#1EA0E9',  
         fontSize: 32,
-        fontWeight: '700'
-
+        fontWeight: '700',
+        bottom: 2,
     },
     lightText: {
         color: '#ECC94B',
         fontSize: 24,
-        fontWeight: '700'
+        fontWeight: '700',
+        bottom: 6,
     },
     tempO: {
         position: 'absolute',
-        width: 10,
-        height: 10,
-        borderWidth: 3,
+        width: 12,
+        height: 12,
+        borderWidth: 4,
         borderRadius: 100,
         borderColor: '#C43D3D',
-        top: 20,
+        top: 10,
+        right: 10,
     }
 })
 

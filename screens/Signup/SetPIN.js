@@ -3,17 +3,29 @@ import { View, Image, Text, StyleSheet, TextInput, TouchableOpacity } from 'reac
 import { ScreenWidth, } from '@rneui/base';
 import { Button } from '@rneui/themed';
 import  Icon  from "react-native-vector-icons/Ionicons";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import AuthContext from '../../AuthContext';
 import { useNavigation } from '@react-navigation/native';
-import AuthContext from '../AuthContext';
-export default function PinScreen() {
-    const navigation = useNavigation();
-    const [pinCode, setPinCode] = useState('');
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-    const {logout, setUserData, userData  } = useContext(AuthContext);
+export default function SetPINScreen({route}) {
+    const navigation = useNavigation()
+    const [pinCode, setPinCode] = useState('');
+    const [pinConfirmCode, setPinConfirmCode] = useState('');
+
+    const { login } = useContext(AuthContext)
+    const { userID, userName, userEmail } = route.params;
+
 
     const textInputRef = useRef(null);
+    const textInputConfirmRef = useRef(null)
 
+
+    useEffect(() => {
+        setTimeout(() => {
+            textInputRef.current.focus()
+        }, 3000)
+    }, []);
 
     const handlePinChange = (value) => {
         // Chỉ cho phép nhập chữ số và không quá 4 ký tự
@@ -23,45 +35,58 @@ export default function PinScreen() {
         }
         setPinCode(onlyDigits);
     };
+
+    const handlePinCofirmChange = (value) => {
+        // Chỉ cho phép nhập chữ số và không quá 4 ký tự
+        const onlyDigits = value.replace(/[^\d]/g, '');
+        if (onlyDigits.length > 5) {
+        return;
+        }
+        setPinConfirmCode(onlyDigits);
+    };
+
     const handleClickSubmitPIN = () => {
-        if (pinCode != userData.pinCode) alert("PIN code is incorrect")
+        login()
+
+        if (pinCode != pinConfirmCode) {
+            alert("You need to confirm the correct PIN code.")
+            return
+        }
         else {
-          setPinCode('')
-          navigation.navigate('TabNavigation')
+            axios.put('http://10.0.2.2:3000/api/users/setpin', {
+                _id: userID, pinCode: pinCode
+            })
+            .then(res => {
+                AsyncStorage.setItem('userData', JSON.stringify(res.data))
+                login()
+                navigation.navigate('TabNavigation')
+            }) 
+            .catch(err => {
+                if (err.response) {
+                    alert (err.response.data.message)
+                    return
+                }
+                else {
+                    alert('Gặp lỗi');
+                    console.log(err)
+                }
+            })
         }
     }
-    const handleClickLogout = () => {
-        const removeData = async () => {
-            try {
-                await AsyncStorage.removeItem('userData');
-                console.log('Dữ liệu đã được xoá!');
-              } catch (e) {
-                console.log('Lỗi khi xoá dữ liệu: ', e);
-              }
-          };
-          removeData()
-          setUserData(null)
-          logout()
-          navigation.navigate('AuthStackScreen')
-    }
+
   return (
     <View style={styles.container}>
       <View style = {styles.user}>
         <Image source={{uri:'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png'}} 
                     style = {{width: 60, height: 60, borderRadius: 10, borderWidth: 1, borderColor:'#BCE4FA'}}
         />
-        <View>
-          <Text style = {{fontSize: 18, fontWeight: '600', color: '#10101'}}>{userData.name}</Text>
-          <Text style = {{fontSize: 12, fontWeight: '400', color: '#666'}}>{userData.email}</Text>
+        <View style = {{width: '100%', marginLeft: 20}}>
+          <Text style = {{fontSize: 18, fontWeight: '600', color: '#10101'}}>{userName}</Text>
+          <Text style = {{fontSize: 12, fontWeight: '400', color: '#666'}}>{userEmail}</Text>
         </View>
-        <TouchableOpacity onPress={handleClickLogout}>
-          <View style = {styles.logout}>
-              <Icon name = "exit" size = {28} color = '#75A7F7' style={{left: 3}}/>
-          </View>
-        </TouchableOpacity>
       </View>
-      <Text style = {styles.welcomeText}>Welcome back,</Text>
-      <Text style = {styles.welcomeText}>Enter PIN code to continue.</Text>
+      <Text style = {styles.welcomeText}>Welcome to IntelliHome, </Text>
+      <Text style = {styles.welcomeText}>Set a PIN code to get started.</Text>
         <TouchableOpacity onPress={() => textInputRef.current.focus()}>
           <View style = {{flexDirection: 'row', justifyContent:'space-between', width: ScreenWidth - 80, marginTop: 30}}>
             {
@@ -79,14 +104,34 @@ export default function PinScreen() {
           </View>
         </TouchableOpacity>
 
+        
+        <TouchableOpacity onPress={() => textInputConfirmRef.current.focus()}>
+          <View style = {{flexDirection: 'row', justifyContent:'space-between', width: ScreenWidth - 80, marginTop: 30}}>
+            {
+              Array(5).fill(1).map((i , index) => {
+                if (index > pinConfirmCode.length)
+                  return <View style = {styles.inputNot} key = {index}></View>
+                else if (index === pinConfirmCode.length)
+                  return <View style = {styles.inputNow} key = {index}></View>
+                else 
+                  return<View style = {styles.inputYes} key = {index}>
+                    <Icon name = "ellipse" size={28} />
+                  </View>
+              })
+            }
+          </View>
+        </TouchableOpacity>
+        
+        
         <View style = {{flexDirection: 'row', justifyContent:'space-around', width: '100%', marginTop: 20}}>
           <Button color="secondary" radius={'sm'}  containerStyle={{width: 100}}
-            onPress = {() => setPinCode('')}
+            onPress = {() => {setPinCode(''); setPinConfirmCode('')}}
           >Remove</Button>
           <Button radius={'sm'} containerStyle={{width: 100}}
             onPress = {handleClickSubmitPIN}
           >Next</Button>
         </View>
+        
         <TextInput
           ref={textInputRef}
           keyboardType="numeric"
@@ -95,6 +140,16 @@ export default function PinScreen() {
           style = {{opacity: 0}}
           value={pinCode}
           onChangeText={handlePinChange}
+        />
+
+        <TextInput
+          ref={textInputConfirmRef}
+          keyboardType="numeric"
+          maxLength={5}
+          secureTextEntry={true}
+          style = {{opacity: 0}}
+          value={pinConfirmCode}
+          onChangeText={handlePinCofirmChange}
         />
     </View>
   );

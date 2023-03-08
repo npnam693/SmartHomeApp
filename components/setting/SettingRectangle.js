@@ -22,19 +22,17 @@ const typeOption = {
 }
 
 export default function SettingRectangle({type}) {
-    console.log(type)
     return (
         <View style = {{width: ScreenWidth - 32, height: 64,
-            backgroundColor:'#DBDBDB', flexDirection: 'row', alignItems:'center',
+            backgroundColor:'#EBF8FF', flexDirection: 'row', alignItems:'center',
             padding: 12, marginLeft: 4, borderRadius: 12, marginBottom: 12,
-            
+            borderWidth: 1, borderColor: '#ccc'
             }}>
             <View style = {{backgroundColor: '#D2E0EE', width: 40,  height: 40,  
                             borderRadius: 30, alignItems: 'center', 
                             justifyContent:'center', marginRight: 12}}>
                 {typeOption[type].icon}
             </View>
-
             <Text style={{fontSize: 16, fontWeight: '500'}}>{typeOption[type].name}</Text>
         </View>
     )
@@ -42,5 +40,3 @@ export default function SettingRectangle({type}) {
 
 
 
-
-``

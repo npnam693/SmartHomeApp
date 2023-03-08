@@ -1,27 +1,43 @@
-import { Image, View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
+import { Image, View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from "react-native"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
-import { useState } from "react"
+import { useState, useContext, useEffect} from "react"
+import AuthContext from "../AuthContext";
 import axios from 'axios'
+
+
+
+
 export default function LoginScreen({ navigation }){
     const [data, setData] = useState({
-        username: '',
+        email: '',
         password: '',
     })
-    
+
+
+    const { isLoggedIn, login } = useContext(AuthContext);
+
     const handleClickLogin = () => {
-        axios.get('http://10.0.2.2:3000/api/users')
-            .then(response => {
-                console.log(response.data);
-            })
+        if (data.email == '' || data.password == '') {
+            alert('Please fill all fields')
+        }
+
+        axios.post('http://10.0.2.2:3000/api/users/login', {
+            email: data.email, password: data.password
+        })
+        .then(response => {
+            AsyncStorage.setItem('userData', JSON.stringify(response.data))
+            login()
+            navigation.navigate('TabNavigation')
+        })
             .catch(error => {
-                console.log(error);
-            });
-        console.log(data)
-        navigation.navigate('PinScreen')
+            alert(error.response.data.message);
+        });
     }
+
     return (
-        <View style = {styles.container}>
+        <ScrollView style = {styles.container}>
             <Image source = {require('../assets/images/IntroLogin.png')} style={{width: ScreenWidth, height: 356, marginTop: 30}}/>
             <View style = {styles.inputContainer}>
                 <TextInput
@@ -35,8 +51,8 @@ export default function LoginScreen({ navigation }){
                         paddingHorizontal: 20,
                         marginBottom: 22,
                     }}
-                    value = {data.username}
-                    onChangeText={(input) => setData({...data, username: input})}
+                    value = {data.email}
+                    onChangeText={(input) => setData({...data, email: input})}
                 />
                 <TextInput
                     placeholder = {'Enter your password'}
@@ -67,7 +83,7 @@ export default function LoginScreen({ navigation }){
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({

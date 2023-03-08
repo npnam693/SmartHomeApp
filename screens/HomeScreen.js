@@ -10,15 +10,13 @@ export default function HomeScreen({navigation}){
     return (
         <View style = {{display: 'flex', flexDirection:'column', width: '100%'}} >
             <GeneralInfo navigation = {navigation}/>
-            <ScrollView style = {{width: '100%', height:ScreenHeight - 190}}>
+            <View style = {{width: '100%', height:ScreenHeight - 190}}>
                 <View style={{alignSelf: 'center'}}>
-                <ControlDevice navigation = {navigation}/>
-                <ControlDevice navigation = {navigation}/>
-                <ControlDevice navigation = {navigation}/>
-                <ControlDevice navigation = {navigation}/>
-                <ControlDevice navigation = {navigation}/>
+                <ControlDevice navigation = {navigation} type = "light"/>
+                <ControlDevice navigation = {navigation} type = "fan"/>
+                <ControlDevice navigation = {navigation} type = "door"/>
                 </View>
-            </ScrollView>
+            </View>
         </View>
     )
 }
