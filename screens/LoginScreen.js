@@ -10,6 +10,13 @@ export default function LoginScreen({ navigation }){
     })
     
     const handleClickLogin = () => {
+        axios.get('http://10.0.2.2:3000/api/users')
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
         console.log(data)
         navigation.navigate('PinScreen')
     }
