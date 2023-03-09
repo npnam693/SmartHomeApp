@@ -136,7 +136,6 @@ function TabNavigation() {
 const Stack = createNativeStackNavigator()
 
 export default function AppNavigation() {
-    
     return (
         <Stack.Navigator>
             <Stack.Screen name="AuthStackScreen" component={AuthStackScreen} options={{headerShown: false, tabBarShowLabel: false}}/>
