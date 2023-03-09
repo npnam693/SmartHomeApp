@@ -1,7 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Octicons'
+import { Button } from '@rneui/themed';
 import { View,  StyleSheet } from 'react-native';
+import ScheduleScreen from './screens/ScheduleScreen';
 import HomeScreen from './screens/HomeScreen';
 import DeviceScreen from './screens/DeviceScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -66,8 +69,53 @@ function HomeStackScreen({ navigation }) {
       <HomeStack.Navigator>
         <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
         <HomeStack.Screen name="DeviceScreen" component={DeviceScreen}  
-          options= {{
-            title: 'Name Device'
+          options= {({route}) => 
+          (
+          {
+            headerBackTitleStyle: {
+              backgroundColor: '#75A7F7',
+              color: '#EBF8FF'
+            },
+            headerRight: () => (
+              <Button color='#75A7F7' icon={<Icon name='clock' size={20} color='#EBF8FF' />} 
+                // buttonStyle ={{borderRadius: '50%'}}
+                radius = {10}
+                onPress={() => navigation.navigate('ScheduleScreen')}
+              />
+            ),
+            headerLeft: (props) => (
+              <Button {...props} color='#75A7F7' buttonStyle= {{width: 40}} icon={<Icon name='arrow-left' size={20} color='#EBF8FF'/>}
+                // buttonStyle ={{borderRadius: '50%'}}
+                radius={10}
+                onPress={() => { navigation.navigate('HomeScreen')}} // cai nay hoi ngu phai sua no
+              />
+            ),
+            title: 'Name Device',
+            headerTitleAlign: 'center'
+          })}
+        />
+        <HomeStack.Screen name="ScheduleScreen" component={ScheduleScreen}
+          options={{
+            headerBackTitleStyle: {
+              backgroundColor: '#75A7F7',
+              color: '#EBF8FF'
+            },
+            headerRight: () => (
+              <Button color='#75A7F7' icon={<Ionicons name='checkmark' size={20} color='#EBF8FF' />}
+                // buttonStyle ={{borderRadius: '50%'}}
+                radius={10}
+                onPress={() => navigation.goBack()} //deo hoat dong
+              />
+            ),
+            headerLeft: (props) => (
+              <Button {...props} color='#75A7F7' buttonStyle={{ width: 40 }} icon={<Ionicons name='close-outline' size={20} color='#EBF8FF' />}
+                // buttonStyle ={{borderRadius: '50%'}}
+                radius={10}
+                onPress={() => navigation.goBack()} //deo hoat dong
+              />
+            ),
+            title: 'Schedule',
+            headerTitleAlign: 'center'
           }}
         />
         <HomeStack.Screen name="NotificationScreen" component={NotificationScreen} >

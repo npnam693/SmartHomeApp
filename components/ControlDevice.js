@@ -10,19 +10,22 @@ export const typeDevice = {
         name : 'Smart Light',
         iconTurn : <Icon name = "lightbulb-variant-outline" size = {42} color = '#75A7F7'/>,
         iconOff : <Icon name = "lightbulb-variant-outline" size = {42} color = '#9A9B9E'/>,
-        feedId: "smarthome-dadn.smart-light"
+        feedId: "smarthome-dadn.smart-light",
+        unitTitle: 'Light Insensity'
     },
     fan: {
         name : 'Smart Fan',
         iconTurn : <Icon name = "fan" size = {38} color = '#75A7F7'/>,
         iconOff : <Icon name = "fan" size = {38} color = '#9A9B9E'/>,
-        feedId: "smarthome-dadn.smart-fan"
+        feedId: "smarthome-dadn.smart-fan",
+        unitTitle: 'Number'
     },
     door: {
         name : 'Smart Door',    
         iconTurn : <Icon name = "door-open" size = {38} color = '#75A7F7'/>,
         iconOff : <Icon name = "door-open" size = {38} color = '#9A9B9E'/>,
-        feedId: "smarthome-dadn.smart-door"
+        feedId: "smarthome-dadn.smart-door",
+        unitTitle: 'Status'
     }
 }
 
@@ -47,7 +50,7 @@ export default function ControlDevice({ navigation, type }) {
 
     
     return (
-        <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('DeviceScreen')}>
+        <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('DeviceScreen', {type})}>
             <View style = {styles.leftContainer}>
                 <View style = {styles.iconContainer}>
                     {checked ? typeDevice[type].iconTurn : typeDevice[type].iconOff }
