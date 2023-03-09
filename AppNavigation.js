@@ -16,6 +16,7 @@ import VisualiaztionScreen from './screens/Visualization';
 import SetPINScreen from './screens/Signup/SetPIN';
 import AddFace from './screens/Setting/AddFace';
 import FaceRegconition from './screens/Setting/FaceRegconition';
+// import { StackActions } from '@react-navigation/native';
 
 import { useState, useEffect, useContext } from 'react';
 import AuthContext from './AuthContext';
@@ -25,6 +26,7 @@ const HomeStack = createNativeStackNavigator()
 const VisualizationStack = createNativeStackNavigator()
 const SettingStack = createNativeStackNavigator()
 const AuthStack = createNativeStackNavigator()
+
 
 
 function AuthStackScreen(){
@@ -69,7 +71,7 @@ function HomeStackScreen({ navigation }) {
       <HomeStack.Navigator>
         <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
         <HomeStack.Screen name="DeviceScreen" component={DeviceScreen}  
-          options= {({route}) => 
+          options= {({navigation, route}) => 
           (
           {
             headerBackTitleStyle: {
@@ -87,7 +89,7 @@ function HomeStackScreen({ navigation }) {
               <Button {...props} color='#75A7F7' buttonStyle= {{width: 40}} icon={<Icon name='arrow-left' size={20} color='#EBF8FF'/>}
                 // buttonStyle ={{borderRadius: '50%'}}
                 radius={10}
-                onPress={() => { navigation.navigate('HomeScreen')}} // cai nay hoi ngu phai sua no
+                onPress={() => { navigation.goBack(); }} // cai nay hoi ngu phai sua no
               />
             ),
             title: 'Name Device',
@@ -95,7 +97,7 @@ function HomeStackScreen({ navigation }) {
           })}
         />
         <HomeStack.Screen name="ScheduleScreen" component={ScheduleScreen}
-          options={{
+          options={({ navigation, route }) => ({
             headerBackTitleStyle: {
               backgroundColor: '#75A7F7',
               color: '#EBF8FF'
@@ -104,19 +106,19 @@ function HomeStackScreen({ navigation }) {
               <Button color='#75A7F7' icon={<Ionicons name='checkmark' size={20} color='#EBF8FF' />}
                 // buttonStyle ={{borderRadius: '50%'}}
                 radius={10}
-                onPress={() => navigation.goBack()} //deo hoat dong
+                onPress={() => navigation.goBack()} 
               />
             ),
             headerLeft: (props) => (
               <Button {...props} color='#75A7F7' buttonStyle={{ width: 40 }} icon={<Ionicons name='close-outline' size={20} color='#EBF8FF' />}
                 // buttonStyle ={{borderRadius: '50%'}}
                 radius={10}
-                onPress={() => navigation.goBack()} //deo hoat dong
+                onPress={() => navigation.goBack()} 
               />
             ),
             title: 'Schedule',
             headerTitleAlign: 'center'
-          }}
+          })}
         />
         <HomeStack.Screen name="NotificationScreen" component={NotificationScreen} >
         </HomeStack.Screen>
