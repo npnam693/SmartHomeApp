@@ -3,6 +3,7 @@ import { typeDevice } from "../components/ControlDevice"
 import { Button } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/AntDesign'
 import Schedule from "../components/Schedule";
+import axios from "axios";
 
 export default function DeviceScreen({ navigation, route }){
     console.log(route.params.type)
@@ -24,7 +25,7 @@ export default function DeviceScreen({ navigation, route }){
                     icon={<Icon name="minus" size={20} color='#EBF8FF' />}
                 />
             </View>
-            <ScrollView style={styles.devices}>
+            <ScrollView style={styles.devices} showsVerticalScrollIndicator={false}>
                 <Schedule />
                 <Schedule />
                 <Schedule />
