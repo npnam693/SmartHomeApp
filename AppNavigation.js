@@ -82,7 +82,7 @@ function HomeStackScreen({ navigation }) {
               <Button color='#75A7F7' icon={<Icon name='clock' size={20} color='#EBF8FF' />} 
                 // buttonStyle ={{borderRadius: '50%'}}
                 radius = {10}
-                onPress={() => navigation.navigate('ScheduleScreen')}
+                onPress={() => navigation.navigate('ScheduleScreen', {type: route.params.type})}
               />
             ),
             headerLeft: (props) => (
@@ -102,13 +102,13 @@ function HomeStackScreen({ navigation }) {
               backgroundColor: '#75A7F7',
               color: '#EBF8FF'
             },
-            headerRight: () => (
-              <Button color='#75A7F7' icon={<Ionicons name='checkmark' size={20} color='#EBF8FF' />}
-                // buttonStyle ={{borderRadius: '50%'}}
-                radius={10}
-                onPress={() => navigation.goBack()} 
-              />
-            ),
+            // headerRight: () => (
+            //   <Button color='#75A7F7' icon={<Ionicons name='checkmark' size={20} color='#EBF8FF' />}
+            //     // buttonStyle ={{borderRadius: '50%'}}
+            //     radius={10}
+            //     onPress={() => navigation.goBack()} 
+            //   />
+            // ),
             headerLeft: (props) => (
               <Button {...props} color='#75A7F7' buttonStyle={{ width: 40 }} icon={<Ionicons name='close-outline' size={20} color='#EBF8FF' />}
                 // buttonStyle ={{borderRadius: '50%'}}
