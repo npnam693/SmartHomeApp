@@ -1,22 +1,24 @@
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native'
 import { ScreenWidth } from '@rneui/base';
 import IconOcticons from 'react-native-vector-icons/Octicons'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { io } from "socket.io-client";
-
+import  moment from 'moment'
 export const typeSensor = {
     temp: {
         name: "Temperature",
-        feedId: "smarthome-dadn.temp-sensor",
+        feedId: "bbc-temp",
     },
     humidity: {
         name: "Humidity",
-        feedId: "smarthome-dadn.humidity-sensor",
+        feedId: "bbc-humi",
     },
     lightIntensity: {
         name: "Light Intensity",
-        feedId: "smarthome-dadn.light-sensor"
+        feedId: "bbc-humi"
     },
 }
 export default function GeneralInfo({ navigation }) {
@@ -26,19 +28,18 @@ export default function GeneralInfo({ navigation }) {
     
     useEffect(() => {
         Object.entries(typeSensor).map(([key, value]) => {
-            console.log(key)
-            axios.get(`https://io.adafruit.com/api/v2/nguyenphinam2k2/feeds/${value.feedId}/data?limit=1`)
+            axios.get(`https://io.adafruit.com/api/v2/leductai/feeds/${value.feedId}/data?limit=1`)
                 .then(res => {
                     if (key === 'temp') setTemp(res.data[0].value)
-                    if (key === 'humidity') sethumidity(res.data[0].value)
+                    if (key === 'humidity') setHumidity(res.data[0].value)
                     if (key === 'lightIntensity') setlightIntensity(res.data[0].value)
                 })
-                .catch(err => console.log(err))
+                .catch(err => console.log(err.response))
         })
     }, [])
     
     const socket = io("http://10.0.2.2:3000");
-    socket.on("toggle smarthome-dadn.temp-sensor", (msg) => {
+    socket.on("toggle bbc-temp", (msg) => {
         setTemp(msg)
         console.log('zozo r')
     })
@@ -62,7 +63,7 @@ export default function GeneralInfo({ navigation }) {
                     <View style={{ display: 'flex',  flexDirection: 'row' }}>
                         <Image source = {require('../assets/images/Sunny.png')} />
                         <View style = {styles.infoToday}>
-                            <Text style = {{fontSize: 13}}>21 Feb 2023</Text>
+                            <Text style = {{fontSize: 13}}>{moment().format("MMM Do YY")}</Text>
                             <Text style = {{fontSize: 16, fontWeight: '700'}}>Sunny</Text>
                         </View>
                     </View>
@@ -77,8 +78,12 @@ export default function GeneralInfo({ navigation }) {
                 <Text style={{width: '100%', fontSize: 14, fontWeight:'600'}}>General Infomation</Text>
                 <View style = {{flexDirection: 'row', width:'100%', justifyContent:'space-between', alignItems:'flex-end'}}>
                     <View style={{flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
-                        <Text style ={styles.temparatureText}>{temp}</Text>
-                        <View style = {styles.tempO}></View>
+                        <View style={{position:'relative'}}>
+                            <Text style ={styles.temparatureText}>{temp}</Text>
+                            <View style={{position: 'absolute', right: -8}}>
+                                <View style = {styles.tempO}></View>
+                            </View>
+                        </View>
                         <Text>Temperature</Text>
                     </View>
                     <View style={{flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
@@ -155,14 +160,12 @@ const styles = StyleSheet.create({
         bottom: 6,
     },
     tempO: {
-        position: 'absolute',
+        
         width: 12,
         height: 12,
         borderWidth: 4,
         borderRadius: 100,
         borderColor: '#C43D3D',
-        top: 10,
-        right: 8,
     }
 })
 

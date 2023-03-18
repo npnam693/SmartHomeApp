@@ -10,21 +10,21 @@ export const typeDevice = {
         name : 'Smart Light',
         iconTurn : <Icon name = "lightbulb-variant-outline" size = {42} color = '#75A7F7'/>,
         iconOff : <Icon name = "lightbulb-variant-outline" size = {42} color = '#9A9B9E'/>,
-        feedId: "smarthome-dadn.smart-light",
+        feedId: "led",
         unitTitle: 'Light Insensity'
     },
     fan: {
         name : 'Smart Fan',
         iconTurn : <Icon name = "fan" size = {38} color = '#75A7F7'/>,
         iconOff : <Icon name = "fan" size = {38} color = '#9A9B9E'/>,
-        feedId: "smarthome-dadn.smart-fan",
+        feedId: "bbc-fan",
         unitTitle: 'Number'
     },
     door: {
         name : 'Smart Door',    
         iconTurn : <Icon name = "door-open" size = {38} color = '#75A7F7'/>,
         iconOff : <Icon name = "door-open" size = {38} color = '#9A9B9E'/>,
-        feedId: "smarthome-dadn.smart-door",
+        feedId: "bbc-door",
         unitTitle: 'Status'
     }
 }
@@ -40,7 +40,7 @@ export default function ControlDevice({ navigation, type }) {
     });
 
     useEffect(()=> {
-        axios.get(`https://io.adafruit.com/api/v2/nguyenphinam2k2/feeds/${typeDevice[type].feedId}/data?limit=1`)
+        axios.get(`https://io.adafruit.com/api/v2/leductai/feeds/${typeDevice[type].feedId}/data?limit=1`)
             .then((res) => {
                 if (res.data[0].value == '0') setChecked(false)
                 else setChecked(true)
@@ -65,7 +65,6 @@ export default function ControlDevice({ navigation, type }) {
                     value={checked}
                     onValueChange={(value) => {
                         socket.emit('toggleswitch', value ? '1' : '0', typeDevice[type].feedId)
-                        console.log('alo')
                         setChecked(value)
                     }}
                 />
