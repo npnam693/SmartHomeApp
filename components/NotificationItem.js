@@ -6,11 +6,11 @@ const getIconNoti = (type, mode) =>  {
     let name  = "fan"
     let nameReturn = "Smart Fan"
     let color = '#75A7F7'
-    if (type === 'light') {
+    if (type == 'light') {
         name = "lightbulb-variant-outline"
         nameReturn = "Smart Light"
     }
-    else if (type === 'door')
+    else if (type == 'door')
         name = 'door-open'
         nameReturn = "Smart Door"
     if (mode === 0)     
@@ -21,18 +21,18 @@ const getIconNoti = (type, mode) =>  {
     }
 }
 
-export default function NotificationItem({type, actor, bgColor}) {
-    type = 'fan'
+export default function NotificationItem({type, actor, bgColor, value}) {
     actor = "Nguyen Phi Nam"
+    console.log(type)
     return (
         <View style = {[styles.container, {backgroundColor:bgColor}]}>
             <View style = {styles.containerDevice}>
-                {getIconNoti(type, 1).icon}
+                {getIconNoti(type, value).icon}
             </View>
             <View style = {{width: 226, justifyContent: 'space-between'}}>
                 <Text style = {{
                     fontSize: 12,
-                }}>{getIconNoti(type, 1).name} has been turned on by 
+                }}>{getIconNoti(type,value).name} has been turned {value ? 'on' : 'off'} by 
                     {
                         actor ? 
                             <Text style = {{fontWeight: '600', color: '#1EA0E9'}}> {actor}</Text>

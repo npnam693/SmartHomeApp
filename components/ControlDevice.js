@@ -73,7 +73,7 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                         
                         axios.post('http://10.0.2.2:3000/api/devicelog/', {
                             deviceID: deviceID,
-                            createID: userData._id,
+                            creatorID: userData._id,
                             value
                         })
                             .then((res) => console.log(res))
