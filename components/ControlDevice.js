@@ -1,8 +1,11 @@
 import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Switch } from '@rneui/themed';
 import { io } from "socket.io-client";
+
+import AuthContext from "../AuthContext";
+
 import axios from 'axios';
 
 export const typeDevice = {
@@ -29,7 +32,9 @@ export const typeDevice = {
     }
 }
 
-export default function ControlDevice({ navigation, type }) {
+export default function ControlDevice({ navigation, type, deviceID }) {
+    const { userData } = useContext(AuthContext);
+
     const [checked, setChecked] = useState(false);
     const socket = io("http://10.0.2.2:3000");
     
@@ -65,6 +70,14 @@ export default function ControlDevice({ navigation, type }) {
                     value={checked}
                     onValueChange={(value) => {
                         socket.emit('toggleswitch', value ? '1' : '0', typeDevice[type].feedId)
+                        
+                        axios.post('http://10.0.2.2:3000/api/devicelog/', {
+                            deviceID: deviceID,
+                            createID: userData._id,
+                            value
+                        })
+                            .then((res) => console.log(res))
+                            .catch((err) => console.log(err.response.data.message))
                         setChecked(value)
                     }}
                 />
