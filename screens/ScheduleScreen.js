@@ -6,9 +6,8 @@ import ScrollPicker from 'react-native-wheel-scrollview-picker';
 import { SelectList } from 'react-native-dropdown-select-list'
 import { Button } from "@rneui/base";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { typeDevice } from "../components/ControlDevice";
 import AuthContext from "../AuthContext";
-
+import axios from "axios";
 
 // const Days = [
 //     { key: '2', value: 'Monday' },
@@ -25,14 +24,22 @@ const Minutes = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10
 
 function ScheduleScreen({navigation, route}) {
     const { userData } = useContext(AuthContext) //get current user
-
-    const [status, setStatus] = useState(true) //true for active
-    const [date, setDate] = useState()
+    const data = route.params.data
+    const time = data ? new Date(data.timeSchedule) : null
+    const [action, setAction] = useState(data ? data.action : true) //true for active
+    const [date, setDate] = useState(time)
     const [show, setShow] = useState(false)
-    const [hour, setHour] = useState(new Date().getHours())
-    const [minute, setMinute] = useState(new Date().getMinutes())
-    const [selectedHourIndex, setSelectedHourIndex] = useState(0)
-    const [selectedMinuteIndex, setSelectedMinuteIndex] = useState(0)
+    const [hour, setHour] = useState(time ? time.getHours() : 0)
+    const [minute, setMinute] = useState(time ? time.getMinutes() : 0)
+    const [selectedHourIndex, setSelectedHourIndex] = useState(time ? time.getHours() : 0)
+    const [selectedMinuteIndex, setSelectedMinuteIndex] = useState(time ? time.getMinutes() : 0)
+
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userData.token}`
+        }
+    }
 
     const handleSave = () =>{
         if (!date) {
@@ -48,10 +55,26 @@ function ScheduleScreen({navigation, route}) {
         }
 
         //call api
-
+        axios.patch(`http://10.0.2.2:3000/api/schedules/${route.params.deviceId}/${data._id}`, {
+            action,
+            timeSchedule: date
+        }, config)
+            .then(res => {
+                console.log(res.data)
+                navigation.goBack()
+            })
+            .catch(err => {
+                console.log(err)
+                alert(err.response.data.message)
+            })
     }
 
     const handleCreate = () => {
+        if (!date) {
+            alert('You must select a date')
+            return
+        }
+
         const today = new Date()
         date.setHours(hour, minute)
         if (date < today) {
@@ -59,7 +82,30 @@ function ScheduleScreen({navigation, route}) {
             return
         }
 
-        //call api
+        axios.post(`http://10.0.2.2:3000/api/schedules/${route.params.deviceId}`,{
+            action, 
+            timeSchedule: date
+        }, config)
+            .then(res => {
+                console.log(res.data)
+                navigation.goBack()
+            })
+            .catch(err => {
+                console.log(err)
+                alert(err.response.data.message)
+            })
+    }
+
+    const handleDelete = ()=>{
+        axios.delete(`http://10.0.2.2:3000/api/schedules/${route.params.deviceId}/${data._id}`, config)
+            .then(res => {
+                console.log(res.data)
+                navigation.goBack()
+            })
+            .catch(err => {
+                console.log(err)
+                alert(err.response.data.message)
+            })
     }
 
 
@@ -68,7 +114,7 @@ function ScheduleScreen({navigation, route}) {
             <View style ={styles.timeWidget}>
                 <ScrollPicker
                     dataSource={Hours}
-                    selectedIndex={0}
+                    selectedIndex={selectedHourIndex}
                     renderItem={(data, index) =>{
                         return <>
                             {index === selectedHourIndex ? (
@@ -91,7 +137,7 @@ function ScheduleScreen({navigation, route}) {
                 />
                 <ScrollPicker
                     dataSource={Minutes}
-                    selectedIndex={0}
+                    selectedIndex={selectedMinuteIndex}
                     renderItem={(data, index) => {
                         return <>
                             {index === selectedMinuteIndex ? (
@@ -146,7 +192,7 @@ function ScheduleScreen({navigation, route}) {
                 <View style={{marginTop: 10, marginBottom: 10}}>
                     <SelectList
                         placeholder='Choose action'
-                        setSelected={(val) => setStatus(val)}
+                        setSelected={(val) => setAction(val)}
                         data={[
                             {key: true, value: 'Turn on'},
                             {key: false, value: 'Turn off'}
@@ -156,10 +202,18 @@ function ScheduleScreen({navigation, route}) {
                     />
                 </View>
                 <Button radius={10}
-                    onPress={route.params?.isEdit ? handleSave : handleCreate}
+                    onPress={route.params?.data ? handleSave : handleCreate}
                 >
-                    {route.params?.isEdit ? 'SAVE' : 'CREATE'}
+                    {route.params?.data ? 'SAVE' : 'CREATE'}
                 </Button>
+                {route.params?.data &&  (
+                    <Button radius={10}
+                        color="error"
+                        onPress={handleDelete}
+                    >
+                        DELETE
+                    </Button>
+                )}
             </View>
         </View>
     )
