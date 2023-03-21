@@ -55,7 +55,7 @@ export default function ControlDevice({ navigation, type, deviceID }) {
 
     
     return (
-        <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('DeviceScreen', {type})}>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('DeviceScreen', { type, deviceId: deviceID })}>
             <View style = {styles.leftContainer}>
                 <View style = {styles.iconContainer}>
                     {checked ? typeDevice[type].iconTurn : typeDevice[type].iconOff }
