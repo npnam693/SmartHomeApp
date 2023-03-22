@@ -41,7 +41,7 @@ export default function PinScreen() {
           };
           removeData()
           setUserData(null)
-          setNotifs(null)
+          setNotifs([])
           AsyncStorage.setItem('notifCount', JSON.stringify(notifs))
           logout()
           navigation.navigate('AuthStackScreen')

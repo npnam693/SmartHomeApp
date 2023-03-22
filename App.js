@@ -6,7 +6,6 @@ import AppNavigation from './AppNavigation';
 import AuthContext from './AuthContext';
 import { io } from "socket.io-client";
 
-export const socket = io("http://10.0.2.2:3000");
 
 const MyTheme = {
   ...DefaultTheme,
@@ -19,7 +18,8 @@ const MyTheme = {
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userData, setUserData] = useState(null);
-    const [notifs, setNotifs] = useState(null)
+    const [notifs, setNotifs] = useState([])
+    const socket = io("http://10.0.2.2:3000");
     
     const fetchUser = async () => {
     
@@ -44,6 +44,9 @@ export default function App() {
     useEffect(() => {
         fetchUser();
         fetchNotif()
+        socket.on('notif received', (newNotif)=>{
+          setNotifs([newNotif, ...notifs])
+        })
     }, [isLoggedIn]);
         
 
@@ -60,7 +63,7 @@ export default function App() {
     console.log(userData)
 
     return (
-      <AuthContext.Provider value={{ isLoggedIn, userData, setUserData, login, logout, notifs, setNotifs }}>
+      <AuthContext.Provider value={{ isLoggedIn, userData, setUserData, login, logout, notifs, setNotifs, socket }}>
         <NavigationContainer theme={MyTheme}>
           <AppNavigation /> 
         </NavigationContainer>
