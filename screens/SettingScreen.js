@@ -26,6 +26,8 @@ export default function SettingScreen({ navigation }) {
         navigation.navigate('AuthStackScreen')
     }
 
+    console.log(userData.homeID)
+
 
     return (
         <View style = {styles.container}>
@@ -55,14 +57,14 @@ export default function SettingScreen({ navigation }) {
                         flex: 1
                     }}>
                     <QRCode
-                        value={userData.home}
+                        value={userData.homeID}
                         size={200}
                         color="black"
                         backgroundColor="white"
                         borderRadius={10}
                         padding={10}
                     />
-                    <Text style={{fontSize: 18, fontWeight: '400', marginTop: 30}}>Key: {userData.home}</Text>
+                    <Text style={{fontSize: 18, fontWeight: '400', marginTop: 30}}>Key: {userData.homeID}</Text>
                     <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
                         <View style = {{backgroundColor:'#ed6474', borderRadius: 16, marginTop: 50, width: 100, height:40,
                             alignItems: 'center', justifyContent:'center'

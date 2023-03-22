@@ -27,6 +27,7 @@ export default function LoginScreen({ navigation }){
             email: data.email, password: data.password
         })
         .then(response => {
+            console.log('HUHUUH', response.data)
             AsyncStorage.setItem('userData', JSON.stringify(response.data))
             login()
             navigation.navigate('TabNavigation')

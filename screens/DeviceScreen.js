@@ -4,9 +4,30 @@ import { Button } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/AntDesign'
 import Schedule from "../components/Schedule";
 import axios from "axios";
+import { useState, useEffect, useContext } from "react";
+import AuthContext from "../AuthContext";
 
 export default function DeviceScreen({ navigation, route }){
-    console.log(route.params.type)
+
+    const [schedules, setSchedules] = useState([])
+    const {userData} = useContext(AuthContext)
+    // console.log(userData)
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userData.token}`
+        }
+    }
+
+    useEffect(() => {
+        axios.get(`http://10.0.2.2:3000/api/schedules/${route.params.deviceId}`, config)
+            .then((res) => {
+                console.log(res.data)
+                setSchedules(res.data)
+            })
+            .catch((err) => console.log(err))
+        route.params['setSchedules'] = setSchedules
+    }, [])
+
     return (
         <View style = {styles.container}>
             <View style={styles.header}>
@@ -25,15 +46,15 @@ export default function DeviceScreen({ navigation, route }){
                     icon={<Icon name="minus" size={20} color='#EBF8FF' />}
                 />
             </View>
-            <ScrollView style={styles.devices} showsVerticalScrollIndicator={false}>
-                <Schedule />
-                <Schedule />
-                <Schedule />
-                <Schedule />
+            <ScrollView contentContainerStyle={styles.devices} showsVerticalScrollIndicator={false}>
+                {schedules.map(schedule => (
+                    <Schedule key={schedule._id} data={schedule} navigation={navigation} setSchedules={setSchedules}/>
+                ))}
             </ScrollView>
         </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -65,6 +86,10 @@ const styles = StyleSheet.create({
     ,
     devices: {
         display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        paddingHorizontal: 20,
+        paddingVertical: 20
     }
     ,
     unitTitle: {

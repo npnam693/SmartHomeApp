@@ -1,7 +1,21 @@
 import { Text, View, StyleSheet, ScrollView} from "react-native"
 import NotificationItem from "../components/NotificationItem"
+import axios from "axios"
+import AuthContext from "../AuthContext";
 
+import { useEffect, useState, useContext } from "react"
 export default function NotificationScreen({ navigation }) {
+    const { userData } = useContext(AuthContext);
+
+    const [notiData, setNotiData] = useState([])
+    console.log(notiData)
+
+    useEffect(() => {
+        axios.get(`http://10.0.2.2:3000/api/devicelog/${userData.homeID}`)
+            .then(data => setNotiData(data.data))
+            .catch(err => console.error(err))
+    }, [])
+
     return (
         <View style = {styles.container}>
             <View style = {styles.headerTab}>
@@ -10,16 +24,15 @@ export default function NotificationScreen({ navigation }) {
             </View>
             <ScrollView style = {{width: '100%'}}>
                 {
-                    Array(5).fill(0).map((item, index) => {
-                        if (index % 2 == 0) {
-                            return <NotificationItem bgColor = '#DBDBDB' key={index}/>
+                    notiData.map((item, index) => {
+                        if (item.value % 2 == 0) {
+                            return <NotificationItem bgColor = '#DBDBDB' key={index} type={item.deviceID.type} actor={item.creatorID.name} value={item.value}/>
                         }   
                         else {
-                            return <NotificationItem bgColor = '#EBF8FF'key ={index}/>
+                            return <NotificationItem bgColor = '#EBF8FF'key ={index} type={item.deviceID.type} actor={item.creatorID.name} value={item.value}/>
                         }
                     })
                 }
-
             </ScrollView>
         </View>
     )

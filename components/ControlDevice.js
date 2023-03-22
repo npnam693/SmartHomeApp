@@ -1,8 +1,11 @@
 import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Switch } from '@rneui/themed';
 import { io } from "socket.io-client";
+
+import AuthContext from "../AuthContext";
+
 import axios from 'axios';
 
 export const typeDevice = {
@@ -10,26 +13,28 @@ export const typeDevice = {
         name : 'Smart Light',
         iconTurn : <Icon name = "lightbulb-variant-outline" size = {42} color = '#75A7F7'/>,
         iconOff : <Icon name = "lightbulb-variant-outline" size = {42} color = '#9A9B9E'/>,
-        feedId: "smarthome-dadn.smart-light",
+        feedId: "led",
         unitTitle: 'Light Insensity'
     },
     fan: {
         name : 'Smart Fan',
         iconTurn : <Icon name = "fan" size = {38} color = '#75A7F7'/>,
         iconOff : <Icon name = "fan" size = {38} color = '#9A9B9E'/>,
-        feedId: "smarthome-dadn.smart-fan",
+        feedId: "bbc-fan",
         unitTitle: 'Number'
     },
     door: {
         name : 'Smart Door',    
         iconTurn : <Icon name = "door-open" size = {38} color = '#75A7F7'/>,
         iconOff : <Icon name = "door-open" size = {38} color = '#9A9B9E'/>,
-        feedId: "smarthome-dadn.smart-door",
+        feedId: "bbc-door",
         unitTitle: 'Status'
     }
 }
 
-export default function ControlDevice({ navigation, type }) {
+export default function ControlDevice({ navigation, type, deviceID }) {
+    const { userData } = useContext(AuthContext);
+
     const [checked, setChecked] = useState(false);
     const socket = io("http://10.0.2.2:3000");
     
@@ -40,7 +45,7 @@ export default function ControlDevice({ navigation, type }) {
     });
 
     useEffect(()=> {
-        axios.get(`https://io.adafruit.com/api/v2/nguyenphinam2k2/feeds/${typeDevice[type].feedId}/data?limit=1`)
+        axios.get(`https://io.adafruit.com/api/v2/leductai/feeds/${typeDevice[type].feedId}/data?limit=1`)
             .then((res) => {
                 if (res.data[0].value == '0') setChecked(false)
                 else setChecked(true)
@@ -50,7 +55,7 @@ export default function ControlDevice({ navigation, type }) {
 
     
     return (
-        <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('DeviceScreen', {type})}>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('DeviceScreen', { type, deviceId: deviceID })}>
             <View style = {styles.leftContainer}>
                 <View style = {styles.iconContainer}>
                     {checked ? typeDevice[type].iconTurn : typeDevice[type].iconOff }
@@ -65,7 +70,14 @@ export default function ControlDevice({ navigation, type }) {
                     value={checked}
                     onValueChange={(value) => {
                         socket.emit('toggleswitch', value ? '1' : '0', typeDevice[type].feedId)
-                        console.log('alo')
+                        
+                        axios.post('http://10.0.2.2:3000/api/devicelog/', {
+                            deviceID: deviceID,
+                            creatorID: userData._id,
+                            value
+                        })
+                            .then((res) => console.log(res))
+                            .catch((err) => console.log(err.response.data.message))
                         setChecked(value)
                     }}
                 />
