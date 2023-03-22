@@ -2,29 +2,57 @@ import { View, Text, StyleSheet, Image, TextInput} from 'react-native'
 import { ScreenWidth } from '@rneui/base'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useState } from 'react'
-
 import { Button } from '@rneui/themed';
+import * as ImagePicker from 'expo-image-picker';
+
+import { ref, uploadBytes, getDownloadURL} from "firebase/storage";
+import { storage } from '../../firebase/firebaseConfig';
+
+
 
 export default function AddFace() {
-    const [images, setImage] = useState([])
     const [data, setData] = useState('')
-    const [numImg, setNumImg] = useState(5)
+    // const [numImg, setNumImg] = useState(5)
+    
+    const [image, setImage] = useState([]);
+
+    const pickImage = async () => {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        // allowsEditing: true,
+        allowsMultipleSelection: true,
+        // aspect: [4, 3],
+        quality: 1,
+      });
+  
+      console.log(result);
+  
+      if (!result.canceled) {
+        setImage(result.assets);
+      }
+    }
+
+    
     const handleClickSubmitFace = () => {
         console.log('Submit Face')
     }
 
     return (
         <View style = {styles.container}>
-            <View style = {styles.upload}>
+                {/* <View style = {styles.upload}>
                 <Icon name = "md-cloud-upload-outline" size={46} color='#75A7F7' />    
-                <Text style={{fontWeight: '600'}}>Upload Face Image</Text>
-            </View>
+                <Text style={{fontWeight: '600'}}>Upload Face Image</Text> */}
+            {/* </View> */}
+
+            <Button title="Pick an image from camera roll" onPress={pickImage} />
+
             <View style = {styles.listitem}>
                 {
                     Array(8).fill(0).map((item, index) => {
-                        if (index < numImg) {
+                        if (index < image.length) {
                             return (
-                                <Image source={{uri:'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png'}} 
+                                <Image source={{uri:image[index].uri}}
                                     style = {styles.faceitem}
                                     key = {index}
                                 /> 
@@ -60,7 +88,6 @@ export default function AddFace() {
         </View>
     )
 }   
-
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',

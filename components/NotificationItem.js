@@ -22,8 +22,6 @@ const getIconNoti = (type, mode) =>  {
 }
 
 export default function NotificationItem({type, actor, bgColor, value}) {
-    actor = "Nguyen Phi Nam"
-    console.log(type)
     return (
         <View style = {[styles.container, {backgroundColor:bgColor}]}>
             <View style = {styles.containerDevice}>
