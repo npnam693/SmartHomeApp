@@ -25,6 +25,7 @@ export default function DeviceScreen({ navigation, route }){
                 setSchedules(res.data)
             })
             .catch((err) => console.log(err))
+        route.params['setSchedules'] = setSchedules
     }, [])
 
     return (
@@ -45,14 +46,15 @@ export default function DeviceScreen({ navigation, route }){
                     icon={<Icon name="minus" size={20} color='#EBF8FF' />}
                 />
             </View>
-            <ScrollView style={styles.devices} showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={styles.devices} showsVerticalScrollIndicator={false}>
                 {schedules.map(schedule => (
-                    <Schedule key={schedule._id} data={schedule} navigation={navigation}/>
+                    <Schedule key={schedule._id} data={schedule} navigation={navigation} setSchedules={setSchedules}/>
                 ))}
             </ScrollView>
         </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -84,6 +86,10 @@ const styles = StyleSheet.create({
     ,
     devices: {
         display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        paddingHorizontal: 20,
+        paddingVertical: 20
     }
     ,
     unitTitle: {
