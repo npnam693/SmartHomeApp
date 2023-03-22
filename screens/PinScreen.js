@@ -10,7 +10,7 @@ export default function PinScreen() {
     const navigation = useNavigation();
     const [pinCode, setPinCode] = useState('');
 
-    const {logout, setUserData, userData  } = useContext(AuthContext);
+    const { logout, setUserData, userData, notifs, setNotifs  } = useContext(AuthContext);
 
     const textInputRef = useRef(null);
 
@@ -41,6 +41,8 @@ export default function PinScreen() {
           };
           removeData()
           setUserData(null)
+          setNotifs(null)
+          AsyncStorage.setItem('notifCount', JSON.stringify(notifs))
           logout()
           navigation.navigate('AuthStackScreen')
     }
