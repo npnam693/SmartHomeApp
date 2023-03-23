@@ -10,7 +10,7 @@ export default function PinScreen() {
     const navigation = useNavigation();
     const [pinCode, setPinCode] = useState('');
 
-    const { logout, setUserData, userData, notifs, setNotifs  } = useContext(AuthContext);
+    const { logout, setUserData, userData, notifs, setNotifs, socket  } = useContext(AuthContext);
 
     const textInputRef = useRef(null);
 
@@ -27,6 +27,7 @@ export default function PinScreen() {
         if (pinCode != userData.pinCode) alert("PIN code is incorrect")
         else {
           setPinCode('')
+          socket.emit('setup', userData._id)
           navigation.navigate('TabNavigation')
         }
     }
@@ -34,15 +35,17 @@ export default function PinScreen() {
         const removeData = async () => {
             try {
                 await AsyncStorage.removeItem('userData');
+                await AsyncStorage.removeItem('notifs');
                 console.log('Dữ liệu đã được xoá!');
               } catch (e) {
                 console.log('Lỗi khi xoá dữ liệu: ', e);
               }
           };
+          socket.emit('logout', userData._id)
           removeData()
           setUserData(null)
           setNotifs([])
-          AsyncStorage.setItem('notifCount', JSON.stringify(notifs))
+          AsyncStorage.setItem('notifs', JSON.stringify(notifs))
           logout()
           navigation.navigate('AuthStackScreen')
     }

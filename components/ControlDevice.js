@@ -74,7 +74,7 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                             value
                         })
                             .then((res) => {
-                                console.log(res)
+                                // console.log(res)
                                 socket.emit('send notif', res.data, userData.homeID)
                             })
                             .catch((err) => console.log(err.response.data.message))

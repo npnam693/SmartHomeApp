@@ -44,11 +44,16 @@ export default function App() {
     useEffect(() => {
         fetchUser();
         fetchNotif()
-        socket.on('notif received', (newNotif)=>{
-          setNotifs([newNotif, ...notifs])
-        })
     }, [isLoggedIn]);
-        
+
+    useEffect(() => {
+      console.log('doo r')
+      socket.on('notif received', (newNotif) => {
+        console.log('render lai ne !!!!!')
+        console.log('ccccccccccccccccccccccccc', newNotif)
+        setNotifs(prev => [newNotif, ...prev])
+      })
+    })
 
     const login = () => {
         setIsLoggedIn(true);
