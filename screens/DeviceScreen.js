@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import Schedule from "../components/Schedule";
 import { useState, useEffect, useContext } from "react";
 import AuthContext from "../AuthContext";
-import { axiosClient } from '../api/axiosClient';
+import { axiosClient } from '../api/axiosSetup';
 
 export default function DeviceScreen({ navigation, route }){
 

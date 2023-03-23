@@ -5,7 +5,7 @@ import { Button } from "@rneui/base"
 import { useState, useContext, useEffect} from "react"
 import AuthContext from "../AuthContext";
 import axios from 'axios'
-import { axiosClient } from '../api/axiosClient';
+import { axiosClient } from '../api/axiosSetup';
 
 
 export default function LoginScreen({ navigation }){

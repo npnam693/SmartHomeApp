@@ -3,8 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Switch } from '@rneui/themed';
 import AuthContext from "../AuthContext";
-
-import { axiosClient, axiosAdafruit } from '../api/axiosClient';
+import { axiosClient, axiosAdafruit } from '../api/axiosSetup';
 
 export const typeDevice = {
     light: {

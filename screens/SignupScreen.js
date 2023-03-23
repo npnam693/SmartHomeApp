@@ -4,7 +4,7 @@ import { Button } from "@rneui/base"
 import { useState, useContext } from "react"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { axiosClient } from "../api/axiosClient";
+import { axiosClient } from "../api/axiosSetup";
 
 export default function SignupScreen({navigation}){
     const [data, setData] = useState({

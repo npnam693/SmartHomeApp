@@ -8,7 +8,7 @@ import AuthContext from '../../AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { axiosClient } from '../../api/axiosClient';
+import { axiosClient } from '../../api/axiosSetup';
 export default function SetPINScreen({route}) {
     const navigation = useNavigation()
     const [pinCode, setPinCode] = useState('');

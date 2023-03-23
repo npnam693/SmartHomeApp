@@ -7,7 +7,7 @@ import { useEffect, useState, useContext } from 'react';
 import ControlDevice from '../components/ControlDevice';
 import GeneralInfo from '../components/GeneralInfo';
 import AuthContext from '../AuthContext';
-import { axiosClient } from '../api/axiosClient';
+import { axiosClient } from '../api/axiosSetup';
 export default function HomeScreen({navigation}){
     const [deviceData, setDeviceData] = useState([])
     const { socket, setNotifs } = useContext(AuthContext)

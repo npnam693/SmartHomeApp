@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, ScrollView} from "react-native"
 import NotificationItem from "../components/NotificationItem"
 import AuthContext from "../AuthContext";
-import { axiosClient } from "../api/axiosClient";
+import { axiosClient } from "../api/axiosSetup";
 import { useEffect, useState, useContext } from "react"
 export default function NotificationScreen({ navigation }) {
     const { userData } = useContext(AuthContext);

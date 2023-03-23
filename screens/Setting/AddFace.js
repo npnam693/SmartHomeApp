@@ -7,7 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import { storage } from '../../firebase/firebaseConfig';
 import uuid from 'react-native-uuid';
-import { axiosClient } from '../../api/axiosClient';
+import { axiosClient } from '../../api/axiosSetup';
 import AuthContext from '../../AuthContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 

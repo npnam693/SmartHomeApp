@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { ScreenWidth } from '@rneui/base'
 import Icon from 'react-native-vector-icons/Ionicons'
 import FaceItem from '../../components/setting/FaceItem'
-import { axiosClient } from '../../api/axiosClient'
+import { axiosClient } from '../../api/axiosSetup'
 import { useEffect, useContext, useState } from 'react'
 import AuthContext from '../../AuthContext'
 export default function FaceRegconition({navigation}) {

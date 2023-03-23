@@ -1,10 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState, useContext, useEffect } from 'react';
 import { Switch } from '@rneui/themed';
-import axios from 'axios';
 import AuthContext from '../AuthContext';
 
-import { axiosClient } from '../api/axiosClient';
+import { axiosClient } from '../api/axiosSetup';
 
 const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const Hours = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23']

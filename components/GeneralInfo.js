@@ -2,7 +2,7 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native'
 import { ScreenWidth } from '@rneui/base';
 import IconOcticons from 'react-native-vector-icons/Octicons'
 
-import { axiosClient, axiosAdafruit } from '../api/axiosClient';
+import { axiosClient, axiosAdafruit } from '../api/axiosSetup';
 
 import { useEffect, useState, useContext } from 'react';
 import AuthContext from '../AuthContext';
