@@ -26,7 +26,7 @@ export default function SettingRectangle({type}) {
         <View style = {{width: ScreenWidth - 32, height: 64,
             backgroundColor:'#EBF8FF', flexDirection: 'row', alignItems:'center',
             padding: 12, marginLeft: 4, borderRadius: 12, marginBottom: 12,
-            borderWidth: 1, borderColor: '#ccc'
+            borderWidth: 1, borderColor: '#c3d5e8'
             }}>
             <View style = {{backgroundColor: '#D2E0EE', width: 40,  height: 40,  
                             borderRadius: 30, alignItems: 'center', 

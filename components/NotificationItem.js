@@ -21,36 +21,36 @@ const getIconNoti = (type, mode) =>  {
     }
 }
 
-export default function NotificationItem({type, actor, bgColor, value}) {
+export default function NotificationItem({bgColor, data}) {
+    const date = new Date(data.createdAt)
+
     return (
         <View style = {[styles.container, {backgroundColor:bgColor}]}>
             <View style = {styles.containerDevice}>
-                {getIconNoti(type, value).icon}
+                {getIconNoti(data.deviceID.type, data.value).icon}
             </View>
             <View style = {{width: 226, justifyContent: 'space-between'}}>
                 <Text style = {{
                     fontSize: 12,
-                }}>{getIconNoti(type,value).name} has been turned {value ? 'on' : 'off'} by 
+                }}>{getIconNoti(data.deviceID.type,data.value).name} has been turned {data.value ? 'on' : 'off'} by 
                     {
-                        actor ? 
-                            <Text style = {{fontWeight: '600', color: '#1EA0E9'}}> {actor}</Text>
+                        data.creatorID.name ? 
+                            <Text style = {{fontWeight: '600', color: '#1EA0E9'}}> {data.creatorID.name}</Text>
                         :
                             <Text style = {{fontWeight: '600', color: '#C43D3D'}}> automatically</Text>
                         }
                 
                 </Text>
-                <View style = {{flexDirection:'row', justifyContent: 'space-between'}}>
+                <View style = {{flexDirection:'row', justifyContent: 'space-between', marginTop: 10}}>
                     <Text style = {{
                     fontSize: 12,
-                }}>1m ago</Text>
+                }}></Text>
                     <Text style = {{
                     fontSize: 12,
-                }}>22:03 26/02/2023</Text>
+                }}>{date.toLocaleString()}</Text>
                 </View>
             </View>
         </View>
-
-
     )
 }
 

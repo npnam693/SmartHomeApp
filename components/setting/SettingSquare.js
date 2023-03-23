@@ -7,7 +7,7 @@ const typeButton = {
         bgColor: '#C4DFE0'
     },
     FACE_RECOGNITION: {
-        name : 'Face Reg.',  
+        name : 'Face ID',  
         icon : <Icon name = "eye-outline" size = {38} color = '#670E03'/>,
         bgColor: '#F5E4E2'
     },

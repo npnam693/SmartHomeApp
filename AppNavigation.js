@@ -135,9 +135,9 @@ function VisualizationStackScreen({navigation}){
 function SettingStackScreen({ navigation}){
     return (
       <SettingStack.Navigator>
-        <SettingStack.Screen name="SettingScreen" component={SettingScreen} options={{ headerShown: false }}/>
-        <SettingStack.Screen name="AddFace" component={AddFace} />
-        <SettingStack.Screen name="FaceRegconition" component={FaceRegconition} />
+        <SettingStack.Screen name="Setting Screen" component={SettingScreen} options={{ headerShown: false }}/>
+        <SettingStack.Screen name="Add Face" component={AddFace} />
+        <SettingStack.Screen name="Face Regconition" component={FaceRegconition} />
       </SettingStack.Navigator>
     )
 }

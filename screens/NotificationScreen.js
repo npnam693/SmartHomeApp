@@ -18,19 +18,19 @@ export default function NotificationScreen({ navigation }) {
 
     return (
         <View style = {styles.container}>
-            <View style = {styles.headerTab}>
+            {/* <View style = {styles.headerTab}>
                 <Text style = {styles.textHeader}>Recomanded</Text>
                 <Text style = {styles.textHeader}>General</Text>
-            </View>
+            </View> */}
             <ScrollView style = {{width: '100%'}}>
                 {
                     notiData.map((item, index) => {
-                        if (item.value % 2 == 0) {
-                            return <NotificationItem bgColor = '#DBDBDB' key={index} type={item.deviceID.type} actor={item.creatorID.name} value={item.value}/>
-                        }   
-                        else {
-                            return <NotificationItem bgColor = '#EBF8FF'key ={index} type={item.deviceID.type} actor={item.creatorID.name} value={item.value}/>
-                        }
+                        // if (item.value % 2 == 0) {
+                            // return <NotificationItem bgColor = '#DBDBDB' key={index} data={item}/>
+                        // }   
+                        // else {
+                        return <NotificationItem bgColor = 'white'key ={index} data={item}/>
+                        // }
                     })
                 }
             </ScrollView>

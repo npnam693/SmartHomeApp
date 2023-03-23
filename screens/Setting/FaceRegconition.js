@@ -2,21 +2,31 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { ScreenWidth } from '@rneui/base'
 import Icon from 'react-native-vector-icons/Ionicons'
 import FaceItem from '../../components/setting/FaceItem'
+import axios from 'axios'
+import { useEffect, useContext, useState } from 'react'
+import AuthContext from '../../AuthContext'
 export default function FaceRegconition({navigation}) {
+    const { userData } = useContext(AuthContext);
+    const [faces, setFaces] = useState([])
+    
+    useEffect(() => {
+        axios.get(`http://10.0.2.2:3000/api/users/getface/${userData._id}`)
+            .then(res => setFaces(res.data))
+            .catch(err => console.log(err.response))
+    }, [])
+    console.log(faces)
     return (
         <View style = {styles.container}>
-            <TouchableOpacity onPress = {() => navigation.navigate('AddFace')}>
+            <TouchableOpacity onPress = {() => navigation.navigate('Add Face')}>
                 <View style = {styles.upload}>
                     <Icon name = "md-cloud-upload-outline" size={46} color='#75A7F7' />    
                     <Text style={{fontWeight: '600'}}>Add Face Recognition</Text>
                 </View>
             </TouchableOpacity>
-
             <View style = {styles.faceitem}>
-                <FaceItem />
-                <FaceItem /> 
-                <FaceItem /> 
-                <FaceItem /> 
+                {
+                    faces.map((item, index) => <FaceItem data = {item} key = {index}/>)
+                }
             </View>
 
 

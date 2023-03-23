@@ -32,7 +32,7 @@ export default function SettingScreen({ navigation }) {
     return (
         <View style = {styles.container}>
             <Image source={{uri:'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png'}} 
-                style = {{width: 130, height: 130, borderRadius: 110, borderWidth: 1, borderColor:'#00B5D8'}}
+                style = {{width: 130, height: 130, borderRadius: 110, borderWidth: 1, borderColor:'#c3d5e8'}}
             />
             <Text style = {{fontSize: 20, fontWeight: '600', color: '#10101'}}>{userData.name}</Text>
             <Text style = {{fontSize: 14, fontWeight: '400', color: '#666'}}>{userData.email}</Text>
@@ -40,7 +40,6 @@ export default function SettingScreen({ navigation }) {
                 <TouchableOpacity onPress={() => setModalVisible(true)}>
                     <SettingSquare type = "SHARE_KEY" />
                 </TouchableOpacity>
-
                 <Modal
                     animationType="slide"
                     // transparent={true}
@@ -74,7 +73,7 @@ export default function SettingScreen({ navigation }) {
                     </TouchableOpacity>
                     </View>
                 </Modal>
-                <TouchableOpacity onPress={() => navigation.navigate('FaceRegconition')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Face Regconition')}>
                     <SettingSquare type = "FACE_RECOGNITION" />
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -83,9 +82,8 @@ export default function SettingScreen({ navigation }) {
                 <TouchableOpacity>
                     <SettingSquare type = "ADD_DEVICE" />
                 </TouchableOpacity>
-            
             </View >
-            <View style={[styles.options,{flexDirection: 'column', marginTop: 20}]}>
+            <View style={[{flexDirection: 'column', marginTop: 20}]}>
                 <TouchableOpacity>
                     <SettingRectangle type = "PROFILE" />
                 </TouchableOpacity>
