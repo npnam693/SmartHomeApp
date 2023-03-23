@@ -8,7 +8,6 @@ import axios from 'axios'
 
 
 
-
 export default function LoginScreen({ navigation }){
     const [data, setData] = useState({
         email: '',
@@ -16,7 +15,7 @@ export default function LoginScreen({ navigation }){
     })
 
 
-    const { isLoggedIn, login } = useContext(AuthContext);
+    const { isLoggedIn, login, socket } = useContext(AuthContext);
 
     const handleClickLogin = () => {
         if (data.email == '' || data.password == '') {
@@ -30,6 +29,7 @@ export default function LoginScreen({ navigation }){
             console.log('HUHUUH', response.data)
             AsyncStorage.setItem('userData', JSON.stringify(response.data))
             login()
+            socket.emit('setup', response.data._id)
             navigation.navigate('TabNavigation')
         })
             .catch(error => {
