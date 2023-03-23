@@ -31,7 +31,6 @@ export default function SignupScreen({navigation}){
         })
         .then(response => {
             console.log(response.data);
-            // setUserData(JSON.stringify(response.data))
             AsyncStorage.setItem('userData', JSON.stringify(response.data))
             navigation.navigate("SetPINScreen", {userID: response.data._id, userName: response.data.name, userEmail: response.data.email})
         })

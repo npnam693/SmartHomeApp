@@ -16,6 +16,8 @@ import VisualiaztionScreen from './screens/Visualization';
 import SetPINScreen from './screens/Signup/SetPIN';
 import AddFace from './screens/Setting/AddFace';
 import FaceRegconition from './screens/Setting/FaceRegconition';
+import { ChangePIN } from './screens/Setting/ChangePIN';
+
 // import { StackActions } from '@react-navigation/native';
 
 import { useState, useEffect, useContext } from 'react';
@@ -138,6 +140,7 @@ function SettingStackScreen({ navigation}){
         <SettingStack.Screen name="Setting Screen" component={SettingScreen} options={{ headerShown: false }}/>
         <SettingStack.Screen name="Add Face" component={AddFace} />
         <SettingStack.Screen name="Face Regconition" component={FaceRegconition} />
+        <SettingStack.Screen name="Change Pin" component={ChangePIN} />
       </SettingStack.Navigator>
     )
 }

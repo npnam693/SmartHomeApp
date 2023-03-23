@@ -55,7 +55,7 @@ function ScheduleScreen({navigation, route}) {
         }
 
         //call api
-        axios.patch(`http://10.0.2.2:3000/api/schedules/${route.params.deviceId}/${data._id}`, {
+        axios.patch(`/api/schedules/${route.params.deviceId}/${data._id}`, {
             action,
             timeSchedule: date
         }, config)
@@ -83,7 +83,7 @@ function ScheduleScreen({navigation, route}) {
             return
         }
 
-        axios.post(`http://10.0.2.2:3000/api/schedules/${route.params.deviceId}`,{
+        axios.post(`/api/schedules/${route.params.deviceId}`,{
             action, 
             timeSchedule: date
         }, config)
@@ -99,7 +99,7 @@ function ScheduleScreen({navigation, route}) {
     }
 
     const handleDelete = ()=>{
-        axios.delete(`http://10.0.2.2:3000/api/schedules/${route.params.deviceId}/${data._id}`, config)
+        axios.delete(`/api/schedules/${route.params.deviceId}/${data._id}`, config)
             .then(res => {
                 console.log(res.data)
                 setSchedules(res.data)

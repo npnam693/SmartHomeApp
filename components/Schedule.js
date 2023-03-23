@@ -22,7 +22,7 @@ function Schedule({data, navigation, setSchedules}) {
     }
 
     const handleToggle = (value) => {
-        axios.patch(`http://10.0.2.2:3000/api/schedules/${data.deviceId}/${data._id}/toggle`,{
+        axios.patch(`/api/schedules/${data.deviceId}/${data._id}/toggle`,{
             status: value
         }, config)
             .then((response) => {

@@ -10,7 +10,6 @@ import QRCode from 'react-native-qrcode-svg';
 export default function SettingScreen({ navigation }) {
     const { isLoggedIn, logout, setUserData, userData, setNotifs } = useContext(AuthContext);
     const [modalVisible, setModalVisible] = useState(false);
-
     const handleClickLogout = () => {
         const removeData = async () => {
             try {
@@ -27,9 +26,7 @@ export default function SettingScreen({ navigation }) {
         logout()
         navigation.navigate('AuthStackScreen')
     }
-
     console.log(userData.homeID)
-
 
     return (
         <View style = {styles.container}>
@@ -77,8 +74,8 @@ export default function SettingScreen({ navigation }) {
                 </Modal>
                 <TouchableOpacity onPress={() => navigation.navigate('Face Regconition')}>
                     <SettingSquare type = "FACE_RECOGNITION" />
-                </TouchableOpacity>
-                <TouchableOpacity>
+                </TouchableOpacity >
+                <TouchableOpacity onPress={() => navigation.navigate('Change Pin')}>
                     <SettingSquare type = "CHANGE_PIN" />
                 </TouchableOpacity>
                 <TouchableOpacity>
