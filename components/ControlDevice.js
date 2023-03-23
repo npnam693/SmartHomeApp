@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Switch } from '@rneui/themed';
 import AuthContext from "../AuthContext";
 
-import axios from 'axios';
+import { axiosClient, axiosAdafruit } from '../api/axiosClient';
 
 export const typeDevice = {
     light: {
@@ -42,7 +42,7 @@ export default function ControlDevice({ navigation, type, deviceID }) {
     });
 
     useEffect(()=> {
-        axios.get(`https://io.adafruit.com/api/v2/leductai/feeds/${typeDevice[type].feedId}/data?limit=1`)
+        axiosAdafruit.get(`${typeDevice[type].feedId}/data?limit=1`)
             .then((res) => {
                 if (res.data[0].value == '0') setChecked(false)
                 else setChecked(true)
@@ -68,7 +68,7 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                     onValueChange={(value) => {
                         socket.emit('toggleswitch', value ? '1' : '0', typeDevice[type].feedId)
                         
-                        axios.post('http://10.0.2.2:3000/api/devicelog/', {
+                        axiosClient.post('api/devicelog/', {
                             deviceID: deviceID,
                             creatorID: userData._id,
                             value

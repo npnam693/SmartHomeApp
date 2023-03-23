@@ -8,6 +8,7 @@ import AuthContext from '../../AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { axiosClient } from '../../api/axiosClient';
 export default function SetPINScreen({route}) {
     const navigation = useNavigation()
     const [pinCode, setPinCode] = useState('');
@@ -53,7 +54,7 @@ export default function SetPINScreen({route}) {
             return
         }
         else {
-            axios.put('http://10.0.2.2:3000/api/users/setpin', {
+          axiosClient.put('api/users/setpin', {
                 _id: userID, pinCode: pinCode
             })
             .then(res => {

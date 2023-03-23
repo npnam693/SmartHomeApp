@@ -2,17 +2,17 @@
 
 import { View } from 'react-native';
 import { ScreenHeight } from '@rneui/base';
-import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
 
 import ControlDevice from '../components/ControlDevice';
 import GeneralInfo from '../components/GeneralInfo';
 import AuthContext from '../AuthContext';
+import { axiosClient } from '../api/axiosClient';
 export default function HomeScreen({navigation}){
     const [deviceData, setDeviceData] = useState([])
     const { socket, setNotifs } = useContext(AuthContext)
     useEffect(() => {
-        axios.get("http://10.0.2.2:3000/api/device/")
+        axiosClient.get("api/device/")
             .then((device) => setDeviceData(device.data))
             .catch(err => console.error(err))
     }, [])

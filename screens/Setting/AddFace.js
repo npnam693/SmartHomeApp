@@ -7,7 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import { storage } from '../../firebase/firebaseConfig';
 import uuid from 'react-native-uuid';
-import axios from 'axios';
+import { axiosClient } from '../../api/axiosClient';
 import AuthContext from '../../AuthContext';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -58,7 +58,7 @@ export default function AddFace({navigation}) {
             return
         } 
         setUploading(true)
-        axios.post(`http://10.0.2.2:3000/api/users/addface`, {
+        axiosClient.post(`api/users/addface`, {
             userID: userData._id,
             name: data.name,
             images: await uploadFile(),

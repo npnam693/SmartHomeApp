@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { ScreenWidth } from '@rneui/base'
 import Icon from 'react-native-vector-icons/Ionicons'
 import FaceItem from '../../components/setting/FaceItem'
-import axios from 'axios'
+import { axiosClient } from '../../api/axiosClient'
 import { useEffect, useContext, useState } from 'react'
 import AuthContext from '../../AuthContext'
 export default function FaceRegconition({navigation}) {
@@ -10,7 +10,7 @@ export default function FaceRegconition({navigation}) {
     const [faces, setFaces] = useState([])
     
     useEffect(() => {
-        axios.get(`http://10.0.2.2:3000/api/users/getface/${userData._id}`)
+        axiosClient.get(`api/users/getface/${userData._id}`)
             .then(res => setFaces(res.data))
             .catch(err => console.log(err.response))
     }, [])

@@ -5,7 +5,7 @@ import { Button } from "@rneui/base"
 import { useState, useContext, useEffect} from "react"
 import AuthContext from "../AuthContext";
 import axios from 'axios'
-
+import { axiosClient } from '../api/axiosClient';
 
 
 export default function LoginScreen({ navigation }){
@@ -22,7 +22,7 @@ export default function LoginScreen({ navigation }){
             alert('Please fill all fields')
         }
 
-        axios.post('http://10.0.2.2:3000/api/users/login', {
+        axiosClient.post('api/users/login', {
             email: data.email, password: data.password
         })
         .then(response => {

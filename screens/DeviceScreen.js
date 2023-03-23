@@ -3,9 +3,9 @@ import { typeDevice } from "../components/ControlDevice"
 import { Button } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/AntDesign'
 import Schedule from "../components/Schedule";
-import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import AuthContext from "../AuthContext";
+import { axiosClient } from '../api/axiosClient';
 
 export default function DeviceScreen({ navigation, route }){
 
@@ -19,7 +19,7 @@ export default function DeviceScreen({ navigation, route }){
     }
 
     useEffect(() => {
-        axios.get(`http://10.0.2.2:3000/api/schedules/${route.params.deviceId}`, config)
+        axiosClient.get(`api/schedules/${route.params.deviceId}`, config)
             .then((res) => {
                 console.log(res.data)
                 setSchedules(res.data)

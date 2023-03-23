@@ -3,8 +3,8 @@ import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
 import { useState, useContext } from "react"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { axiosClient } from "../api/axiosClient";
 
 export default function SignupScreen({navigation}){
     const [data, setData] = useState({
@@ -26,7 +26,7 @@ export default function SignupScreen({navigation}){
             return
         }
 
-        axios.post('http://10.0.2.2:3000/api/users', {
+        axiosClient.post('api/users', {
             name: data.name, email: data.email, password: data.password, homeID: data.homeID
         })
         .then(response => {
