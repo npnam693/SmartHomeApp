@@ -51,7 +51,17 @@ export default function App() {
       socket.on('notif received', (newNotif) => {
         console.log('render lai ne !!!!!')
         console.log('ccccccccccccccccccccccccc', newNotif)
-        setNotifs(prev => [newNotif, ...prev])
+        setNotifs(prev => {
+          let isDup = false
+          prev.forEach(notif => {
+            if (notif._id === newNotif._id) isDup = true
+          })
+          if (isDup) return prev
+          const updatedNotifs = [newNotif, ...prev]
+          console.log('okokokokokok: ', updatedNotifs.length)
+          AsyncStorage.setItem('notifs', JSON.stringify(updatedNotifs))
+          return updatedNotifs
+        })
       })
     })
 
