@@ -2,8 +2,6 @@ import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Switch } from '@rneui/themed';
-import { io } from "socket.io-client";
-
 import AuthContext from "../AuthContext";
 
 import axios from 'axios';
@@ -33,10 +31,9 @@ export const typeDevice = {
 }
 
 export default function ControlDevice({ navigation, type, deviceID }) {
-    const { userData } = useContext(AuthContext);
+    const { userData, socket } = useContext(AuthContext);
 
     const [checked, setChecked] = useState(false);
-    const socket = io("http://10.0.2.2:3000");
     
     socket.on(`toggle ${typeDevice[type].feedId}`, (msg) => {
         console.log('ben client ngke toggle r')
@@ -76,7 +73,10 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                             creatorID: userData._id,
                             value
                         })
-                            .then((res) => console.log(res))
+                            .then((res) => {
+                                // console.log(res)
+                                socket.emit('send notif', res.data, userData.homeID)
+                            })
                             .catch((err) => console.log(err.response.data.message))
                         setChecked(value)
                     }}
