@@ -69,7 +69,12 @@ export default function GeneralInfo({ navigation }) {
                             <Text style = {{fontSize: 16, fontWeight: '700'}}>Sunny</Text>
                         </View>
                     </View>
-                    <TouchableOpacity onPress = {() => {
+                    <TouchableOpacity onPress = {async () => {
+                        try{
+                            await AsyncStorage.removeItem('notifs');
+                        }catch(err){
+                            console.log(err)
+                        }
                         setNotifs([])
                         navigation.navigate('NotificationScreen')
                     }}>

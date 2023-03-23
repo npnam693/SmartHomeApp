@@ -8,13 +8,14 @@ import { useContext, useState } from "react"
 import QRCode from 'react-native-qrcode-svg';
 
 export default function SettingScreen({ navigation }) {
-    const { isLoggedIn, logout, setUserData, userData } = useContext(AuthContext);
+    const { isLoggedIn, logout, setUserData, userData, setNotifs } = useContext(AuthContext);
     const [modalVisible, setModalVisible] = useState(false);
 
     const handleClickLogout = () => {
         const removeData = async () => {
             try {
                 await AsyncStorage.removeItem('userData');
+                await AsyncStorage.removeItem('notifs');
                 console.log('Dữ liệu đã được xoá!');
             } catch (e) {
                 console.log('Lỗi khi xoá dữ liệu: ', e);
@@ -22,6 +23,7 @@ export default function SettingScreen({ navigation }) {
         };
         removeData()
         setUserData(null)
+        setNotifs([])
         logout()
         navigation.navigate('AuthStackScreen')
     }
