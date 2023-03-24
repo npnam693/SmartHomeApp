@@ -1,7 +1,6 @@
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native'
 import { ScreenWidth,Badge } from '@rneui/base';
 import IconOcticons from 'react-native-vector-icons/Octicons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 
 import { axiosAdafruit } from '../api/axiosSetup';

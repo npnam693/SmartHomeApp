@@ -7,8 +7,7 @@ import { SelectList } from 'react-native-dropdown-select-list'
 import { Button } from "@rneui/base";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AuthContext from "../AuthContext";
-import axios from "axios";
-
+import { axiosClient } from "../api/axiosSetup";
 // const Days = [
 //     { key: '2', value: 'Monday' },
 //     { key: '3', value: 'Tuesday' },
@@ -55,7 +54,7 @@ function ScheduleScreen({navigation, route}) {
         }
 
         //call api
-        axios.patch(`/api/schedules/${route.params.deviceId}/${data._id}`, {
+        axiosClient.patch(`/api/schedules/${route.params.deviceId}/${data._id}`, {
             action,
             timeSchedule: date
         }, config)
@@ -83,7 +82,7 @@ function ScheduleScreen({navigation, route}) {
             return
         }
 
-        axios.post(`/api/schedules/${route.params.deviceId}`,{
+        axiosClient.post(`/api/schedules/${route.params.deviceId}`,{
             action, 
             timeSchedule: date
         }, config)
@@ -99,7 +98,7 @@ function ScheduleScreen({navigation, route}) {
     }
 
     const handleDelete = ()=>{
-        axios.delete(`/api/schedules/${route.params.deviceId}/${data._id}`, config)
+        axiosClient.delete(`/api/schedules/${route.params.deviceId}/${data._id}`, config)
             .then(res => {
                 console.log(res.data)
                 setSchedules(res.data)
@@ -210,12 +209,15 @@ function ScheduleScreen({navigation, route}) {
                     {route.params?.data ? 'SAVE' : 'CREATE'}
                 </Button>
                 {route.params?.data &&  (
-                    <Button radius={10}
-                        color="error"
-                        onPress={handleDelete}
-                    >
-                        DELETE
-                    </Button>
+                    <View style={{marginTop: 10}}>
+                        <Button radius={10}
+                            color="error"
+                            onPress={handleDelete}
+                            
+                        >
+                            DELETE
+                        </Button>
+                    </View>
                 )}
             </View>
         </View>

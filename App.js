@@ -49,7 +49,6 @@ export default function App() {
     useEffect(() => {
       console.log('doo r')
       socket.on('notif received', (newNotif) => {
-        console.log('render lai ne !!!!!')
         console.log('ccccccccccccccccccccccccc', newNotif)
         setNotifs(prev => {
           let isDup = false
@@ -85,3 +84,4 @@ export default function App() {
       </AuthContext.Provider>
     );
 }
+
