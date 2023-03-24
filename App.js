@@ -19,7 +19,8 @@ export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userData, setUserData] = useState(null);
     const [notifs, setNotifs] = useState([])
-    const socket = io("https://api-smarthome.onrender.com");
+    // const socket = io("https://api-smarthome.onrender.com");
+    const socket = io("http://10.0.2.2:3000");
     
     const fetchUser = async () => {
     

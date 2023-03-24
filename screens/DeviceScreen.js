@@ -5,18 +5,30 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import Schedule from "../components/Schedule";
 import { useState, useEffect, useContext } from "react";
 import AuthContext from "../AuthContext";
-import { axiosClient } from '../api/axiosSetup';
+import { axiosClient, axiosAdafruit } from '../api/axiosSetup';
 
 export default function DeviceScreen({ navigation, route }){
 
     const [schedules, setSchedules] = useState([])
-    const {userData} = useContext(AuthContext)
+    const {userData, socket} = useContext(AuthContext)
+    const [value, setValue] = useState()
+
+    const handleChangeValue = (data) => {
+        socket.emit('adjust value', data, typeDevice[route.params.type].feedAdjustId)
+        setValue(data)
+    }
     // console.log(userData)
     const config = {
         headers: {
             Authorization: `Bearer ${userData.token}`
         }
     }
+
+    socket.on(`toggle ${typeDevice[route.params.type].feedAdjustId}`, (msg) => {
+        console.log('thay doi value cua thiet bi tu ada ok')
+        setValue(parseInt(msg))
+    });
+
 
     useEffect(() => {
         axiosClient.get(`api/schedules/${route.params.deviceId}`, config)
@@ -25,6 +37,12 @@ export default function DeviceScreen({ navigation, route }){
                 setSchedules(res.data)
             })
             .catch((err) => console.log(err))
+
+        if (typeDevice[route.params.type].feedAdjustId) {
+            axiosAdafruit.get(`${typeDevice[route.params.type].feedAdjustId}/data?limit=1`)
+                .then(res => setValue(parseInt(res.data[0].value)))
+                .catch(err => console.log(err))
+        }
         route.params['setSchedules'] = setSchedules
     }, [])
 
@@ -32,20 +50,26 @@ export default function DeviceScreen({ navigation, route }){
         <View style = {styles.container}>
             <View style={styles.header}>
                 <Text style={styles.unitTitle}>{typeDevice[route.params.type].unitTitle}</Text>
-                <Text style={styles.value}>value</Text>
+                {value && (
+                    <Text style={styles.value}>{value}</Text>
+                )}
             </View>
-            <View style ={styles.adjust}>
-                <Button
-                    radius={50}
-                    style={styles.adjustButton}
-                    icon={<Icon name="plus" size={20} color='#EBF8FF' />}
-                />
-                <Button
-                    radius={50}
-                    style={styles.adjustButton}
-                    icon={<Icon name="minus" size={20} color='#EBF8FF' />}
-                />
-            </View>
+            {value && (
+                <View style={styles.adjust}>
+                    <Button
+                        radius={50}
+                        style={styles.adjustButton}
+                        icon={<Icon name="plus" size={20} color='#EBF8FF' />}
+                        onPress = {()=> handleChangeValue(value + 1)}
+                    />
+                    <Button
+                        radius={50}
+                        style={styles.adjustButton}
+                        icon={<Icon name="minus" size={20} color='#EBF8FF' />}
+                        onPress={() => handleChangeValue(value - 1)}
+                    />
+                </View>
+            )}
             <ScrollView contentContainerStyle={styles.devices} showsVerticalScrollIndicator={false}>
                 {schedules.map(schedule => (
                     <Schedule key={schedule._id} data={schedule} navigation={navigation} setSchedules={setSchedules}/>

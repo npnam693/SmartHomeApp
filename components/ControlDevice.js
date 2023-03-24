@@ -11,6 +11,7 @@ export const typeDevice = {
         iconTurn : <Icon name = "lightbulb-variant-outline" size = {42} color = '#75A7F7'/>,
         iconOff : <Icon name = "lightbulb-variant-outline" size = {42} color = '#9A9B9E'/>,
         feedId: "led",
+        feedAdjustId: 'bbc-led-light',
         unitTitle: 'Light Insensity'
     },
     fan: {
@@ -18,6 +19,7 @@ export const typeDevice = {
         iconTurn : <Icon name = "fan" size = {38} color = '#75A7F7'/>,
         iconOff : <Icon name = "fan" size = {38} color = '#9A9B9E'/>,
         feedId: "bbc-fan",
+        feedAdjustId: 'bbc-fan-power',
         unitTitle: 'Number'
     },
     door: {
@@ -25,7 +27,7 @@ export const typeDevice = {
         iconTurn : <Icon name = "door-open" size = {38} color = '#75A7F7'/>,
         iconOff : <Icon name = "door-open" size = {38} color = '#9A9B9E'/>,
         feedId: "bbc-door",
-        unitTitle: 'Status'
+        unitTitle: 'Smart door'
     }
 }
 
