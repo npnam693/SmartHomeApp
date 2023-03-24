@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SmartHome_MobileApp",
-    "slug": "SmartHome_MobileApp",
+    "slug": "smarthome-dadn-222",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2f7b3178-5517-4486-a92b-ced4951dcf77"
+      }
+    },
+    "owner": "nam693"
   }
 }

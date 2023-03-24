@@ -19,7 +19,7 @@ export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userData, setUserData] = useState(null);
     const [notifs, setNotifs] = useState([])
-    const socket = io("");
+    const socket = io("https://api-smarthome.onrender.com");
     
     const fetchUser = async () => {
     
@@ -47,7 +47,9 @@ export default function App() {
     }, [isLoggedIn]);
 
     useEffect(() => {
+      console.log('doo r')
       socket.on('notif received', (newNotif) => {
+        console.log('ccccccccccccccccccccccccc', newNotif)
         setNotifs(prev => {
           let isDup = false
           prev.forEach(notif => {
@@ -55,7 +57,8 @@ export default function App() {
           })
           if (isDup) return prev
           const updatedNotifs = [newNotif, ...prev]
-            AsyncStorage.setItem('notifs', JSON.stringify(updatedNotifs))
+          console.log('okokokokokok: ', updatedNotifs.length)
+          AsyncStorage.setItem('notifs', JSON.stringify(updatedNotifs))
           return updatedNotifs
         })
       })

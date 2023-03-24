@@ -2,9 +2,8 @@ import { View, Image, Text, StyleSheet, TextInput, TouchableOpacity } from 'reac
 import { ScreenWidth, } from '@rneui/base';
 import { Button } from '@rneui/themed';
 import  Icon  from "react-native-vector-icons/Ionicons";
-import axios from 'axios';
+import { axiosClient } from '../../api/axiosSetup';
 import AuthContext from '../../AuthContext';
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useRef, useEffect, useContext } from 'react';
 
@@ -36,7 +35,7 @@ export function ChangePIN({navigation}) {
     };
 
     const handleClickSubmitPIN = () => {
-        axios.post('/api/users/login', {
+        axiosClient.post('/api/users/login', {
             email: userData.email, password: password
         })
             .then(response => {
@@ -47,7 +46,7 @@ export function ChangePIN({navigation}) {
                 else {
                     console.log('HUHUUH', response.data)
 
-                    axios.put('/api/users/setpin', {
+                    axiosClient.put('/api/users/setpin', {
                         _id: userData._id, pinCode: pinCode
                     })
                         .then(res => {
