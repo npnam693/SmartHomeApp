@@ -1,12 +1,14 @@
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native'
-import { ScreenWidth } from '@rneui/base';
+import { ScreenWidth,Badge } from '@rneui/base';
 import IconOcticons from 'react-native-vector-icons/Octicons'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
-import { axiosClient, axiosAdafruit } from '../api/axiosSetup';
 
+import { axiosAdafruit } from '../api/axiosSetup';
 import { useEffect, useState, useContext } from 'react';
-import AuthContext from '../AuthContext';
 import  moment from 'moment'
+import AuthContext from '../AuthContext';
+
 export const typeSensor = {
     temp: {
         name: "Temperature",
@@ -25,10 +27,8 @@ export default function GeneralInfo({ navigation }) {
     const [temp, setTemp] = useState(30)
     const [humidity, setHumidity] = useState(30)
     const [lightIntensity, setlightIntensity] = useState(30)
-
-    const { socket } = useContext(AuthContext);
-
-
+    const {socket, notifs, setNotifs} = useContext(AuthContext)
+    
     useEffect(() => {
         Object.entries(typeSensor).map(([key, value]) => {
             axiosAdafruit.get(`${value.feedId}/data?limit=1`)
@@ -69,10 +69,21 @@ export default function GeneralInfo({ navigation }) {
                             <Text style = {{fontSize: 16, fontWeight: '700'}}>Sunny</Text>
                         </View>
                     </View>
-                    <TouchableOpacity onPress = {() => navigation.navigate('NotificationScreen')}>
+                    <TouchableOpacity onPress = {async () => {
+                        try{
+                            await AsyncStorage.removeItem('notifs');
+                        }catch(err){
+                            console.log(err)
+                        }
+                        setNotifs([])
+                        navigation.navigate('NotificationScreen')
+                    }}>
                         <View style = {styles.notification}>
                             <View style={{width: '100%', alignItems:'center'}}>
                                 <IconOcticons name = 'bell-fill' size={20} color = 'white'/>
+                                {notifs.length > 0 && (
+                                    <Badge value={`${notifs.length}+`} status="error" containerStyle={{ position: 'absolute', top: -10, left: 20 }} />
+                                )}
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -170,5 +181,4 @@ const styles = StyleSheet.create({
         borderColor: '#C43D3D',
     }
 })
-
 
