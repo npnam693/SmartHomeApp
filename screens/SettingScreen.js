@@ -1,4 +1,4 @@
-import { Text, View, Image, TouchableOpacity, StyleSheet, Modal } from "react-native"
+import { Text, View, Image, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import SettingSquare from "../components/setting/SettingSquare"
 import SettingRectangle from "../components/setting/SettingRectangle"
@@ -36,7 +36,7 @@ export default function SettingScreen({ navigation }) {
             <Text style = {{fontSize: 20, fontWeight: '600', color: '#10101'}}>{userData.name}</Text>
             <Text style = {{fontSize: 14, fontWeight: '400', color: '#666'}}>{userData.email}</Text>
             <View style = {styles.option}>
-                <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <TouchableOpacity onPress={() => setModalVisible(true)} activeOpacity={0.05}>
                     <SettingSquare type = "SHARE_KEY" />
                 </TouchableOpacity>
                 <Modal
@@ -63,7 +63,7 @@ export default function SettingScreen({ navigation }) {
                         padding={10}
                     />
                     <Text style={{fontSize: 18, fontWeight: '400', marginTop: 30}}>Key: {userData.homeID}</Text>
-                    <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+                    <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} activeOpacity={0.05}>
                         <View style = {{backgroundColor:'#ed6474', borderRadius: 16, marginTop: 50, width: 100, height:40,
                             alignItems: 'center', justifyContent:'center'
                         }}>
@@ -72,10 +72,10 @@ export default function SettingScreen({ navigation }) {
                     </TouchableOpacity>
                     </View>
                 </Modal>
-                <TouchableOpacity onPress={() => navigation.navigate('Face Regconition')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Face Regconition')} activeOpacity={0.05}>
                     <SettingSquare type = "FACE_RECOGNITION" />
                 </TouchableOpacity >
-                <TouchableOpacity onPress={() => navigation.navigate('Change Pin')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Change Pin')} activeOpacity={0.05}>
                     <SettingSquare type = "CHANGE_PIN" />
                 </TouchableOpacity>
                 <TouchableOpacity>

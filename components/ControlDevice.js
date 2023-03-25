@@ -60,7 +60,7 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                 </View>
                 <View>
                     <Text style = {styles.nameDevice}>{typeDevice[type].name}</Text>
-                    <Text>4 Devices</Text>
+                    <Text>Living Room</Text>
                 </View>
             </View>
             <View style={styles.rightContainer}>
@@ -75,7 +75,6 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                             value
                         })
                             .then((res) => {
-                                // console.log(res)
                                 socket.emit('send notif', res.data, userData.homeID)
                             })
                             .catch((err) => console.log(err.response.data.message))
@@ -99,7 +98,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: 'white',
         justifyContent: 'space-between',
-        shadowColor: "#00B5D8",
         shadowOffset: {
             width: 0,
             height: 3,

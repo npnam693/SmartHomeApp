@@ -16,7 +16,7 @@ export default function SignupScreen({navigation}){
     })
 
     const handleClickSubmit = () => {
-        if (data.name == "" || data.email == "" || data.password == "" || data.confirmPassword == "") {
+        if (data.name == "" || data.email == "" || data.password == "" || data.confirmPassword == "" || data.homeID == "" ) {
             alert('You have to fill full the fields')
             return
         }
@@ -40,7 +40,7 @@ export default function SignupScreen({navigation}){
                 return
             }
             else {
-                alert('Gặp lỗi');
+                alert('An Error Occurred Please Try Again Later');
                 console.log(error)
             }
         });
@@ -122,7 +122,7 @@ export default function SignupScreen({navigation}){
 
                 <KeyboardAwareScrollView extraScrollHeight={100}>
                     <TextInput
-                        placeholder = {'Your Home key (You can ignore)'}
+                        placeholder = {'Home key'}
                         style={{
                             backgroundColor : "#D3D3D3",
                             height: 48,

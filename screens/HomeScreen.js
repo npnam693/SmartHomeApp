@@ -1,7 +1,7 @@
 
 
-import { View } from 'react-native';
-import { ScreenHeight } from '@rneui/base';
+import { ScrollView, View } from 'react-native';
+import { ScreenHeight, ScreenWidth } from '@rneui/base';
 import { useEffect, useState, useContext } from 'react';
 
 import ControlDevice from '../components/ControlDevice';
@@ -18,17 +18,20 @@ export default function HomeScreen({navigation}){
     }, [])
 
     return (
-        <View style = {{display: 'flex', flexDirection:'column', width: '100%'}} >
+        <View style = {{display: 'flex', flexDirection:'column', width: '100%', height: '100%'}} >
             <GeneralInfo navigation = {navigation}/>
-            <View style = {{width: '100%', height:ScreenHeight - 190}}>
-                <View style={{alignSelf: 'center'}}>
+            
+            <ScrollView contentContainerStyle={{ display:'flex', alignItems:'center'}} showsVerticalScrollIndicator={false}>
+                <View style={{marginBottom: 40}}>
                     {
                         deviceData.map((device, index) => 
-                            <ControlDevice key={index} navigation = {navigation} type = {device.type} deviceID={device._id} />
+                            <View style={{width: 330, alignItems: 'center'}} key={index}>
+                                <ControlDevice navigation = {navigation} type = {device.type} deviceID={device._id} />
+                            </View>
                         )
                     }                
                 </View>
-            </View>
+            </ScrollView>
         </View>
     )
 }

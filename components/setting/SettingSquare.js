@@ -25,7 +25,6 @@ const typeButton = {
 export default function SettingSquare({type}) {
     return (
         <View style = {{alignItems:'center', justifyContent:'center', width: 76}}>
-        
             <View style = {[styles.box,{backgroundColor: typeButton[type].bgColor}]}>
                 {typeButton[type].icon}
             </View>
@@ -36,8 +35,7 @@ export default function SettingSquare({type}) {
 
 const styles = StyleSheet.create({
     box:{
-        width: 60, 
-        height: 60, 
+        padding: 10,
         borderRadius: 10, 
         alignItems: 'center', 
         justifyContent:'center', 

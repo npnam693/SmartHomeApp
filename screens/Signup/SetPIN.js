@@ -47,7 +47,6 @@ export default function SetPINScreen({route}) {
     };
 
     const handleClickSubmitPIN = () => {
-        login()
 
         if (pinCode != pinConfirmCode) {
             alert("You need to confirm the correct PIN code.")
