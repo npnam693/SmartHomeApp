@@ -14,6 +14,7 @@ export default function SignupScreen({navigation}){
         confirmPassword: "",
         homeID: "",
     })
+    const [isSending, setIsSending] = useState(false)
 
     const handleClickSubmit = () => {
         if (data.name == "" || data.email == "" || data.password == "" || data.confirmPassword == "" || data.homeID == "" ) {
@@ -25,16 +26,18 @@ export default function SignupScreen({navigation}){
             alert('You need to confirm the correct password')
             return
         }
-
+        setIsSending(true)
         axiosClient.post('api/users', {
             name: data.name, email: data.email, password: data.password, homeID: data.homeID
         })
         .then(response => {
             console.log(response.data);
+            setIsSending(false)
             AsyncStorage.setItem('userData', JSON.stringify(response.data))
             navigation.navigate("SetPINScreen", {userID: response.data._id, userName: response.data.name, userEmail: response.data.email})
         })
         .catch(error => {
+            setIsSending(false)
             if (error.response) {
                 alert (error.response.data.message)
                 return
@@ -48,6 +51,14 @@ export default function SignupScreen({navigation}){
 
     return (
         <ScrollView>
+            <Spinner
+                //visibility of Overlay Loading Spinner
+                visible={isSending}
+                //Text with the Spinner
+                textContent={'Loading...'}
+                //Text style of the Spinner Text
+                textStyle={styles.spinnerTextStyle}
+            />
             <Image source = {require('../assets/images/IntroSignup.png')} style={{width: ScreenWidth, height: 284, marginTop: 20}}/>
             <View style = {styles.inputContainer}>
                 <KeyboardAwareScrollView extraScrollHeight={300}>

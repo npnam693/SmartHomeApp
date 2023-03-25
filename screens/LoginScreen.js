@@ -6,6 +6,7 @@ import { useState, useContext, useEffect} from "react"
 import AuthContext from "../AuthContext";
 import axios from 'axios'
 import { axiosClient } from '../api/axiosSetup';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 export default function LoginScreen({ navigation }){
@@ -14,6 +15,9 @@ export default function LoginScreen({ navigation }){
         password: '',
     })
 
+    const [isSending, setIsSending] = useState(false)
+
+
 
     const { isLoggedIn, login, socket } = useContext(AuthContext);
 
@@ -21,24 +25,34 @@ export default function LoginScreen({ navigation }){
         if (data.email == '' || data.password == '') {
             alert('Please fill all fields')
         }
-
+        setIsSending(true)
         axiosClient.post('api/users/login', {
             email: data.email, password: data.password
         })
-        .then(response => {
-            console.log('HUHUUH', response.data)
-            AsyncStorage.setItem('userData', JSON.stringify(response.data))
-            login()
-            socket.emit('setup', response.data._id)
-            navigation.navigate('TabNavigation')
-        })
+            .then(response => {
+                console.log('HUHUUH', response.data)
+                AsyncStorage.setItem('userData', JSON.stringify(response.data))
+                setIsSending(false)
+                login()
+                socket.emit('setup', response.data._id)
+                navigation.navigate('TabNavigation')
+            })
             .catch(error => {
-            alert(error.response.data.message);
-        });
-    }
+                setIsSending(false)
+                alert(error.response.data.message);
+            });
+        }
 
     return (
         <ScrollView style = {styles.container}>
+            <Spinner
+                //visibility of Overlay Loading Spinner
+                visible={isSending}
+                //Text with the Spinner
+                textContent={'Loading...'}
+                //Text style of the Spinner Text
+                textStyle={styles.spinnerTextStyle}
+            />
             <Image source = {require('../assets/images/IntroLogin.png')} style={{width: ScreenWidth, height: 356, marginTop: 30}}/>
             <View style = {styles.inputContainer}>
                 <TextInput

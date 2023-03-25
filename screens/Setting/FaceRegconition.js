@@ -5,15 +5,21 @@ import FaceItem from '../../components/setting/FaceItem'
 import { axiosClient } from '../../api/axiosSetup'
 import { useEffect, useContext, useState } from 'react'
 import AuthContext from '../../AuthContext'
+import { useIsFocused } from '@react-navigation/native'
+
+
 export default function FaceRegconition({navigation}) {
     const { userData } = useContext(AuthContext);
     const [faces, setFaces] = useState([])
     
+    const isFocused = useIsFocused()
+
     useEffect(() => {
-        axiosClient.get(`api/users/getface/${userData._id}`)
-            .then(res => setFaces(res.data))
-            .catch(err => console.log(err.response))
-    }, [])
+        if(isFocused)
+            axiosClient.get(`api/users/getface/${userData._id}`)
+                .then(res => setFaces(res.data))
+                .catch(err => console.log(err.response))
+    }, [isFocused])
     console.log(faces)
     return (
         <View style = {styles.container}>
@@ -28,8 +34,6 @@ export default function FaceRegconition({navigation}) {
                     faces.map((item, index) => <FaceItem data = {item} key = {index}/>)
                 }
             </View>
-
-
         </View>
     )
 }   

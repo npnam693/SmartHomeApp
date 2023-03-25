@@ -5,13 +5,17 @@ import  Icon  from "react-native-vector-icons/Ionicons";
 import { axiosClient } from '../../api/axiosSetup';
 import AuthContext from '../../AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useRef, useContext } from 'react';
+import Spinner from 'react-native-loading-spinner-overlay';
+
+
 
 export function ChangePIN({navigation}) {
     const [pinCode, setPinCode] = useState('');
     const [pinConfirmCode, setPinConfirmCode] = useState('');
     const [password, setPassword] = useState('');
     const { userData } = useContext(AuthContext)
+    const [isSending, setIsSending] = useState(false)
 
     const textInputRef = useRef(null);
     const textInputConfirmRef = useRef(null)
@@ -35,6 +39,7 @@ export function ChangePIN({navigation}) {
     };
 
     const handleClickSubmitPIN = () => {
+        setIsSending(true)
         axiosClient.post('/api/users/login', {
             email: userData.email, password: password
         })
@@ -51,27 +56,30 @@ export function ChangePIN({navigation}) {
                     })
                         .then(res => {
                             AsyncStorage.setItem('userData', JSON.stringify(res.data))
+                            setIsSending(true)
                             navigation.navigate('Setting Screen')
                         }) 
                         .catch(err => {
+                            setIsSending(true)
                             if (err.response) {
                                 alert(err.response.data.message)
                                 return
                             }
                             else {
-                                alert('Gặp lỗi');
+                                alert('Something went wrong');
                                 console.log(err)
                             }
                         })
                     }
             })
             .catch(err =>  {
+                setIsSending(true)
                 if (err.response) {
                     alert (err.response.data.message)
                     return
                 }
                 else {
-                    alert('Gặp lỗi');
+                    alert('Something went wrong');
                     console.log(err)
                 }
             })
@@ -80,6 +88,14 @@ export function ChangePIN({navigation}) {
 
     
     <View style={styles.container}>
+      <Spinner
+        //visibility of Overlay Loading Spinner
+        visible={isSending}
+        //Text with the Spinner
+        textContent={'Loading...'}
+        //Text style of the Spinner Text
+        textStyle={styles.spinnerTextStyle}
+      />
       <View style = {styles.user}>
         <Image source={{uri:'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png'}} 
                     style = {{width: 60, height: 60, borderRadius: 10, borderWidth: 1, borderColor:'#BCE4FA'}}
