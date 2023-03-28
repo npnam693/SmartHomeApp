@@ -66,7 +66,7 @@ export default function AddFace({navigation}) {
             .then(res => {
                 console.log(res)
                 setUploading(false)
-                navigation.navigate('Face Regconition')
+                navigation.navigate('Face Regconition',  )
             })
             .catch(err =>  {
                 console.log(err)
