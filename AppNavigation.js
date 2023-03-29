@@ -17,6 +17,7 @@ import SetPINScreen from './screens/Signup/SetPIN';
 import AddFace from './screens/Setting/AddFace';
 import FaceRegconition from './screens/Setting/FaceRegconition';
 import { ChangePIN } from './screens/Setting/ChangePIN';
+import DetailVisualization from './screens/Visualization/DetailVisualization';
 
 // import { StackActions } from '@react-navigation/native';
 
@@ -131,6 +132,7 @@ function VisualizationStackScreen({navigation}){
     return (
         <VisualizationStack.Navigator>
           <VisualizationStack.Screen name="VisualiaztionScreen" component={VisualiaztionScreen} options={{ headerShown: false }}/>
+          <VisualizationStack.Screen name="DetailVisualization" component={DetailVisualization} />
         </VisualizationStack.Navigator>
     )
 }

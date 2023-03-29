@@ -10,7 +10,7 @@ import {
   } from "react-native-chart-kit";
 
 import { axiosAdafruit } from "../api/axiosSetup";
-export default function Visualiaztion() {
+export default function Visualiaztion({navigation}) {
     const [temp, setTemp] = useState()
     const [humi, setHumi] = useState()
     
@@ -25,13 +25,12 @@ export default function Visualiaztion() {
     }, [])
     return (
         <View style = {styles.container}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('DetailVisualization')}>
                 <Text>Temperator</Text>
                 <LineChart
                     data={{
                     labels: temp ? temp.map((item, index) => {
                                 const date = new Date(item[0])
-                                // return date.getHours().toString() + 'h ' + date.getDate().toString() + '/' + (date.getMonth() + 1).toString()
                                 return date.getHours().toString() + 'h'
                             })
                             :["January", "February", "March", "April", "May", "June"],
@@ -69,9 +68,9 @@ export default function Visualiaztion() {
                     }}
                 />
             </TouchableOpacity>
+            
             <TouchableOpacity>
             <Text>Humidity</Text>
-
                 <LineChart
                     data={{
                     labels: ["1h", "2h", "3h", "4h", "5h", "6h"],
@@ -116,6 +115,7 @@ export default function Visualiaztion() {
                     }}
                 />
             </TouchableOpacity>
+            
             <TouchableOpacity>
                 <Text>Light Intensity</Text>
 
