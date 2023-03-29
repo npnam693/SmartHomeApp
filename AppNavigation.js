@@ -85,7 +85,7 @@ function HomeStackScreen({ navigation }) {
               <Button color='#75A7F7' icon={<Icon name='clock' size={20} color='#EBF8FF' />} 
                 // buttonStyle ={{borderRadius: '50%'}}
                 radius = {10}
-                onPress={() => navigation.navigate('ScheduleScreen', { deviceId: route.params.deviceId, setSchedules: route.params.setSchedules})}
+                onPress={() => navigation.navigate('ScheduleScreen', { deviceId: route.params.deviceId})}
               />
             ),
             headerLeft: (props) => (

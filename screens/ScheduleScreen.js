@@ -23,7 +23,7 @@ const Minutes = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10
 
 function ScheduleScreen({navigation, route}) {
     const { userData } = useContext(AuthContext) //get current user
-    const { data, setSchedules } = route.params
+    const { data } = route.params
     const time = data ? new Date(data.timeSchedule) : null
     const [action, setAction] = useState(data ? data.action : true) //true for active
     const [date, setDate] = useState(time)
@@ -60,7 +60,6 @@ function ScheduleScreen({navigation, route}) {
         }, config)
             .then(res => {
                 console.log(res.data)
-                setSchedules(res.data)
                 navigation.goBack()
             })
             .catch(err => {
@@ -88,7 +87,6 @@ function ScheduleScreen({navigation, route}) {
         }, config)
             .then(res => {
                 console.log(res.data)
-                setSchedules(res.data)
                 navigation.goBack()
             })
             .catch(err => {
@@ -101,7 +99,6 @@ function ScheduleScreen({navigation, route}) {
         axiosClient.delete(`/api/schedules/${route.params.deviceId}/${data._id}`, config)
             .then(res => {
                 console.log(res.data)
-                setSchedules(res.data)
                 navigation.goBack()
             })
             .catch(err => {
