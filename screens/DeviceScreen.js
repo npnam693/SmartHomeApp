@@ -6,12 +6,14 @@ import Schedule from "../components/Schedule";
 import { useState, useEffect, useContext } from "react";
 import AuthContext from "../AuthContext";
 import { axiosClient, axiosAdafruit } from '../api/axiosSetup';
+import { useIsFocused } from "@react-navigation/native";
 
 export default function DeviceScreen({ navigation, route }){
 
     const [schedules, setSchedules] = useState([])
     const {userData, socket} = useContext(AuthContext)
     const [value, setValue] = useState()
+    const isFocused = useIsFocused()
 
     const handleChangeValue = (data) => {
         socket.emit('adjust value', data, typeDevice[route.params.type].feedAdjustId)
@@ -43,8 +45,19 @@ export default function DeviceScreen({ navigation, route }){
                 .then(res => setValue(parseInt(res.data[0].value)))
                 .catch(err => console.log(err))
         }
-        route.params['setSchedules'] = setSchedules
+        // route.params['setSchedules'] = setSchedules
     }, [])
+
+    useEffect(() => {
+        if(isFocused){
+            axiosClient.get(`api/schedules/${route.params.deviceId}`, config)
+                .then((res) => {
+                    console.log(res.data)
+                    setSchedules(res.data)
+                })
+                .catch((err) => console.log(err))
+        }
+    }, [isFocused])
 
     return (
         <View style = {styles.container}>
@@ -60,13 +73,13 @@ export default function DeviceScreen({ navigation, route }){
                         radius={50}
                         style={styles.adjustButton}
                         icon={<Icon name="plus" size={20} color='#EBF8FF' />}
-                        onPress = {()=> handleChangeValue(value + 1)}
+                        onPress = {()=> handleChangeValue(value + 10)}
                     />
                     <Button
                         radius={50}
                         style={styles.adjustButton}
                         icon={<Icon name="minus" size={20} color='#EBF8FF' />}
-                        onPress={() => handleChangeValue(value - 1)}
+                        onPress={() => handleChangeValue(value - 10)}
                     />
                 </View>
             )}
