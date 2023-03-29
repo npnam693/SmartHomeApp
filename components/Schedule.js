@@ -38,7 +38,7 @@ function Schedule({data, navigation, setSchedules}) {
 
     return ( 
         <TouchableOpacity style={styles.container}
-            onPress={() => navigation.navigate('ScheduleScreen', { deviceId: data.deviceId, data: data, setSchedules: setSchedules })}
+            onPress={() => navigation.navigate('ScheduleScreen', { deviceId: data.deviceId, data: data })}
         >
             <View style={styles.leftContainer}>
                 <View style={styles.date}>
