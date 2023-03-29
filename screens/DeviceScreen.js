@@ -86,7 +86,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        marginTop: 20
+        height: '100%',
+        width: '100%',
+        marginTop: 20,
     },
     header: {
         display: "flex",
@@ -110,12 +112,10 @@ const styles = StyleSheet.create({
     ,
     devices: {
         display: 'flex',
-        justifyContent: 'center',
         alignItems:'center',
         width: '100%',
         paddingHorizontal: 20,
-        paddingVertical: 20,
-        marginBottom: 20
+        paddingBottom: 30,
     }
     ,
     unitTitle: {
