@@ -1,17 +1,21 @@
 import { Text, View, StyleSheet, Dimensions } from "react-native";
 import { Button } from '@rneui/themed';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LineChart } from "react-native-chart-kit"
 import TableData from "../../components/TableData";
-
+import { axiosAdafruit } from "../../api/axiosSetup";
 const mode = ['MONTH', 'DAY', 'WEEK', 'YEAR']
 
 export default function DetailVisualization() {
     const [modeSelected, setModeSelected] = useState(mode[0])
-    console.log(modeSelected)
 
+    const [dataTemp, setDataTemp] = useState([])
 
-
+    useEffect(() => {
+        axiosAdafruit.get('bbc-temp/data/chart?hours=2000&resolution=60')
+            .then((temp) => setDataTemp(temp.data.data.slice(0,6)))
+            .catch((err) => console.log(err))
+    }, [])
     
     return (
         <View style = {styles.container}>
@@ -83,19 +87,10 @@ export default function DetailVisualization() {
                 }}
             />
 
-            <View style = {{width: '100%', padding: 30}}>
-                <TableData />
-
+            <View style = {{width: '100%', paddingHorizontal: 30, marginTop: 16}}>
+                <TableData data = {dataTemp} />
             </View>
 
-            {/* <View sytle = {styles.tableContainer}>
-                
-                <View style={styles.containerTable}>
-                    <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-                        <Row data={['Huhu', "hihi", 'haha']} />
-                    </Table>
-                </View>
-            </View> */}
         </View>
 
     )
@@ -111,7 +106,7 @@ const styles = StyleSheet.create({
     selected: {
         padding: 16,
         marginLeft: 'auto',
-        paddingHorizontal: 45, 
+        paddingHorizontal: 30, 
     },
     quickInfo: {
         // height: '20%'    ,

@@ -3,37 +3,38 @@ import { Text, View, StyleSheet} from "react-native";
 
 
 const withComponents = [20,30,50]
-
 const dataTest = [[1,2,3], [4,5,6], [7,8,9], [10,11,12]] 
 
+const getDate = (str) => {
+    const date = new Date(str)
+    return date.toLocaleString()
+}
 
-export default function TableData() {
+export default function TableData({data}) {
     return (
         <View style={styles.container}>
             <View style = {styles.header}>
-                <View  style = {[styles.itemCell, {flex: 0.2}]}>
-                    <Text>STT</Text>   
+                <View style = {[styles.itemCell, {flex: 0.15}]}>
+                    <Text style = {styles.textHeader}>STT</Text>   
                 </View>
-                
-                <View  style = {[styles.itemCell, {flex: 0.3}]}>
-                    <Text>Value</Text>   
+                <View style = {[styles.itemCell, {flex: 0.2}]}>
+                    <Text style = {styles.textHeader}>Value</Text>   
                 </View>
-                <View  style = {[styles.itemCell, {flex: 0.5}]}>
-                    <Text>Created At</Text>   
+                <View style = {[styles.itemCell, {flex: 0.65}]}>
+                    <Text style = {styles.textHeader}>Created At</Text>   
                 </View>
             </View>
             {
-                dataTest.map((item, index) => (
+                data.map((item, index) => (
                     <View style = {styles.itemRow} key ={index}>
-                        <View  style = {[styles.itemCell, {flex: 0.2}]}>
-                            <Text>{item[0]}</Text>   
+                        <View style = {[styles.itemCell, {flex: 0.15}]}>
+                            <Text>{index+1}</Text>   
                         </View>
-                        
-                        <View  style = {[styles.itemCell, {flex: 0.3}]}>
-                            <Text>{item[1]}</Text>   
+                        <View style = {[styles.itemCell, {flex: 0.2}]}>
+                            <Text>{Number(item[1]).toFixed(1)}</Text>   
                         </View>
-                        <View  style = {[styles.itemCell, {flex: 0.5}]}>
-                            <Text>{item[2]}</Text>   
+                        <View style = {[styles.itemCell, {flex: 0.65}]}>
+                            <Text>{getDate(item[0])}</Text>   
                         </View>  
                     </View>
                 ))
@@ -50,21 +51,22 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',   
         justifyContent: 'space-between',
-        borderWidth: 0.5,
-        borderColor: '#c8e1ff'
+        borderRadius: 30
     },
     itemCell: {
-        // width: 40,
-        // height: 40
         borderWidth: 0.5,
-        borderColor: '#c8e1ff'
+        borderColor: '#ccc',
+        padding: 6,
+        paddingHorizontal: 8
     },
     itemRow: {
-        borderWidth: 1,
         borderTopWidth: 0,
-        borderColor: '#c8e1ff',
         flexDirection: 'row',   
         justifyContent: 'space-between',
+    },
+    textHeader: {
+        fontWeight: '500',
+        color: '#333'
     }
 })
 
