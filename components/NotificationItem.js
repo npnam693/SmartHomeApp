@@ -34,7 +34,7 @@ export default function NotificationItem({bgColor, data}) {
                     fontSize: 12,
                 }}>{getIconNoti(data.deviceID.type,data.value).name} has been turned {data.value ? 'on' : 'off'} by 
                     {
-                        data.creatorID.name ? 
+                        data.creatorID?.name ? 
                             <Text style = {{fontWeight: '600', color: '#1EA0E9'}}> {data.creatorID.name}</Text>
                         :
                             <Text style = {{fontWeight: '600', color: '#C43D3D'}}> automatically</Text>

@@ -30,13 +30,13 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "0606301b-a970-46a3-a794-4948d60aa82d"
-      }
-    },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    }
+    // "extra": {
+    //   "eas": {
+    //     "projectId": "0606301b-a970-46a3-a794-4948d60aa82d"
+    //   }
+    // },
+    // "runtimeVersion": {
+    //   "policy": "sdkVersion"
+    // }
   }
 }
