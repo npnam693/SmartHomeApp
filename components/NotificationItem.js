@@ -10,9 +10,11 @@ const getIconNoti = (type, mode) =>  {
         name = "lightbulb-variant-outline"
         nameReturn = "Smart Light"
     }
-    else if (type == 'door')
+    else if (type == 'door') {
         name = 'door-open'
         nameReturn = "Smart Door"
+    }
+
     if (mode === 0)     
         color =  '#757575'
     return {
