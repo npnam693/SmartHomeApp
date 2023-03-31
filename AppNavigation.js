@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Octicons'
 import { Button } from '@rneui/themed';
-import { View,  StyleSheet } from 'react-native';
+import { View,  StyleSheet, Text } from 'react-native';
 import ScheduleScreen from './screens/ScheduleScreen';
 import HomeScreen from './screens/HomeScreen';
 import DeviceScreen from './screens/DeviceScreen';
@@ -132,7 +132,13 @@ function VisualizationStackScreen({navigation}){
     return (
         <VisualizationStack.Navigator>
           <VisualizationStack.Screen name="VisualiaztionScreen" component={VisualiaztionScreen} options={{ headerShown: false }}/>
-          <VisualizationStack.Screen name="DetailVisualization" component={DetailVisualization} />
+        <VisualizationStack.Screen name="DetailVisualization" component={DetailVisualization}
+          options={({ route }) => {
+              if (route.params.sensorType == 'bbc-temp') return {title: 'Temperature Data'}
+              if (route.params.sensorType == 'bbc-humi') return {title: 'Humidity Data'}
+            }}
+
+        />
         </VisualizationStack.Navigator>
     )
 }

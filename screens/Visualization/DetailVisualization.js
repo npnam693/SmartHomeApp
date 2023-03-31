@@ -4,22 +4,42 @@ import { useState, useEffect } from "react";
 import { LineChart } from "react-native-chart-kit"
 import TableData from "../../components/TableData";
 import { axiosAdafruit } from "../../api/axiosSetup";
-const mode = ['MONTH', 'WEEK', 'YEAR']
 
 import ModalOption from "../../components/ModalOption";
+const mode = ["MONTH", 'WEEK', 'YEAR']
 
 
-export default function DetailVisualization() {
+export default function DetailVisualization({ navigation, route }) {
+    const typeSensor = route.params.sensorType
     const [modeSelected, setModeSelected] = useState(mode[0])
-    const [dataTemp, setDataTemp] = useState([])
     const [showModal, setShowModal] = useState(false)
-
-
+    const [data, setData] = useState([])
+    const [dataTemp, setDataTemp] = useState()
+    
     useEffect(() => {
-        axiosAdafruit.get('bbc-temp/data/chart?hours=2000&resolution=60')
-            .then((temp) => setDataTemp(temp.data.data.slice(0,10)))
-            .catch((err) => console.log(err))
-    }, [])
+        if (modeSelected === 'MONTH') { 
+            axiosAdafruit.get(`${typeSensor}/data/chart?hours=720&resolution=30`)
+                .then((res) => {
+                    setData(res.data.data)
+                    const resValue = res.data.data.map(item => Number(item[1]))
+                    setDataTemp(resValue)
+                })
+                .catch((err) => console.log(err))
+        }
+        else if (modeSelected === 'WEEK') {
+            axiosAdafruit.get(`${typeSensor}/data/chart?hours=168&resolution=5`)
+                .then((res) => {
+                    setData(res.data.data)
+                    const resValue = res.data.data.map(item => Number(item[1]))
+                    setDataTemp(resValue)
+                })
+                .catch((err) => console.log(err))
+        }
+    }, [modeSelected])
+
+    if (dataTemp) [
+        console.log(dataTemp)
+    ]
 
     const getModeTitle = (mode) => {
         if (mode === 'MONTH') return 'Last 30 days'
@@ -66,39 +86,37 @@ export default function DetailVisualization() {
                 </Button>
             </View>
             <ModalOption visible={showModal} data={dataModal} actionPressOutside={() => setShowModal(false)} />
-
-
-
             <View style={styles.quickInfo}>
                 <View style = {styles.quickInfoItem}>
-                    <Text style = {styles.infoValue}>20</Text>
+                    <Text style={styles.infoValue}>{dataTemp && Math.min(...dataTemp).toFixed(1)}</Text>
                     <Text style = {styles.infoTitle}>Lowest</Text>
                 </View>
                 <View style = {styles.quickInfoItem}>
-                    <Text style = {styles.infoValue}>24</Text>
+                    <Text style={styles.infoValue}>{dataTemp && Number(dataTemp.reduce((a,b) => a + b, 0) / dataTemp.length).toFixed(1)}</Text>
                     <Text style = {styles.infoTitle}>Average</Text>
                 </View>
                 <View style = {styles.quickInfoItem}>
-                    <Text style = {styles.infoValue}>37</Text>
+                    <Text style={styles.infoValue}>{dataTemp && Math.max(...dataTemp).toFixed(1)}</Text>
                     <Text style = {styles.infoTitle}>Highest</Text>
                 </View>
             </View>
             
-
             <LineChart
                 data={{
-                    labels: ["1h", "2h", "3h", "4h", "5h", "6h"],
+                    // labels: ["1h", "2h", "3h", "4h", "5h", "6h"],
                     datasets: [
                         {
-                            data: [
-                                Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100
-                    ]
-                    }
+                            data: dataTemp ? dataTemp
+                            :
+                                [
+                                    Math.random() * 100,
+                                    Math.random() * 100,
+                                    Math.random() * 100,
+                                    Math.random() * 100,
+                                    Math.random() * 100,
+                                    Math.random() * 100
+                                ]   
+                        }
                 ]
                 }}
                 width={Dimensions.get("window").width - 60} // from react-native
@@ -117,8 +135,8 @@ export default function DetailVisualization() {
                     borderRadius: 16
                 },
                 propsForDots: {
-                    r: "6",
-                    strokeWidth: "2",
+                    r: "3",
+                    strokeWidth: "1",
                     stroke: "#67B56A"
                 }
                 }}
@@ -128,10 +146,13 @@ export default function DetailVisualization() {
                     borderRadius: 16
                 }}
             />
-
-            <ScrollView style = {{width: '100%', paddingHorizontal: 27, marginTop: 16}}>
-                <TableData data = {dataTemp} />
+            {
+            
+            dataTemp && 
+            <ScrollView style={{ width: '100%', paddingHorizontal: 27, marginTop: 16 }}>
+                <TableData data = {data} />
             </ScrollView>
+            }
 
         </View>
 

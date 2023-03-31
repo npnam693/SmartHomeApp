@@ -2,9 +2,6 @@
 import { Text, View, StyleSheet} from "react-native";
 
 
-const withComponents = [20,30,50]
-const dataTest = [[1,2,3], [4,5,6], [7,8,9], [10,11,12]] 
-
 const getDate = (str) => {
     const date = new Date(str)
     return date.toLocaleString()
@@ -56,7 +53,6 @@ export default function TableData({data}) {
         </View>
     )
 }
-
 const styles = StyleSheet.create({
     container: {
         // width: '100%',
