@@ -7,6 +7,7 @@ import { useEffect, useContext, useState } from 'react'
 import AuthContext from '../../AuthContext'
 import { useIsFocused } from '@react-navigation/native'
 
+import ModalOption from '../../components/ModalOption'
 
 export default function FaceRegconition({navigation}) {
     const { userData } = useContext(AuthContext);
@@ -42,8 +43,25 @@ export default function FaceRegconition({navigation}) {
             .catch(err => console.log(err.response))
     }
 
+    const dataModel = [
+        {
+            title: 'Remove',
+            icon: <Icon name = 'close-circle-outline' size = {20}/>,
+            action: handleRemoveItemFace,
+        },
+        {
+            title: 'Detail',
+            icon: <Icon name = 'filter' size = {20}/>,
+            action: () => setShowAppOptions(false),
+        },
+        {
+            title: 'Close',
+            icon: <Icon name = 'remove-circle-outline' size = {20}/>,
+            action: () => setShowAppOptions(false),
+        }
+    ]
     return (
-        <View style = {styles.container}>
+        <View style = {styles.container} >
                 <TouchableOpacity onPress = {() => navigation.navigate('Add Face')}>
                     <View style = {styles.upload}>
                         <Icon name = "md-cloud-upload-outline" size={46} color='#75A7F7' />    
@@ -62,30 +80,7 @@ export default function FaceRegconition({navigation}) {
                         )
                     }
                 </View>
-            
-            <Modal animationType="slide" transparent={true} visible={showAppOptions}>
-            <View style={styles.modalContent}>
-                <View style={styles.modalOption}>
-                    <View style ={{borderBottomColor: '#75A7F7', borderBottomWidth: 2, width:'80%', alignItems:'center'}}>
-                        <Pressable onPress={handleRemoveItemFace}>
-                            <Text style = {styles.optionText}>Remove</Text>
-                        </Pressable>
-                    </View>
-                    
-                    <View style ={{borderBottomColor: '#75A7F7', borderBottomWidth: 2, width:'80%', alignItems:'center'}}>
-                        <Pressable onPress={()=> setShowAppOptions(false)}>
-                            <Text style = {styles.optionText}>Detail</Text>
-                        </Pressable>
-                    </View>
-                    
-                    <View style ={{width:'80%', alignItems:'center'}}>
-                        <Pressable onPress={() => setShowAppOptions(false)}>
-                            <Text style = {styles.optionText}>Close</Text>
-                        </Pressable>
-                    </View>
-                </View>
-            </View>
-            </Modal>
+            <ModalOption visible={showAppOptions} data = {dataModel} actionPressOutside={() => setShowAppOptions(false)}/>
         </View>
     )
 }   
@@ -115,28 +110,5 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
-    modalContent: {
-        height: '20%',
-        width: '100%',
-        backgroundColor: '#2c3030',
-        borderTopRightRadius: 18,
-        borderTopLeftRadius: 18,
-        position: 'absolute',
-        bottom: 0,
-        justifyContent: 'center',
-      },
-    modalOption: {
-        borderTopRightRadius: 10,
-        borderTopLeftRadius: 10,
-        paddingHorizontal: 20,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    optionText: {
-        fontSize: 18,
-        color: 'white',
-        padding: 10,
-        fontWeight: '600'
-    }
+
 })

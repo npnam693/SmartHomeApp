@@ -1,4 +1,4 @@
-import { Text, View, Image, TouchableOpacity, StyleSheet, Modal, TouchableWithoutFeedback } from "react-native"
+import { Text, View, Image, TouchableOpacity, StyleSheet, Modal } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import SettingSquare from "../components/setting/SettingSquare"
 import SettingRectangle from "../components/setting/SettingRectangle"
