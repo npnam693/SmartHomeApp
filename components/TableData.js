@@ -23,7 +23,6 @@ export default function TableData({data}) {
             </View>
             {
                 data.map((item, index) => (
-                    
                     index == data.length - 1 ?
                         <View style={styles.itemRow} key={index}>
                             <View style = {[styles.itemCell, {flex: 0.15, borderBottomLeftRadius: 10}]}>
