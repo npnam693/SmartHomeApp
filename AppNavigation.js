@@ -16,6 +16,7 @@ import VisualiaztionScreen from './screens/Visualization';
 import SetPINScreen from './screens/Signup/SetPIN';
 import AddFace from './screens/Setting/AddFace';
 import FaceRegconition from './screens/Setting/FaceRegconition';
+import UploadCamera from './screens/Setting/Camera';
 import { ChangePIN } from './screens/Setting/ChangePIN';
 import DetailVisualization from './screens/Visualization/DetailVisualization';
 
@@ -147,6 +148,7 @@ function SettingStackScreen({ navigation}){
       <SettingStack.Navigator>
         <SettingStack.Screen name="Setting Screen" component={SettingScreen} options={{ headerShown: false }}/>
         <SettingStack.Screen name="Add Face" component={AddFace} />
+        <SettingStack.Screen name="Camera" component={UploadCamera} options={{ headerShown: false, tabBarVisible: false }} />
         <SettingStack.Screen name="Face Regconition" component={FaceRegconition} />
         <SettingStack.Screen name="Change Pin" component={ChangePIN} />
       </SettingStack.Navigator>
