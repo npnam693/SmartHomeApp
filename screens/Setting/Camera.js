@@ -143,6 +143,11 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        paddingHorizontal: 30
+        paddingHorizontal: 30,
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        bottom: 40,
+        width: '100%',
+        zIndex: 1
     }
 });
