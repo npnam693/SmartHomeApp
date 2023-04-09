@@ -1,15 +1,17 @@
 import { View, Text, StyleSheet, Image, TextInput} from 'react-native'
 import { ScreenWidth } from '@rneui/base'
-import { useState, useContext} from 'react'
+import { useState, useContext, useRef, useEffect} from 'react'
 import { Button } from '@rneui/themed';
 import * as ImagePicker from 'expo-image-picker';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import { storage } from '../../firebase/firebaseConfig';
 import uuid from 'react-native-uuid';
 import { axiosClient } from '../../api/axiosSetup';
 import AuthContext from '../../AuthContext';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Camera, CameraType } from 'expo-camera';
+
 
 export default function AddFace({navigation}) {
     const [data, setData] = useState({
@@ -19,6 +21,7 @@ export default function AddFace({navigation}) {
     const [uploading, setUploading] = useState(false)
     const [images, setImages] = useState([]);
     const { userData } = useContext(AuthContext);
+
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -76,39 +79,39 @@ export default function AddFace({navigation}) {
 
     return (
         <View style = {styles.container}>
-            <Spinner
-                //visibility of Overlay Loading Spinner
-                visible={uploading}
-                //Text with the Spinner
-                textContent={'Loading...'}
-                //Text style of the Spinner Text
-                textStyle={styles.spinnerTextStyle}
-            />
-            <Button title="Pick images from camera roll" onPress={pickImage} />
-
-            <View style = {styles.listitem}>
-                {
-                    Array(8).fill(0).map((item, index) => {
-                        if (index < images.length) {
-                            return (
-                                <Image source={{uri:images[index].uri}}
-                                    style = {styles.faceitem}
-                                    key = {index}
-                                /> 
+                <Spinner
+                    //visibility of Overlay Loading Spinner
+                    visible={uploading}
+                    //Text with the Spinner
+                    textContent={'Loading...'}
+                    //Text style of the Spinner Text
+                    textStyle={styles.spinnerTextStyle}
+                />
+            <Button title="Take a picture" onPress={() => navigation.navigate('Camera', { setImages })} />
+                <Text>Or</Text>
+                <Button title="Pick images from camera roll" onPress={pickImage} />
+                <View style={styles.listitem}>
+                    {
+                        Array(8).fill(0).map((item, index) => {
+                            if (index < images.length) {
+                                return (
+                                    <Image source={{ uri: images[index].uri }}
+                                        style={styles.faceitem}
+                                        key={index}
+                                    />
+                                )
+                            }
+                            else return (
+                                <View key={index} style={styles.faceitem}>
+                                </View>
                             )
-                        }
-                        else return (
-                            <View key = {index} style={styles.faceitem}>
-                            </View>
-                        )
-                    })
-                }
-            </View>
-
-            <TextInput
-                    placeholder = {'Enter your name'}
+                        })
+                    }
+                </View>
+                <TextInput
+                    placeholder={'Enter your name'}
                     style={{
-                        backgroundColor : "#EBF8FF",
+                        backgroundColor: "#EBF8FF",
                         height: 48,
                         width: ScreenWidth - 70,
                         borderRadius: 8,
@@ -117,16 +120,15 @@ export default function AddFace({navigation}) {
                         paddingHorizontal: 20,
                         marginVertical: 10,
                     }}
-                    value = {data.name}
-                    onChangeText={(input) => setData({...data, name: input})}
+                    value={data.name}
+                    onChangeText={(input) => setData({ ...data, name: input })}
                 />
-            {
-                !uploading &&
-                <Button radius={'sm'} containerStyle={{width: 100, marginLeft: 'auto', marginTop: 10, marginRight: 35}}
-                    onPress = {handleClickSubmitFace}
-                >Next</Button> 
-                
-            }
+                {
+                    !uploading &&
+                    <Button radius={'sm'} containerStyle={{ width: 100, marginLeft: 'auto', marginTop: 10, marginRight: 35 }}
+                        onPress={handleClickSubmitFace}
+                    >Next</Button>
+                }
         </View>
     )
 }   
