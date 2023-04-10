@@ -97,13 +97,19 @@ export default function UploadCamera({navigation, route}){
                     </View>) : (
                     <View style={{
                         display: 'flex',
-                        alignItems:'center'
+                        alignItems:'center',
+                        backgroundColor: 'transparent',
+                        position: 'absolute',
+                        bottom: 40,
+                        width: '100%',
+                        zIndex: 1
                     }}>
                         <Button
                             icon={<Ionicons name='camera' size={40} color='#000' />}
                             buttonStyle={{
                                 backgroundColor: '#fff',
-                                width: 80
+                                width: 80,
+                                marginTop: 10
                             }}
                             titleStyle={{
                                 marginLeft: 5
@@ -122,19 +128,26 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: "#000",
-        paddingBottom: 20,
+        backgroundColor: "transparent",
+        height: '100%'
     },
 
     camera: {
         flex: 1,
-        borderRadius: 20
+        borderRadius: 20,
+        position: 'relative',
+        height: '100%',
     },
 
     option: {
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        paddingHorizontal: 30
+        paddingHorizontal: 30,
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        bottom: 40,
+        width: '100%',
+        zIndex: 1
     }
 });
