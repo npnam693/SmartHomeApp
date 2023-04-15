@@ -1,4 +1,4 @@
-import { Text, View, Image, TouchableOpacity, StyleSheet, Modal } from "react-native"
+import { Text, View, Image, TouchableOpacity, StyleSheet, Modal, ScrollView, Dimensions } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import SettingSquare from "../components/setting/SettingSquare"
 import SettingRectangle from "../components/setting/SettingRectangle"
@@ -82,20 +82,25 @@ export default function SettingScreen({ navigation }) {
                     <SettingSquare type = "ADD_DEVICE" />
                 </TouchableOpacity>
             </View >
-            <View style={[{flexDirection: 'column', marginTop: 20}]}>
-                <TouchableOpacity>
-                    <SettingRectangle type = "PROFILE" />
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <SettingRectangle type = "NOTIFICATION" />
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <SettingRectangle type = "SUPPORT" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress = {handleClickLogout}>
-                    <SettingRectangle type = "LOGOUT" />
-                </TouchableOpacity>
-            </View>
+            <ScrollView contentContainerStyle={{ display: 'flex', alignItems: 'center', width: Dimensions.get('window').width, }} showsVerticalScrollIndicator={false}>
+                <View style={[{flexDirection: 'column', marginTop: 20, paddingBottom: 90}]}>
+                    <TouchableOpacity>
+                        <SettingRectangle type = "PROFILE" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <SettingRectangle type = "NOTIFICATION" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <SettingRectangle type = "SUPPORT" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Automation Setting')}>
+                        <SettingRectangle type="AUTOMATION" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress = {handleClickLogout}>
+                        <SettingRectangle type = "LOGOUT" />
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
         </View>
     )
 }

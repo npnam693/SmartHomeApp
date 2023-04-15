@@ -19,6 +19,7 @@ import FaceRegconition from './screens/Setting/FaceRegconition';
 import UploadCamera from './screens/Setting/Camera';
 import { ChangePIN } from './screens/Setting/ChangePIN';
 import DetailVisualization from './screens/Visualization/DetailVisualization';
+import AutomationSetting from './screens/Setting/AutomationSetting';
 
 // import { StackActions } from '@react-navigation/native';
 
@@ -151,6 +152,7 @@ function SettingStackScreen({ navigation}){
         <SettingStack.Screen name="Camera" component={UploadCamera} options={{ headerShown: false, tabBarVisible: false }} />
         <SettingStack.Screen name="Face Regconition" component={FaceRegconition} />
         <SettingStack.Screen name="Change Pin" component={ChangePIN} />
+        <SettingStack.Screen name="Automation Setting" component={AutomationSetting} />
       </SettingStack.Navigator>
     )
 }

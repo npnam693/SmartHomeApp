@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from "react-native"
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from "react-native"
 import { typeDevice } from "../components/ControlDevice"
 import { Button } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -84,9 +84,17 @@ export default function DeviceScreen({ navigation, route }){
                 </View>
             )}
             <ScrollView contentContainerStyle={styles.devices} showsVerticalScrollIndicator={false}>
-                {schedules.map(schedule => (
-                    <Schedule key={schedule._id} data={schedule} navigation={navigation} setSchedules={setSchedules}/>
-                ))}
+                <View style={{
+                    paddingHorizontal: 20,
+                    paddingBottom: 30,
+                    display: 'flex',
+                    alignItems: 'center',
+                    width: '100%'
+                }}>
+                    {schedules.map(schedule => (
+                        <Schedule key={schedule._id} data={schedule} navigation={navigation} setSchedules={setSchedules}/>
+                    ))}
+                </View>
             </ScrollView>
         </View>
     )
@@ -126,9 +134,7 @@ const styles = StyleSheet.create({
     devices: {
         display: 'flex',
         alignItems:'center',
-        width: '100%',
-        paddingHorizontal: 20,
-        paddingBottom: 30,
+        width: Dimensions.get('window').width,
     }
     ,
     unitTitle: {
