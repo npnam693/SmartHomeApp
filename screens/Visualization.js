@@ -1,4 +1,4 @@
-import { Text, View, Dimensions, StyleSheet, TouchableOpacity} from "react-native"
+import { Text, View, Dimensions, StyleSheet, TouchableOpacity, ScrollView} from "react-native"
 import { useState, useEffect } from "react";
 import {
     LineChart,
@@ -84,6 +84,7 @@ export default function Visualiaztion({navigation}) {
                         <Text style={styles.textline2}>Light Intensity</Text>
                     </View>
                 </View>
+             <ScrollView>
             <TouchableOpacity style={{
                 backgroundColor:'#C4F1F9', 
                 borderRadius:10,
@@ -198,6 +199,65 @@ export default function Visualiaztion({navigation}) {
                     }}
                 />
             </TouchableOpacity>
+              <TouchableOpacity 
+            style={{
+                backgroundColor:'#fffccc', 
+                borderRadius:10,
+                marginVertical:10,
+                alignItems:'center',
+                justifyContent: 'center',
+                }}
+                onPress={() => navigation.navigate('DetailVisualization', {sensorType: 'bbc-humi'})}
+            >
+                <Text style={styles.textline3}>Light Intensity</Text>
+               <LineChart
+                   data={{
+                    labels: humi.length>0? humi.map((item,index)=>
+                    { 
+                        let date = new Date(item[0])
+                        return date.getHours() +'h'
+                    }
+                    ):
+                     ["1h", "2h", "3h", "4h", "5h", "6h"],
+                    datasets: [
+                        {
+                            data: humi.length>0 ? humi.map((item,index)=>{
+                                return Number(item[1]).toFixed(1)
+                            }) :
+                             [30,60,40,50,25,37]
+                        }
+                    ]
+                    }}
+                    width={Dimensions.get("window").width - 50} // from react-native
+                    height={180}
+                    // yAxisLabel="$"
+                    yAxisSuffix =" %"
+                    yAxisInterval={1} // optional, defaults to 1
+                    chartConfig={{
+                    backgroundColor: "black",
+                    backgroundGradientFrom: "#fffccc",
+                    backgroundGradientTo: "#fffccc",
+                    decimalPlaces: 2, // optional, defaults to 2dp
+                    color: (opacity = 1) => `rgba(56, 56, 56, ${opacity})`,
+                    labelColor: (opacity = 1) => `rgba(56, 56, 56, ${opacity})`,
+                    style: {
+                        borderRadius: 16
+                    },
+                    propsForDots: {
+                        r: "3",
+                        strokeWidth: "2",
+                        stroke: "#4299E1"
+                    }
+                    }}
+                    bezier
+                    style={{
+                    marginVertical: 4,
+                    borderRadius: 16,
+                    alignItems:'center',
+                    }}
+                />
+            </TouchableOpacity>
+             </ScrollView>
         </View>
     )
 }   
