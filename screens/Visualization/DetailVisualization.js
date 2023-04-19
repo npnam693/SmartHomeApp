@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { Text, View, StyleSheet, Dimensions, ScrollView,Image } from "react-native";
 import { Button } from '@rneui/themed';
 import { useState, useEffect } from "react";
 import { LineChart } from "react-native-chart-kit"
@@ -17,16 +17,19 @@ export default function DetailVisualization({ navigation, route }) {
     const [dataTemp, setDataTemp] = useState()
     let colorchart
     let styledata
+    let pic
     if (typeSensor=='bbc-temp')
     {
         colorchart='#C4F1F9'
         styledata=styles.infoValue
+        pic=require('../../assets/images/Sunny.png')
         
     }
     else
     {
         colorchart='#ccfccd'
         styledata=styles.infoValuehumi
+        pic=require('../../assets/images/weak.png')
        
     }
     useEffect(() => {
@@ -40,27 +43,38 @@ export default function DetailVisualization({ navigation, route }) {
                 .catch((err) => console.log(err))
 
         }
-        else if (modeSelected === 'WEEK') {
-            axiosAdafruit.get(`${typeSensor}/data/chart?hours=168&resolution=5`)
+         else if (modeSelected === 'WEEK') {
+            axiosAdafruit.get(`${typeSensor}/data/chart?hours=168&resolution=30`)
                 .then((res) => {
                     setData(res.data.data)
                     const resValue = res.data.data.map(item => Number(item[1]))
                     setDataTemp(resValue)
                 })
                 .catch((err) => console.log(err))
+                
         }
+        else
+        {
+            axiosAdafruit.get(`${typeSensor}/data/chart?hours=720&resolution=60`)
+            .then((res) => {
+                setData(res.data.data)
+                const resValue = res.data.data.map(item => Number(item[1]))
+                setDataTemp(resValue)
+            })
+            .catch((err) => console.log(err))
+        }
+        
     }, [modeSelected])
 
-    if (dataTemp) [
+    if (dataTemp) {
         console.log(dataTemp, modeSelected)
-    ]
+    }
 
     const getModeTitle = (mode) => {
         if (mode === 'MONTH') return 'Last 30 days'
         else if (mode === 'YEAR') return 'Last 4 months'
         else if (mode === 'WEEK') return 'Last 7 days'
     }
-
     const dataModal = [
         {
             title: 'Last 30 days',
@@ -118,10 +132,22 @@ export default function DetailVisualization({ navigation, route }) {
             </View>
                
             </View>
+            <View style={{
+                flexDirection:'row',
+            }}>
             <View style={styles.infoAvg} >
                     <Text style={styledata} >{dataTemp && Number(dataTemp.reduce((a,b) => a + b, 0) / dataTemp.length).toFixed(1)}</Text>
                     <Text style = {styles.infoTitle} >Average</Text>
                 </View>
+            <Image style={{
+                width: "20%",
+                height: 80,
+                marginLeft:'20%',
+                marginBottom:10,
+            }}
+             source={pic}/>
+            </View>
+           
             </View>
 
             
