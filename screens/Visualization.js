@@ -10,61 +10,29 @@ import {
   } from "react-native-chart-kit";
 
 import { axiosAdafruit } from "../api/axiosSetup";
-export const typeSensor = {
-    temp: {
-        name: "Temperature",
-        feedId: "bbc-temp",
-    },
-    humidity: {
-        name: "Humidity",
-        feedId: "bbc-humi",
-    },
-    lightIntensity: {
-        name: "Light Intensity",
-        feedId: "bbc-humi"
-    },
-}
+
 export default function Visualiaztion({navigation}) {
     const [temp, setTemp] = useState([
-        {"created_at": "",
-         "created_epoch": 0,
-          "expiration": "0",
-           "feed_id": 0,
-            "feed_key": "bbc-temp",
-             "id": "0F8YXZMQPGP5RAC3BFSE8QZQN5",
-              "value": ""}
     ])
-    const [humi, setHumi] = useState([{
-        "created_at": "",
-         "created_epoch": 0,
-          "expiration": "",
-           "feed_id": 0,
-            "feed_key": "bbc-temp",
-             "id": "0F8YY0H4VX1G1465BAFVZP7ZNY",
-              "value": ""}])
+    const [humi, setHumi] = useState([
+        ])
     const [tempSingle,setTempSingle]= useState(30)
     const [humiSingle,sethumiSingle]= useState(30)
     
     useEffect(() => {
-        Object.entries(typeSensor).map(([key, value]) => {
-            axiosAdafruit.get(`bbc-temp/data?limit=1000`)
-                .then(res => {
-                    setTemp(res.data)
-                })
-                .catch(err => console.log(err.response))
-                axiosAdafruit.get(`bbc-temp/data?limit=1`)
+        
+            axiosAdafruit.get('bbc-temp/data/chart?hours=2000&resolution=60')
+            .then((temp) => setTemp(temp.data.data.slice(0,6)))
+            .catch((err) => console.log(err))
+            axiosAdafruit.get(`bbc-temp/data?limit=1`)
                 .then(res => {
                     setTempSingle(res.data[0].value)
                 })
                 .catch(err => console.log(err.response))
 
-                axiosAdafruit.get(`bbc-humi/data?limit=100`)
-                .then(res => {
-                    setHumi(res.data)
-                    
-                   
-                })
-                .catch(err => console.log(err.response))
+                axiosAdafruit.get('bbc-humi/data/chart?hours=2000&resolution=60')
+                .then((humi) => setHumi(humi.data.data.slice(0,6)))
+                .catch((err) => console.log(err))
                 axiosAdafruit.get(`bbc-humi/data?limit=1`)
                 .then(res => {
                     sethumiSingle(res.data[0].value)
@@ -72,69 +40,10 @@ export default function Visualiaztion({navigation}) {
                    
                 })
                 .catch(err => console.log(err.response))
-        })
+        
     }, [])
-    let tempList=[
-        {
-            date: new Date('2023-03-29T08:04:44Z'),
-            data: 0
-        }
-    ]
-    let chartdata=[]
-    
-    if(temp.length>1) {
-   
-    for(let x in temp)
-    {
-        let temp1={
-            date:  new Date(temp[x].created_at),
-            data: Number(temp[x].value)
-        }
-        tempList.push(temp1);
-    }
-    let num=(tempList.length/6).toFixed();
-    let sum=0;
-    for(let x in tempList) {
-       if(x>=1)
-       { sum=sum+tempList[x].data 
-        if( x %num==0)
-        {   
-            tempList[x].data=(sum/num).toFixed(1)
-            chartdata.push(tempList[x])
-            sum=0;
-        }
-       
-       }
-    }
-    
-}
+  
 
-let humiList=[
-    {
-        date: new Date('2023-03-29T08:04:44Z'),
-        data: 0
-    }
-]
-let chartHumiData=[]
-if(humi.length>1) {
-   
-    for(let x in humi)
-    {
-        let humi1={
-            date:  new Date(humi[x].created_at),
-            data: Number(humi[x].value)
-        }
-        humiList.push(humi1);
-    }
-    let num=(humiList.length/6).toFixed();
-    for(let x in humiList) {
-       if(x>=1)
-       { if(x==1 || x %num==0)
-        chartHumiData.push(humiList[x])
-       }
-    }
-    
-}
     return (
         <View style = {styles.container}>
             <View style ={{
@@ -182,21 +91,23 @@ if(humi.length>1) {
                 alignItems:'center',
                 justifyContent: 'center',
                 }}
-                onPress={()=>{navigation.navigate("VisualiaztionScreenDetail",{type:'bbc-temp'})}} >
+                onPress={() => navigation.navigate('DetailVisualization', {sensorType: 'bbc-temp'})} >
                 <Text style={styles.textline3}>Temperature</Text>
                <LineChart
                     data={{
-                    labels: chartdata.length>=1 ? chartdata.map((item,index)=>
-                    {    let hours=1 + index
-                            
-                        return hours +'h'
-                    }) :["January", "February", "March", "April", "May", "June"],
+                    labels: temp? temp.map((item,index)=>
+                    { 
+                        let date = new Date(item[0])
+                        return date.getHours() +'h'
+                    }
+                    ):
+                     ["1h", "2h", "3h", "4h", "5h", "6h"],
                     datasets: [
                         {
-                            data: chartdata.length>=1 ? chartdata.map((item,index)=>
-                            {  
-                                return item.data
-                            }) :[30,60,40,50,25,37]
+                            data: temp ? temp.map((item,index)=>{
+                                return Number(item[1]).toFixed(1)
+                            }) :
+                             [30,60,40,50,25,37]
                         }
                     ]
                     }}
@@ -237,21 +148,24 @@ if(humi.length>1) {
                 alignItems:'center',
                 justifyContent: 'center',
                 }}
-                onPress={()=>{navigation.navigate("VisualiaztionScreenDetail",{type:'bbc-humi'})}}
+                onPress={() => navigation.navigate('DetailVisualization', {sensorType: 'bbc-humi'})}
             >
                 <Text style={styles.textline3}>Humidity</Text>
                <LineChart
-                    data={{
-                    labels: chartHumiData.length>=1 ? chartHumiData.map((item,index)=>
-                    {
-                        return index.toString() +'h'
-                    }) :["January", "February", "March", "April", "May", "June"],
+                   data={{
+                    labels: humi? humi.map((item,index)=>
+                    { 
+                        let date = new Date(item[0])
+                        return date.getHours() +'h'
+                    }
+                    ):
+                     ["1h", "2h", "3h", "4h", "5h", "6h"],
                     datasets: [
                         {
-                            data: chartHumiData.length>=1 ? chartHumiData.map((item,index)=>
-                            {
-                                return item.data
-                            }) :[30,60,40,50,25,37]
+                            data: humi ? humi.map((item,index)=>{
+                                return Number(item[1]).toFixed(1)
+                            }) :
+                             [30,60,40,50,25,37]
                         }
                     ]
                     }}
