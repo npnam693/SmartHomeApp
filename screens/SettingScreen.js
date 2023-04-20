@@ -41,7 +41,7 @@ export default function SettingScreen({ navigation }) {
                 </TouchableOpacity>
                 <Modal
                     animationType="slide"
-                    // transparent={true}
+                    transparent={true}
                     visible={modalVisible}
                     onRequestClose={() => {
                         setModalVisible(false);
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 30
+        marginTop: 60
     },
     option: {
         flexDirection: 'row',
