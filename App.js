@@ -20,8 +20,8 @@ export default function App() {
     const [userData, setUserData] = useState(null);
     const [notifs, setNotifs] = useState([])
     // const socket = io("https://api-smarthome.onrender.com");
-    // const socket = io("http://10.0.2.2:3000");
-    const socket = io("https://smarthome-api.onrender.com")
+    const socket = io("http://10.0.2.2:3000");
+    // const socket = io("https://smarthome-api.onrender.com")
     
     const fetchUser = async () => {
     
