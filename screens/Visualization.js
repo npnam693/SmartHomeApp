@@ -96,7 +96,7 @@ export default function Visualiaztion({navigation}) {
                 <Text style={styles.textline3}>Temperature</Text>
                <LineChart
                     data={{
-                    labels: temp? temp.map((item,index)=>
+                    labels: temp.length>0? temp.map((item,index)=>
                     { 
                         let date = new Date(item[0])
                         return date.getHours() +'h'
@@ -105,7 +105,7 @@ export default function Visualiaztion({navigation}) {
                      ["1h", "2h", "3h", "4h", "5h", "6h"],
                     datasets: [
                         {
-                            data: temp ? temp.map((item,index)=>{
+                            data: temp.length>0 ? temp.map((item,index)=>{
                                 return Number(item[1]).toFixed(1)
                             }) :
                              [30,60,40,50,25,37]
@@ -154,7 +154,7 @@ export default function Visualiaztion({navigation}) {
                 <Text style={styles.textline3}>Humidity</Text>
                <LineChart
                    data={{
-                    labels: humi? humi.map((item,index)=>
+                    labels: humi.length>0? humi.map((item,index)=>
                     { 
                         let date = new Date(item[0])
                         return date.getHours() +'h'
@@ -163,7 +163,7 @@ export default function Visualiaztion({navigation}) {
                      ["1h", "2h", "3h", "4h", "5h", "6h"],
                     datasets: [
                         {
-                            data: humi ? humi.map((item,index)=>{
+                            data: humi.length>0 ? humi.map((item,index)=>{
                                 return Number(item[1]).toFixed(1)
                             }) :
                              [30,60,40,50,25,37]
