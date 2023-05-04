@@ -3,9 +3,6 @@ import { useState, useEffect } from "react";
 import { axiosClient } from "../../api/axiosSetup";
 import AutoItem from "../../components/AutoItem";
 
-
-
-
 export default function AutomationSetting({navigation}) {
     const [deviceData, setDeviceData] = useState([])
 
@@ -14,6 +11,7 @@ export default function AutomationSetting({navigation}) {
             .then((device) => setDeviceData(device.data))
             .catch(err => console.error(err))
     }, [])
+    
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={{ display: 'flex', alignItems: 'center', width: '100%' }} showsVerticalScrollIndicator={false}>

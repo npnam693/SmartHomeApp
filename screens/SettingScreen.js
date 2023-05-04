@@ -87,14 +87,14 @@ export default function SettingScreen({ navigation }) {
                     <TouchableOpacity>
                         <SettingRectangle type = "PROFILE" />
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Automation Setting')}>
+                        <SettingRectangle type="AUTOMATION" />
+                    </TouchableOpacity>
                     <TouchableOpacity>
                         <SettingRectangle type = "NOTIFICATION" />
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <SettingRectangle type = "SUPPORT" />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('Automation Setting')}>
-                        <SettingRectangle type="AUTOMATION" />
                     </TouchableOpacity>
                     <TouchableOpacity onPress = {handleClickLogout}>
                         <SettingRectangle type = "LOGOUT" />

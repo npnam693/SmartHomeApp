@@ -19,7 +19,7 @@ export const typeSensor = {
     },
     lightIntensity: {
         name: "Light Intensity",
-        feedId: "bbc-humi"
+        feedId: "light-intensity"
     },
 }
 export default function GeneralInfo({ navigation }) {
