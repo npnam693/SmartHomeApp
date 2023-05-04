@@ -2,7 +2,6 @@ import { Modal, View, Text, Pressable, StyleSheet } from "react-native"
 
 
 export default function ModalOption({visible, data, actionPressOutside}) {
-    
     return (
     <Modal animationType="slide" transparent={true} visible={visible}>
         <Pressable onPress={actionPressOutside}>
