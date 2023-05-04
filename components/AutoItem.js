@@ -2,16 +2,20 @@ import { View, Text, TextInput, StyleSheet } from "react-native"
 import { Button } from '@rneui/themed';
 import { typeDevice } from "./ControlDevice";
 import { useState } from "react";
+import { axiosClient } from "../api/axiosSetup";
+
 
 export default function AutoItem({device}) {
     const [onValue, setOnValue] = useState(device.onValue || 0)
     const [offValue, setoffValue] = useState(device.offValue || 0)
 
     const handleSave = async () => {
-        console.log(onValue, offValue)
-        //call api
+        axiosClient.put("api/device/value/", {
+            onValue, offValue, id: device._id,
+        })
+            .then((device) => console.log(device.data))
+            .catch(err => console.error(err))
     }
-
     return (
         <View style={styles.deviceItem}>
             <View style={{ flex: 1 }}>
