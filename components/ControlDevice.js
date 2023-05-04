@@ -51,7 +51,17 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                 else setChecked(true)
             })
             .catch((err) => console.log(err))
+        axiosClient.get("api/device/")
+            .then((device) => {
+                device.data.map((item, index) => {
+                    if (item.type == type) {
+                        setDeviceData(item)
+                    }   
+                })
+            })
+            .catch(err => console.log(err))
     }, [])
+
 
     
     return (
@@ -83,20 +93,30 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                         setChecked(value)
                     }}
                 />
-                <Pressable>
+                <Pressable
+                    onPress={() => {
+                        console.log('huhu')
+                        axiosClient.put('api/device/mode', {
+                            id: deviceData._id, value: !deviceData.auto
+                        })
+                            .then((data) => { 
+                                console.log(data.data)
+                                setDeviceData(data.data)
+                            }
+                            )
+                            .catch((err) => console.error(err))
+                    }}
+                >
                     {
-                        deviceData.auto ?
-                            <View style={[styles.autoView, {backgroundColor:'#0084ff'}]}>
-                                <Text style = {{color: 'white'}}>Auto</Text>
-                            </View>
+                        deviceData != undefined && deviceData.auto  ?
+                        <View style={[styles.autoView, {backgroundColor:'#2495ff'}]}>
+                            <Text style = {{color: 'white'}}>Auto</Text>
+                        </View>
                             :
-                            <View style={styles.autoView}>
-                                <Text style = {{color: '#9A9B9E'}}>Auto</Text>
-                            </View>
-                            
-
+                        <View style={styles.autoView}>
+                            <Text style = {{color: '#9A9B9E'}}>Auto</Text>
+                        </View>
                     }
-
                 </Pressable>
             </View>
         </TouchableOpacity>
