@@ -1,4 +1,4 @@
-import { Text, View, Dimensions, StyleSheet, TouchableOpacity, StatusBar} from "react-native"
+import { Text, View, Dimensions, StyleSheet, TouchableOpacity} from "react-native"
 import { useState, useEffect } from "react";
 import { LineChart } from "react-native-chart-kit";
 import { axiosAdafruit } from "../api/axiosSetup";
