@@ -49,9 +49,7 @@ export default function App() {
     }, [isLoggedIn]);
 
     useEffect(() => {
-      console.log('doo r')
       socket.on('notif received', (newNotif) => {
-        console.log('ccccccccccccccccccccccccc', newNotif)
         setNotifs(prev => {
           let isDup = false
           prev.forEach(notif => {
@@ -59,7 +57,6 @@ export default function App() {
           })
           if (isDup) return prev
           const updatedNotifs = [newNotif, ...prev]
-          console.log('okokokokokok: ', updatedNotifs.length)
           AsyncStorage.setItem('notifs', JSON.stringify(updatedNotifs))
           return updatedNotifs
         })
@@ -68,12 +65,12 @@ export default function App() {
 
     const login = () => {
         setIsLoggedIn(true);
-        console.log('trang thía đăng nhập đang là ', isLoggedIn)
+        console.log('Login Status: ', isLoggedIn)
     };
 
     const logout = () => {
         setIsLoggedIn(false);
-        console.log('trang thía đăng nhập đang là ', isLoggedIn)
+        console.log('Login Status: ', isLoggedIn)
     };
 
     console.log(userData)

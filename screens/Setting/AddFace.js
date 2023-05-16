@@ -44,7 +44,7 @@ export default function AddFace({navigation}) {
             const response = await fetch(item.uri)
             const blobFile = await response.blob()
             // const ID = await genID()
-            const imageRef = ref(storage, `images/home${userData.homeID}/${userData.email}/${uuid.v4()}`);
+            const imageRef = ref(storage, `images/home${userData.homeID}/${data.name.split(' ').join('')}/${uuid.v4()}`);
             const result = await uploadBytes(imageRef, blobFile)
             const url = await getDownloadURL(result.ref)
             return url
