@@ -1,4 +1,4 @@
-import { NavigationContainer, DefaultTheme, StatusBar} from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -21,6 +21,7 @@ export default function App() {
     const [notifs, setNotifs] = useState([])
     // const socket = io("https://api-smarthome.onrender.com");
     const socket = io("http://10.0.2.2:3000");
+    // const socket = io("https://smarthome-api.onrender.com")
     
     const fetchUser = async () => {
     

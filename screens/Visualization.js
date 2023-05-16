@@ -1,4 +1,4 @@
-import { Text, View, Dimensions, StyleSheet, TouchableOpacity, StatusBar} from "react-native"
+import { Text, View, Dimensions, StyleSheet, TouchableOpacity} from "react-native"
 import { useState, useEffect } from "react";
 import { LineChart } from "react-native-chart-kit";
 import { axiosAdafruit } from "../api/axiosSetup";
@@ -9,7 +9,7 @@ const typeSensor = ["bbc-temp, bbc-humi"]
 export default function Visualiaztion({ navigation }) {
     const [temp, setTemp] = useState()
     const [humi, setHumi] = useState()
-    
+
     useEffect(() => {
         axiosAdafruit.get('bbc-temp/data/chart?hours=2000&resolution=60')
             .then((temp) => setTemp(temp.data.data.slice(0,6)))
@@ -18,6 +18,7 @@ export default function Visualiaztion({ navigation }) {
         axiosAdafruit.get('bbc-humi/data/chart?hours=2000&resolution=60')
             .then((humi) => setHumi(humi.data.data.slice(0,6)))
             .catch((err) => console.log(err))
+    
     }, [])
     
     return (

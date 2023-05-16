@@ -1,4 +1,4 @@
-import { Text, View, Image, TouchableOpacity, StyleSheet, Modal } from "react-native"
+import { Text, View, Image, TouchableOpacity, StyleSheet, Modal, ScrollView, Dimensions } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import SettingSquare from "../components/setting/SettingSquare"
 import SettingRectangle from "../components/setting/SettingRectangle"
@@ -31,11 +31,12 @@ export default function SettingScreen({ navigation }) {
     return (
         <View style = {styles.container}>
             <Image source={{uri:'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png'}} 
-                style = {{width: 130, height: 130, borderRadius: 110, borderWidth: 1, borderColor:'#c3d5e8'}}
+                style = {{width: 100, height: 100, borderRadius: 110, borderWidth: 1, borderColor:'#c3d5e8'}}
             />
             <Text style = {{fontSize: 20, fontWeight: '600', color: '#10101'}}>{userData.name}</Text>
             <Text style = {{fontSize: 14, fontWeight: '400', color: '#666'}}>{userData.email}</Text>
-            <View style = {styles.option}>
+            
+            <View style={styles.option}>
                 <TouchableOpacity onPress={() => setModalVisible(true)} activeOpacity={0.05}>
                     <SettingSquare type = "SHARE_KEY" />
                 </TouchableOpacity>
@@ -51,25 +52,25 @@ export default function SettingScreen({ navigation }) {
                         setModalVisible(false)}
                     }
                 >
-                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#EBF8FF', margin: 'auto',
-                        flex: 1
+                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#EBF8FF', 
+                        flex: 1,
                     }}>
-                    <QRCode
-                        value={userData.homeID}
-                        size={200}
-                        color="black"
-                        backgroundColor="white"
-                        borderRadius={10}
-                        padding={10}
-                    />
-                    <Text style={{fontSize: 18, fontWeight: '400', marginTop: 30}}>Key: {userData.homeID}</Text>
-                    <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} activeOpacity={0.05}>
-                        <View style = {{backgroundColor:'#ed6474', borderRadius: 16, marginTop: 50, width: 100, height:40,
-                            alignItems: 'center', justifyContent:'center'
-                        }}>
-                            <Text style = {{color: 'white', fontWeight: '500', fontSize:18, }}>HIDE</Text>
-                        </View>
-                    </TouchableOpacity>
+                        <QRCode
+                            value={userData.homeID}
+                            size={200}
+                            color="black"
+                            backgroundColor="white"
+                            borderRadius={10}
+                            padding={10}
+                        />
+                        <Text style={{fontSize: 18, fontWeight: '400', marginTop: 30}}>Key: {userData.homeID}</Text>
+                        <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} activeOpacity={0.05}>
+                            <View style = {{backgroundColor:'#ed6474', borderRadius: 16, marginTop: 50, width: 100, height:40,
+                                alignItems: 'center', justifyContent:'center'
+                            }}>
+                                <Text style = {{color: 'white', fontWeight: '500', fontSize:18, }}>HIDE</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </Modal>
                 <TouchableOpacity onPress={() => navigation.navigate('Face Regconition')} activeOpacity={0.05}>
@@ -82,20 +83,25 @@ export default function SettingScreen({ navigation }) {
                     <SettingSquare type = "ADD_DEVICE" />
                 </TouchableOpacity>
             </View >
-            <View style={[{flexDirection: 'column', marginTop: 20}]}>
-                <TouchableOpacity>
-                    <SettingRectangle type = "PROFILE" />
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <SettingRectangle type = "NOTIFICATION" />
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <SettingRectangle type = "SUPPORT" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress = {handleClickLogout}>
-                    <SettingRectangle type = "LOGOUT" />
-                </TouchableOpacity>
-            </View>
+            <ScrollView contentContainerStyle={{ display: 'flex', alignItems: 'center', width: Dimensions.get('window').width, }} showsVerticalScrollIndicator={false}>
+                <View style={[{flexDirection: 'column', marginTop: 20, paddingBottom: 90}]}>
+                    <TouchableOpacity>
+                        <SettingRectangle type = "PROFILE" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Automation Setting')}>
+                        <SettingRectangle type="AUTOMATION" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <SettingRectangle type = "NOTIFICATION" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <SettingRectangle type = "SUPPORT" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress = {handleClickLogout}>
+                        <SettingRectangle type = "LOGOUT" />
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
         </View>
     )
 }
@@ -111,6 +117,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'space-between',
         width: ScreenWidth - 50,
-        marginTop: 30,
+        marginTop: 10,
     }
 })

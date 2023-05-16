@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Switch } from '@rneui/themed';
@@ -35,7 +35,11 @@ export default function ControlDevice({ navigation, type, deviceID }) {
     const { userData, socket } = useContext(AuthContext);
 
     const [checked, setChecked] = useState(false);
+
+    const [deviceData, setDeviceData] = useState();
     
+    console.log(deviceData)
+
     socket.on(`toggle ${typeDevice[type].feedId}`, (msg) => {
         console.log('ben client ngke toggle r')
         if (msg == 1) setChecked(true)
@@ -49,7 +53,18 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                 else setChecked(true)
             })
             .catch((err) => console.log(err))
+        
+        axiosClient.get("api/device/")
+            .then((device) => {
+                device.data.map((item, index) => {
+                    if (item.type == type) {
+                        setDeviceData(item)
+                    }   
+                })
+            })
+            .catch(err => console.log(err))
     }, [])
+
 
     
     return (
@@ -81,9 +96,32 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                         setChecked(value)
                     }}
                 />
-                <View style = {styles.autoView}>
-                    <Text style = {{color: '#9A9B9E'}}>Auto</Text>
-                </View>
+                <Pressable
+                    onPress={() => {
+                        console.log('huhu')
+                        axiosClient.put('api/device/mode', {
+                            id: deviceData._id, value: !deviceData.auto
+                        })
+                            .then((data) => { 
+                                console.log(data.data)
+                                setDeviceData(data.data)
+                            }
+                            )
+                            .catch((err) => console.error(err))
+                    }}
+                >
+                    {
+                        
+                        deviceData != undefined && deviceData.auto ?
+                        <View style={[styles.autoView, {backgroundColor:'#2495ff'}]}>
+                            <Text style = {{color: 'white'}}>Auto</Text>
+                        </View>
+                            :
+                        <View style={styles.autoView}>
+                            <Text style = {{color: '#9A9B9E'}}>Auto</Text>
+                        </View>
+                    }
+                </Pressable>
             </View>
         </TouchableOpacity>
     )

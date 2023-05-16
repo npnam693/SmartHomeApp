@@ -15,6 +15,10 @@ const typeOption = {
         name : 'Support',    
         icon : <IconMaterial name = "support" size = {24} color = '#75A7F7'/>,
     },
+    AUTOMATION: {
+        name: 'Automation settings', 
+        icon: <Icon name="construct" size={24} color='#75A7F7' />,
+    },
     LOGOUT: {
         name: 'Logout',
         icon : <Icon name = "exit" size = {24} color = '#75A7F7'/>,
