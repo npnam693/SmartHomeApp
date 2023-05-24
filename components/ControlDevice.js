@@ -35,9 +35,11 @@ export default function ControlDevice({ navigation, type, deviceID }) {
     const { userData, socket } = useContext(AuthContext);
 
     const [checked, setChecked] = useState(false);
-    
+
     const [deviceData, setDeviceData] = useState();
     
+    console.log(deviceData)
+
     socket.on(`toggle ${typeDevice[type].feedId}`, (msg) => {
         console.log('ben client ngke toggle r')
         if (msg == 1) setChecked(true)
@@ -51,6 +53,7 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                 else setChecked(true)
             })
             .catch((err) => console.log(err))
+        
         axiosClient.get("api/device/")
             .then((device) => {
                 device.data.map((item, index) => {
@@ -108,7 +111,8 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                     }}
                 >
                     {
-                        deviceData != undefined && deviceData.auto  ?
+                        
+                        deviceData != undefined && deviceData.auto ?
                         <View style={[styles.autoView, {backgroundColor:'#2495ff'}]}>
                             <Text style = {{color: 'white'}}>Auto</Text>
                         </View>

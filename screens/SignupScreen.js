@@ -1,4 +1,4 @@
-import { Image, View, Text, TextInput, StyleSheet, ScrollView } from "react-native"
+import { Image, View, Text, TextInput, StyleSheet, ScrollView, Pressable } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
 import { useState, useContext } from "react"
@@ -6,6 +6,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { axiosClient } from "../api/axiosSetup";
 import Spinner from "react-native-loading-spinner-overlay/lib";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 export default function SignupScreen({navigation}){
     const [data, setData] = useState({
         name: "",
@@ -15,6 +17,11 @@ export default function SignupScreen({navigation}){
         homeID: "",
     })
     const [isSending, setIsSending] = useState(false)
+
+    const [showPass, setShowPass] = useState({
+        pass: false,
+        confirm: false,
+    })
 
     const handleClickSubmit = () => {
         if (data.name == "" || data.email == "" || data.password == "" || data.confirmPassword == "" || data.homeID == "" ) {
@@ -26,6 +33,7 @@ export default function SignupScreen({navigation}){
             alert('You need to confirm the correct password')
             return
         }
+
         setIsSending(true)
         axiosClient.post('api/users', {
             name: data.name, email: data.email, password: data.password, homeID: data.homeID
@@ -95,23 +103,35 @@ export default function SignupScreen({navigation}){
                     onChangeText={(input) => setData({...data, email: input})}
                 />
                 <KeyboardAwareScrollView extraScrollHeight={300}>
-                    <TextInput
-                        placeholder = {'Password'}
-                        style={{
-                            backgroundColor : "#D3D3D3",
-                            height: 48,
-                            borderRadius: 8,
-                            padding: 10,
-                            color: '#333',
-                            fontSize: 15,
-                            paddingHorizontal: 20,
-                            marginBottom: 14,
-                        }}
-                        value = {data.password}
-                        onChangeText={(input) => setData({...data, password: input})}
-                    />
+                    <View style = {{flexDirection: 'row'}}>
+                        <TextInput
+                            placeholder = {'Password'}
+                            style={{
+                                backgroundColor : "#D3D3D3",
+                                height: 48,
+                                borderRadius: 8,
+                                padding: 10,
+                                color: '#333',
+                                fontSize: 15,
+                                paddingHorizontal: 20,
+                                marginBottom: 14,
+                                width:'100%'
+                            }}
+                            value = {data.password}
+                            onChangeText={(input) => setData({...data, password: input})}
+                            secureTextEntry={showPass.pass ? true : false}
+                        
+                        
+                        />
+                        <Pressable         
+                            onPress={() => setShowPass({...showPass, pass: !showPass.pass})}
+                        >
+                            <Ionicons name={showPass.pass ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
+                        </Pressable>
+                    </View>
                 </KeyboardAwareScrollView>
                 <KeyboardAwareScrollView extraScrollHeight={100}>
+                    <View style = {{flexDirection: 'row'}}>
                     <TextInput
                         placeholder = {'Confirm Password'}
                         style={{
@@ -123,11 +143,22 @@ export default function SignupScreen({navigation}){
                             fontSize: 15,
                             paddingHorizontal: 20,
                             marginBottom: 14,
-
+                            width:'100%'
                         }}
-                        value = {data.confirmPassword}
+                        value={data.confirmPassword}
+                        secureTextEntry={showPass.confirm ? true : false}
+
                         onChangeText={(input) => setData({...data, confirmPassword: input})}
                     />
+                        <Pressable         
+                            onPress={() => setShowPass({...showPass, confirm: !showPass.confirm})}
+                        >
+                            <Ionicons name={showPass.confirm ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
+                        </Pressable>
+                    </View>
+
+
+
                 </KeyboardAwareScrollView>
                 
 

@@ -1,4 +1,4 @@
-import { Image, View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from "react-native"
+import { Image, View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Pressable } from "react-native"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
@@ -7,7 +7,7 @@ import AuthContext from "../AuthContext";
 import axios from 'axios'
 import { axiosClient } from '../api/axiosSetup';
 import Spinner from 'react-native-loading-spinner-overlay';
-
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function LoginScreen({ navigation }){
     const [data, setData] = useState({
@@ -15,9 +15,9 @@ export default function LoginScreen({ navigation }){
         password: '',
     })
 
+    const [showPass, setShowPass] = useState(false)
+
     const [isSending, setIsSending] = useState(false)
-
-
 
     const { isLoggedIn, login, socket } = useContext(AuthContext);
 
@@ -69,20 +69,29 @@ export default function LoginScreen({ navigation }){
                     value = {data.email}
                     onChangeText={(input) => setData({...data, email: input})}
                 />
-                <TextInput
-                    placeholder = {'Enter your password'}
-                    style={{
-                        backgroundColor : "#D3D3D3",
-                        height: 48,
-                        borderRadius: 8,
-                        padding: 10,
-                        fontSize: 15,
-                        paddingHorizontal: 20,
-                    }}
-                    textContentType = 'password'
-                    value = {data.password}
-                    onChangeText = {(input) => setData({...data, password: input})}
-                />
+                <View style={{flexDirection:'row'}}>
+                    <TextInput
+                        placeholder = {'Enter your password'}
+                        style={{
+                            backgroundColor : "#D3D3D3",
+                            height: 48,
+                            borderRadius: 8,
+                            padding: 10,
+                            fontSize: 15,
+                            paddingHorizontal: 20,
+                            width:'100%'
+                        }}
+                        textContentType='password'
+                        secureTextEntry={showPass ? true : false}
+                        value = {data.password}
+                        onChangeText={(input) => setData({ ...data, password: input })} 
+                    />
+                    <Pressable
+                        onPress={() => setShowPass(!showPass)}
+                    >
+                        <Ionicons name={showPass ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
+                    </Pressable>
+                </View>
                 <Text style = {styles.forgetPass}>Forget Password ?</Text>
                 <Button  type="solid" 
                     buttonStyle={{ backgroundColor: "#00B5D8", marginVertical: 40, borderRadius: 8, height: 48}}
