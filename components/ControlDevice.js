@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity, Pressable, Alert } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Switch } from '@rneui/themed';
@@ -81,6 +81,10 @@ export default function ControlDevice({ navigation, type, deviceID }) {
             <View style={styles.rightContainer}>
                 <Switch       
                     value={checked}
+                    
+                    
+                    
+                    
                     onValueChange={(value) => {
                         socket.emit('toggleswitch', value ? '1' : '0', typeDevice[type].feedId)
                         
@@ -97,18 +101,39 @@ export default function ControlDevice({ navigation, type, deviceID }) {
                     }}
                 />
                 <Pressable
-                    onPress={() => {
-                        console.log('huhu')
-                        axiosClient.put('api/device/mode', {
-                            id: deviceData._id, value: !deviceData.auto
-                        })
-                            .then((data) => { 
-                                console.log(data.data)
-                                setDeviceData(data.data)
-                            }
-                            )
-                            .catch((err) => console.error(err))
-                    }}
+                    onPress={ async () => {
+                        let confirmed = false;
+                        Alert.alert(
+                            'Alert',
+                            'Have you confirmed to enable/disable automatic on this device?',
+                            [
+                              {
+                                text: 'Cancel',
+                                onPress: () => confirmed = false,
+                                style: 'cancel',
+                              },
+                              {
+                                text: "OK",
+                                onPress: () => {
+                                    axiosClient.put('api/device/mode', {
+                                        id: deviceData._id, value: !deviceData.auto
+                                    })
+                                        .then((data) => { 
+                                            console.log(data.data)
+                                            setDeviceData(data.data)
+                                            }
+                                        )
+                                        .catch((err) => console.error(err))
+                                },
+                                style: 'confirm',
+                              }
+                            ],
+                            {
+                              cancelable: true,
+                              onDismiss: () => confirmed = false
+                            },
+                        );
+                        }}
                 >
                     {
                         

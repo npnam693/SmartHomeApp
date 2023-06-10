@@ -13,7 +13,10 @@ export default function AutoItem({device}) {
         axiosClient.put("api/device/value/", {
             onValue, offValue, id: device._id,
         })
-            .then((device) => console.log(device.data))
+            .then((device) => {
+                console.log(device.data)
+                alert("Value threshold adjustment was successful!")
+            })
             .catch(err => console.error(err))
     }
     return (
@@ -24,11 +27,11 @@ export default function AutoItem({device}) {
             </View>
             <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'space-around' }}>
                 <View style={styles.groupInput}>
-                    <Text>On value</Text>
+                    <Text style={styles.titleValue}>On value</Text>
                     <TextInput style={styles.input} inputMode="numeric" keyboardType="numeric" value={`${onValue}`} onChangeText={(val) => {setOnValue(val)}}/>
                 </View>
                 <View style={styles.groupInput}>
-                    <Text>Off value</Text>
+                    <Text style={styles.titleValue}>Off value</Text>
                     <TextInput style={styles.input} inputMode="numeric" keyboardType="numeric" value={`${offValue}`} onChangeText={(val) => { setoffValue(val) }} />
                 </View>
                 <Button onPress={handleSave}>Save</Button>
@@ -65,5 +68,9 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderRadius: 4,
         padding: 5,
+    },
+    titleValue: {
+        text: 14,
+        fontWeight: '500'
     }
 })

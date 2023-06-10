@@ -15,7 +15,7 @@ export default function LoginScreen({ navigation }){
         password: '',
     })
 
-    const [showPass, setShowPass] = useState(false)
+    const [hidePass, setHidePass] = useState(true)
 
     const [isSending, setIsSending] = useState(false)
 
@@ -58,7 +58,7 @@ export default function LoginScreen({ navigation }){
                 <TextInput
                     placeholder = {'Enter your email'}
                     style={{
-                        backgroundColor : "#D3D3D3",
+                        backgroundColor : "#EEEEEE",
                         height: 48,
                         borderRadius: 8,
                         padding: 10,
@@ -73,7 +73,7 @@ export default function LoginScreen({ navigation }){
                     <TextInput
                         placeholder = {'Enter your password'}
                         style={{
-                            backgroundColor : "#D3D3D3",
+                            backgroundColor : "#EEEEEE",
                             height: 48,
                             borderRadius: 8,
                             padding: 10,
@@ -82,14 +82,14 @@ export default function LoginScreen({ navigation }){
                             width:'100%'
                         }}
                         textContentType='password'
-                        secureTextEntry={showPass ? true : false}
+                        secureTextEntry={hidePass ? true : false}
                         value = {data.password}
                         onChangeText={(input) => setData({ ...data, password: input })} 
                     />
                     <Pressable
-                        onPress={() => setShowPass(!showPass)}
+                        onPress={() => setHidePass(!hidePass)}
                     >
-                        <Ionicons name={showPass ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
+                        <Ionicons name={hidePass ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
                     </Pressable>
                 </View>
                 <Text style = {styles.forgetPass}>Forget Password ?</Text>

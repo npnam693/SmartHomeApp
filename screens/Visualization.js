@@ -23,7 +23,7 @@ export default function Visualiaztion({ navigation }) {
     
     return (
         <View style={styles.container}>
-            <View style = {{paddingTop: 50, flexDirection: 'row', width:'100%', justifyContent:'space-between', alignItems:'flex-end', backgroundColor:'#EBF8FF', paddingHorizontal: 30, paddingVertical: 12, borderBottomLeftRadius: 30, borderBottomRightRadius: 30}}>
+            {/* <View style = {{paddingTop: 50, flexDirection: 'row', width:'100%', justifyContent:'space-between', alignItems:'flex-end', backgroundColor:'#EBF8FF', paddingHorizontal: 30, paddingVertical: 12, borderBottomLeftRadius: 30, borderBottomRightRadius: 30}}>
                     <View style={{flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
                         <View style={{position:'relative'}}>
                             <Text style ={styles.temparatureText}>10</Text>
@@ -41,11 +41,11 @@ export default function Visualiaztion({ navigation }) {
                         <Text style = {styles.lightText}> lux</Text>
                         <Text>Light Intensity</Text>
                     </View>
-            </View>
+            </View> */}
 
 
             <TouchableOpacity onPress={() => navigation.navigate('DetailVisualization', {sensorType: 'bbc-temp'})}>
-            <Text style = {styles.titleChart}>Temperator</Text>
+            <Text style = {styles.titleChart}>Temperature</Text>
             <LineChart
                 data={{
                 labels: temp ? temp.map((item, index) => {
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     titleChart: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '500'
     },
     temparatureText: {
