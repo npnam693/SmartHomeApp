@@ -1,12 +1,10 @@
 import { NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import AppNavigation from './AppNavigation';
 import AuthContext from './AuthContext';
 import { io } from "socket.io-client";
-
-
+import { StatusBar } from 'expo-status-bar';
 const MyTheme = {
   ...DefaultTheme,
   colors: {
@@ -78,6 +76,7 @@ export default function App() {
     return (
       <AuthContext.Provider value={{ isLoggedIn, userData, setUserData, login, logout, notifs, setNotifs, socket }}>
         <NavigationContainer theme={MyTheme}>
+          <StatusBar backgroundColor="#EBF8FF" style='dark-content'/>
           <AppNavigation /> 
         </NavigationContainer>
       </AuthContext.Provider>

@@ -1,7 +1,7 @@
 import { Text, View, Dimensions, StyleSheet, TouchableOpacity} from "react-native"
 import { useState, useEffect } from "react";
 import { LineChart } from "react-native-chart-kit";
-import { axiosAdafruit } from "../api/axiosSetup";
+import { axiosAdafruit } from "../../api/axiosSetup";
 
 
 const typeSensor = ["bbc-temp, bbc-humi"]
@@ -9,16 +9,23 @@ const typeSensor = ["bbc-temp, bbc-humi"]
 export default function Visualiaztion({ navigation }) {
     const [temp, setTemp] = useState()
     const [humi, setHumi] = useState()
+    const [light, setLight] = useState()
 
     useEffect(() => {
-        axiosAdafruit.get('bbc-temp/data/chart?hours=2000&resolution=60')
-            .then((temp) => setTemp(temp.data.data.slice(0,6)))
+        axiosAdafruit.get('bbc-temp/data/chart?hours=24&resolution=60')
+            .then((temp) => {
+                setTemp(temp.data.data.slice(0,7))
+                console.log(temp.data.data.slice(0.6))
+            })
             .catch((err) => console.log(err))
         
-        axiosAdafruit.get('bbc-humi/data/chart?hours=2000&resolution=60')
-            .then((humi) => setHumi(humi.data.data.slice(0,6)))
+        axiosAdafruit.get('bbc-humi/data/chart?hours=24&resolution=60')
+            .then((humi) => setHumi(humi.data.data.slice(0,7)))
             .catch((err) => console.log(err))
-    
+        
+        axiosAdafruit.get('light-intensity/data/chart?hours=24&resolution=60')
+            .then((data) => setLight(data.data.data.slice(0,7)))
+            .catch((err) => console.log(err))
     }, [])
     
     return (
@@ -52,7 +59,7 @@ export default function Visualiaztion({ navigation }) {
                             const date = new Date(item[0])
                             return date.getHours().toString() + 'h'
                         })
-                        :["January", "February", "March", "April", "May", "June"],
+                        :["0h", "1h", "2h", "3h", "4h", "5h"],
                 datasets: [
                     {
                         data: temp ? temp.map(item => Number(item[1]).toFixed(1)) : [1,3,4,5,6,6]
@@ -75,7 +82,7 @@ export default function Visualiaztion({ navigation }) {
                     borderRadius: 16
                 },
                 propsForDots: {
-                    r: "3",
+                    r: "4",
                     strokeWidth: "2",
                     stroke: "#4299E1"
                 }
@@ -92,17 +99,15 @@ export default function Visualiaztion({ navigation }) {
             <Text style = {styles.titleChart}>Humidity</Text>
                 <LineChart
                     data={{
-                    labels: ["1h", "2h", "3h", "4h", "5h", "6h"],
+                    labels: humi ? humi.map((item, index) => {
+                        const date = new Date(item[0])
+                        return date.getHours().toString() + 'h'
+                    })
+                    :["0h", "1h", "2h", "3h", "4h", "5h"],
+
                     datasets: [
                         {
-                        data: [
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100,
-                            Math.random() * 100
-                        ]
+                            data: humi ? humi.map(item => Number(item[1]).toFixed(1)) : [1,3,4,5,6,6]
                         }
                     ]
                     }}
@@ -122,7 +127,7 @@ export default function Visualiaztion({ navigation }) {
                         borderRadius: 16
                     },
                     propsForDots: {
-                        r: "6",
+                        r: "4",
                         strokeWidth: "2",
                         stroke: "#67B56A"
                     }
@@ -135,22 +140,22 @@ export default function Visualiaztion({ navigation }) {
                 />
             </TouchableOpacity>
             
-            <TouchableOpacity onPress={() => navigation.navigate('DetailVisualization', {sensorType: 'bbc-humi'})}>
+            <TouchableOpacity onPress={() => navigation.navigate('DetailVisualization', {sensorType: 'light-intensity'})}>
                 <Text style = {styles.titleChart}>Light Intensity</Text>
 
                 <LineChart
                     data={{
-                    labels: temp ? temp.map((item, index) => {
-                        const date = new Date(item[0])
-                        // return date.getHours().toString() + 'h ' + date.getDate().toString() + '/' + (date.getMonth() + 1).toString()
-                        return date.getHours().toString() + 'h'
-                    })
-                    :["January", "February", "March", "April", "May", "June"],
-                    datasets: [
-                        {
-                            data: temp ? temp.map(item => Number(item[1]).toFixed(1)) : [1,3,4,5,6,6]
-                        }
-                    ]
+                        labels: light ? light.map((item, index) => {
+                            const date = new Date(item[0])
+                            return date.getHours().toString() + 'h'
+                        })
+                        :["0h", "1h", "2h", "3h", "4h", "5h"],
+    
+                        datasets: [
+                            {
+                                data: light ? light.map(item => Number(item[1]).toFixed(1)) : [1,3,4,5,6,6]
+                            }
+                        ]
                     }}
                     width={Dimensions.get("window").width - 50} // from react-native
                     height={Dimensions.get("window").height * 0.23}
@@ -168,9 +173,9 @@ export default function Visualiaztion({ navigation }) {
                         borderRadius: 16
                     },
                     propsForDots: {
-                        r: "6",
+                        r: "4",
                         strokeWidth: "2",
-                        stroke: "#ffa726"
+                        stroke: "yellow"
                     }
                     }}
                     bezier
@@ -189,6 +194,7 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#fff',    
         alignItems: 'center',
+        marginTop: 16,
     },
     titleChart: {
         fontSize: 14,

@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, ScrollView} from "react-native"
-import NotificationItem from "../components/NotificationItem"
-import AuthContext from "../AuthContext";
-import { axiosClient } from "../api/axiosSetup";
+import NotificationItem from "../../components/NotificationItem"
+import AuthContext from "../../AuthContext";
+import { axiosClient } from "../../api/axiosSetup";
 import { useEffect, useState, useContext } from "react"
 import Spinner from 'react-native-loading-spinner-overlay';
 

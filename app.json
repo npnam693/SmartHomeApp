@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "SmartHome_MobileApp",
-    "slug": "smarthome-222-dadn",
+    "name": "BKEasyHome",
+    "slug": "bk-easy-home",
     "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,20 +24,46 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon-smarthome.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.nam693.bkeasyhome",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.ACCESS_BACKGROUND_LOCATION",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon-smarthome.png"
     },
-    // "extra": {
-    //   "eas": {
-    //     "projectId": "bb2ba7a8-7d25-4d87-b49f-321a3cc761bd"
-    //   }
-    // },
     "runtimeVersion": {
       "policy": "sdkVersion"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ae52e8c9-7b69-4e70-9cf6-e38e75c8588d"
+      }
+    },
+    "owner": "nam693",
+    "plugins": [
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ]
   }
 }

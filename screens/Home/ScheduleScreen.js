@@ -6,8 +6,9 @@ import ScrollPicker from 'react-native-wheel-scrollview-picker';
 import { SelectList } from 'react-native-dropdown-select-list'
 import { Button } from "@rneui/base";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import AuthContext from "../AuthContext";
-import { axiosClient } from "../api/axiosSetup";
+import AuthContext from "../../AuthContext";
+
+import { axiosClient } from "../../api/axiosSetup";
 // const Days = [
 //     { key: '2', value: 'Monday' },
 //     { key: '3', value: 'Tuesday' },
