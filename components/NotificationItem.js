@@ -31,7 +31,7 @@ export default function NotificationItem({bgColor, data}) {
             <View style = {styles.containerDevice}>
                 {getIconNoti(data.deviceID.type, data.value).icon}
             </View>
-            <View style = {{width: 226, justifyContent: 'space-between'}}>
+            <View style = {{width: '75%', justifyContent: 'space-between'}}>
                 <Text style = {{
                     fontSize: 12,
                 }}>{getIconNoti(data.deviceID.type,data.value).name} has been turned {data.value ? 'on' : 'off'} by 

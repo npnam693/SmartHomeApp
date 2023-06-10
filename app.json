@@ -2,18 +2,19 @@
   "expo": {
     "name": "SmartHome_MobileApp",
     "slug": "smarthome-222-dadn",
+    "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon-smarthome.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-smarthome.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/0606301b-a970-46a3-a794-4948d60aa82d"
+      "url": "https://u.expo.dev/bb2ba7a8-7d25-4d87-b49f-321a3cc761bd"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -29,14 +30,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
     // "extra": {
     //   "eas": {
-    //     "projectId": "0606301b-a970-46a3-a794-4948d60aa82d"
+    //     "projectId": "bb2ba7a8-7d25-4d87-b49f-321a3cc761bd"
     //   }
     // },
-    // "runtimeVersion": {
-    //   "policy": "sdkVersion"
-    // }
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
   }
 }
