@@ -133,7 +133,7 @@ function HomeStackScreen({ navigation }) {
 function VisualizationStackScreen({navigation}){
     return (
         <VisualizationStack.Navigator>
-          <VisualizationStack.Screen name="VisualiaztionScreen" component={VisualiaztionScreen} options={{ headerShown: false }}/>
+          <VisualizationStack.Screen name="VisualiaztionScreen" component={VisualiaztionScreen}/>
         <VisualizationStack.Screen name="DetailVisualization" component={DetailVisualization}
           options={({ route }) => {
               if (route.params.sensorType == 'bbc-temp') return {title: 'Temperature Data'}

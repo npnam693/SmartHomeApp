@@ -8,8 +8,11 @@ export default function AutomationSetting({navigation}) {
     
     useEffect(() => {
         axiosClient.get("api/device/")
-            .then((device) => setDeviceData(device.data))
+            .then((device) => {
+                setDeviceData(device.data)
+            })
             .catch(err => console.log(err))
+        
     }, [])
 
     return (

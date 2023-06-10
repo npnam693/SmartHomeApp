@@ -1,4 +1,4 @@
-import { Text, View, Image, TouchableOpacity, StyleSheet, Modal, ScrollView, Dimensions } from "react-native"
+import { Text, View, Image, TouchableOpacity, StyleSheet, Modal, ScrollView, Dimensions, Pressable } from "react-native"
 import { ScreenWidth } from "@rneui/base"
 import SettingSquare from "../components/setting/SettingSquare"
 import SettingRectangle from "../components/setting/SettingRectangle"
@@ -31,15 +31,15 @@ export default function SettingScreen({ navigation }) {
     return (
         <View style = {styles.container}>
             <Image source={{uri:'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png'}} 
-                style = {{width: 100, height: 100, borderRadius: 110, borderWidth: 3, borderColor:'#90B2C4', marginTop: 20,}}
+                style = {{width: 100, height: 100, borderRadius: 110, borderWidth: 3, borderColor:'#90B2C4',}}
             />
             <Text style = {{fontSize: 20, fontWeight: '600', color: '#10101'}}>{userData.name}</Text>
             <Text style = {{fontSize: 14, fontWeight: '400', color: '#666', marginBottom: 12}}>{userData.email}</Text>
             
             <View style={styles.option}>
-                <TouchableOpacity onPress={() => setModalVisible(true)} activeOpacity={0.05}>
+                <Pressable onPress={() => setModalVisible(true)} activeOpacity={0.05}>
                     <SettingSquare type = "SHARE_KEY" />
-                </TouchableOpacity>
+                </Pressable>
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -53,7 +53,6 @@ export default function SettingScreen({ navigation }) {
                     }
                 >
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#EBF8FF', 
-                        flex: 1, top: -20
                     }}>
                         <QRCode
                             value={userData.homeID}
@@ -64,27 +63,27 @@ export default function SettingScreen({ navigation }) {
                             padding={10}
                         />
                         <Text style={{fontSize: 18, fontWeight: '400', marginTop: 30}}>Key: {userData.homeID}</Text>
-                        <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} activeOpacity={0.05}>
+                        <Pressable onPress={() => setModalVisible(!modalVisible)} activeOpacity={0.05}>
                             <View style = {{backgroundColor:'#ed6474', borderRadius: 16, marginTop: 50, width: 100, height:40,
                                 alignItems: 'center', justifyContent:'center'
                             }}>
                                 <Text style = {{color: 'white', fontWeight: '500', fontSize:18, }}>HIDE</Text>
                             </View>
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
                 </Modal>
-                <TouchableOpacity onPress={() => navigation.navigate('Face Regconition')} activeOpacity={0.05}>
+                <Pressable onPress={() => navigation.navigate('Face Regconition')} activeOpacity={0.05}>
                     <SettingSquare type = "FACE_RECOGNITION" />
-                </TouchableOpacity >
-                <TouchableOpacity onPress={() => navigation.navigate('Change Pin')} activeOpacity={0.05}>
+                </Pressable >
+                <Pressable onPress={() => navigation.navigate('Change Pin')} activeOpacity={0.05}>
                     <SettingSquare type = "CHANGE_PIN" />
-                </TouchableOpacity>
-                <TouchableOpacity>
+                </Pressable>
+                <Pressable>
                     <SettingSquare type = "ADD_DEVICE" />
-                </TouchableOpacity>
+                </Pressable>
             </View >
             <ScrollView contentContainerStyle={{ display: 'flex', alignItems: 'center', width: Dimensions.get('window').width, }} showsVerticalScrollIndicator={false}>
-                <View style={[{flexDirection: 'column', marginTop: 20, paddingBottom: 90}]}>
+                <View style={[{flexDirection: 'column', marginTop: 20}]}>
                     <TouchableOpacity>
                         <SettingRectangle type = "PROFILE" />
                     </TouchableOpacity>
