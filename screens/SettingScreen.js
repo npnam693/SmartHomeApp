@@ -31,10 +31,10 @@ export default function SettingScreen({ navigation }) {
     return (
         <View style = {styles.container}>
             <Image source={{uri:'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png'}} 
-                style = {{width: 100, height: 100, borderRadius: 110, borderWidth: 1, borderColor:'#c3d5e8'}}
+                style = {{width: 100, height: 100, borderRadius: 110, borderWidth: 3, borderColor:'#90B2C4', marginTop: 20,}}
             />
             <Text style = {{fontSize: 20, fontWeight: '600', color: '#10101'}}>{userData.name}</Text>
-            <Text style = {{fontSize: 14, fontWeight: '400', color: '#666'}}>{userData.email}</Text>
+            <Text style = {{fontSize: 14, fontWeight: '400', color: '#666', marginBottom: 12}}>{userData.email}</Text>
             
             <View style={styles.option}>
                 <TouchableOpacity onPress={() => setModalVisible(true)} activeOpacity={0.05}>
@@ -53,7 +53,7 @@ export default function SettingScreen({ navigation }) {
                     }
                 >
                     <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#EBF8FF', 
-                        flex: 1,
+                        flex: 1, top: -20
                     }}>
                         <QRCode
                             value={userData.homeID}

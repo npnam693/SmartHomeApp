@@ -19,8 +19,8 @@ export default function SignupScreen({navigation}){
     const [isSending, setIsSending] = useState(false)
 
     const [showPass, setShowPass] = useState({
-        pass: false,
-        confirm: false,
+        pass: true,
+        confirm: true,
     })
 
     const handleClickSubmit = () => {
@@ -73,7 +73,7 @@ export default function SignupScreen({navigation}){
                 <TextInput
                     placeholder = {'Name'}
                     style={{
-                        backgroundColor : "#D3D3D3",
+                        backgroundColor : "#EEEEEE",
                         height: 48,
                         borderRadius: 8,
                         padding: 10,
@@ -90,7 +90,7 @@ export default function SignupScreen({navigation}){
                 <TextInput
                     placeholder = {'Email'}
                     style={{
-                        backgroundColor : "#D3D3D3",
+                        backgroundColor : "#EEEEEE",
                         height: 48,
                         borderRadius: 8,
                         padding: 10,
@@ -107,7 +107,7 @@ export default function SignupScreen({navigation}){
                         <TextInput
                             placeholder = {'Password'}
                             style={{
-                                backgroundColor : "#D3D3D3",
+                                backgroundColor : "#EEEEEE",
                                 height: 48,
                                 borderRadius: 8,
                                 padding: 10,
@@ -135,7 +135,7 @@ export default function SignupScreen({navigation}){
                     <TextInput
                         placeholder = {'Confirm Password'}
                         style={{
-                            backgroundColor : "#D3D3D3",
+                            backgroundColor : "#EEEEEE",
                             height: 48,
                             borderRadius: 8,
                             padding: 10,
@@ -166,7 +166,7 @@ export default function SignupScreen({navigation}){
                     <TextInput
                         placeholder = {'Home key'}
                         style={{
-                            backgroundColor : "#D3D3D3",
+                            backgroundColor : "#EEEEEE",
                             height: 48,
                             borderRadius: 8,
                             padding: 10,

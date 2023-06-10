@@ -28,7 +28,7 @@ export default function SettingSquare({type}) {
             <View style = {[styles.box,{backgroundColor: typeButton[type].bgColor}]}>
                 {typeButton[type].icon}
             </View>
-            <Text>{typeButton[type].name}</Text>
+            <Text style={{fontWeight: '500', fontSize: 12}}>{typeButton[type].name}</Text>
         </View>
     )
 }
