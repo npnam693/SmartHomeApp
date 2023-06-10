@@ -34,7 +34,7 @@ export default function AutoItem({device}) {
                     <Text style={styles.titleValue}>Off value</Text>
                     <TextInput style={styles.input} inputMode="numeric" keyboardType="numeric" value={`${offValue}`} onChangeText={(val) => { setoffValue(val) }} />
                 </View>
-                <Button onPress={handleSave}>Save</Button>
+                <Button onPress={handleSave} >Save</Button>
             </View>
         </View>
     )
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     titleValue: {
-        text: 14,
+        fontSize: 14,
         fontWeight: '500'
     }
 })

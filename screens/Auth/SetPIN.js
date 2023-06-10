@@ -81,7 +81,7 @@ export default function SetPINScreen({route}) {
                     style = {{width: 60, height: 60, borderRadius: 10, borderWidth: 1, borderColor:'#BCE4FA'}}
         />
         <View style = {{width: '100%', marginLeft: 20}}>
-          <Text style = {{fontSize: 18, fontWeight: '600', color: '#10101'}}>{userName}</Text>
+          <Text style = {{fontSize: 18, fontWeight: '600', color: '#101010'}}>{userName}</Text>
           <Text style = {{fontSize: 12, fontWeight: '400', color: '#666'}}>{userEmail}</Text>
         </View>
       </View>

@@ -3,9 +3,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScreenWidth } from "@rneui/base"
 import { Button } from "@rneui/base"
 import { useState, useContext, useEffect} from "react"
-import AuthContext from "../AuthContext";
+import AuthContext from "../../AuthContext";
+import { axiosClient } from "../../api/axiosSetup";
 import axios from 'axios'
-import { axiosClient } from '../api/axiosSetup';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -53,7 +53,7 @@ export default function LoginScreen({ navigation }){
                 //Text style of the Spinner Text
                 textStyle={styles.spinnerTextStyle}
             />
-            <Image source = {require('../assets/images/IntroLogin.png')} style={{width: ScreenWidth, height: 356, marginTop: 30}}/>
+            <Image source = {require('../../assets/images/IntroLogin.png')} style={{width: ScreenWidth, height: 356, marginTop: 30}}/>
             <View style = {styles.inputContainer}>
                 <TextInput
                     placeholder = {'Enter your email'}

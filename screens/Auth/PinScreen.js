@@ -5,7 +5,7 @@ import { Button } from '@rneui/themed';
 import  Icon  from "react-native-vector-icons/Ionicons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import AuthContext from '../AuthContext';
+import AuthContext from '../../AuthContext';
 export default function PinScreen() {
     const navigation = useNavigation();
     const [pinCode, setPinCode] = useState('');
@@ -55,7 +55,7 @@ export default function PinScreen() {
                     style = {{width: 60, height: 60, borderRadius: 10, borderWidth: 1, borderColor:'#BCE4FA'}}
         />
         <View>
-          <Text style = {{fontSize: 18, fontWeight: '600', color: '#10101'}}>{userData.name}</Text>
+          <Text style = {{fontSize: 18, fontWeight: '600', color: '#101010'}}>{userData.name}</Text>
           <Text style = {{fontSize: 12, fontWeight: '400', color: '#666'}}>{userData.email}</Text>
         </View>
         <TouchableOpacity onPress={handleClickLogout}>

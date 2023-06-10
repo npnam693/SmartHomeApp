@@ -4,7 +4,7 @@ import { Button } from "@rneui/base"
 import { useState, useContext } from "react"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { axiosClient } from "../api/axiosSetup";
+import { axiosClient } from "../../api/axiosSetup";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -18,7 +18,7 @@ export default function SignupScreen({navigation}){
     })
     const [isSending, setIsSending] = useState(false)
 
-    const [showPass, setShowPass] = useState({
+    const [hidePass, setHidePass] = useState({
         pass: true,
         confirm: true,
     })
@@ -67,7 +67,7 @@ export default function SignupScreen({navigation}){
                 //Text style of the Spinner Text
                 textStyle={styles.spinnerTextStyle}
             />
-            <Image source = {require('../assets/images/IntroSignup.png')} style={{width: ScreenWidth, height: 284, marginTop: 20}}/>
+            <Image source = {require('../../assets/images/IntroSignup.png')} style={{width: ScreenWidth, height: 284, marginTop: 20}}/>
             <View style = {styles.inputContainer}>
                 <KeyboardAwareScrollView extraScrollHeight={300}>
                 <TextInput
@@ -119,14 +119,14 @@ export default function SignupScreen({navigation}){
                             }}
                             value = {data.password}
                             onChangeText={(input) => setData({...data, password: input})}
-                            secureTextEntry={showPass.pass ? true : false}
+                            secureTextEntry={hidePass.pass ? true : false}
                         
                         
                         />
                         <Pressable         
-                            onPress={() => setShowPass({...showPass, pass: !showPass.pass})}
+                            onPress={() => setHidePass({...hidePass, pass: !hidePass.pass})}
                         >
-                            <Ionicons name={showPass.pass ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
+                            <Ionicons name={hidePass.pass ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
                         </Pressable>
                     </View>
                 </KeyboardAwareScrollView>
@@ -146,14 +146,14 @@ export default function SignupScreen({navigation}){
                             width:'100%'
                         }}
                         value={data.confirmPassword}
-                        secureTextEntry={showPass.confirm ? true : false}
+                        secureTextEntry={hidePass.confirm ? true : false}
 
                         onChangeText={(input) => setData({...data, confirmPassword: input})}
                     />
                         <Pressable         
-                            onPress={() => setShowPass({...showPass, confirm: !showPass.confirm})}
+                            onPress={() => setHidePass({...hidePass, confirm: !hidePass.confirm})}
                         >
-                            <Ionicons name={showPass.confirm ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
+                            <Ionicons name={hidePass.confirm ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
                         </Pressable>
                     </View>
 

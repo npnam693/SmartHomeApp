@@ -4,22 +4,37 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Octicons'
 import { Button } from '@rneui/themed';
 import { View,  StyleSheet, Text } from 'react-native';
-import ScheduleScreen from './screens/ScheduleScreen';
-import HomeScreen from './screens/HomeScreen';
-import DeviceScreen from './screens/DeviceScreen';
-import LoginScreen from './screens/LoginScreen';
-import SignupScreen from './screens/SignupScreen';
-import NotificationScreen from './screens/NotificationScreen';
-import SettingScreen from './screens/SettingScreen';
-import PinScreen from './screens/PinScreen';
+import ScheduleScreen from './screens/Home/ScheduleScreen';
+import HomeScreen from './screens/Home';
+import DeviceScreen from './screens/Home/DeviceScreen';
+import LoginScreen from './screens/Auth/LoginScreen';
+import SignupScreen from './screens/Auth/SignupScreen';
+import NotificationScreen from './screens/Home/NotificationScreen';
+import SettingScreen from './screens/Setting';
+import PinScreen from './screens/Auth/PinScreen';
 import VisualiaztionScreen from './screens/Visualization';
-import SetPINScreen from './screens/Signup/SetPIN';
+import SetPINScreen from './screens/Auth/SetPIN';
 import AddFace from './screens/Setting/AddFace';
 import FaceRegconition from './screens/Setting/FaceRegconition';
 import UploadCamera from './screens/Setting/Camera';
 import { ChangePIN } from './screens/Setting/ChangePIN';
 import DetailVisualization from './screens/Visualization/DetailVisualization';
 import AutomationSetting from './screens/Setting/AutomationSetting';
+
+// import DeviceScreen from './screens/Home/DeviceScreen';
+// import LoginScreen from './screens/LoginScreen';
+// import SignupScreen from './screens/SignupScreen';
+// import NotificationScreen from './screens/NotificationScreen';
+// import SettingScreen from './screens/SettingScreen';
+// import PinScreen from './screens/PinScreen';
+// import VisualiaztionScreen from './screens/Visualization';
+// import SetPINScreen from './screens/Signup/SetPIN';
+// import AddFace from './screens/Setting/AddFace';
+// import FaceRegconition from './screens/Setting/FaceRegconition';
+// import UploadCamera from './screens/Setting/Camera';
+// import { ChangePIN } from './screens/Setting/ChangePIN';
+// import DetailVisualization from './screens/Visualization/DetailVisualization';
+// import AutomationSetting from './screens/Setting/AutomationSetting';
 
 // import { StackActions } from '@react-navigation/native';
 
@@ -133,7 +148,7 @@ function HomeStackScreen({ navigation }) {
 function VisualizationStackScreen({navigation}){
     return (
         <VisualizationStack.Navigator>
-          <VisualizationStack.Screen name="VisualiaztionScreen" component={VisualiaztionScreen}/>
+          <VisualizationStack.Screen name="Dashboard" component={VisualiaztionScreen}/>
         <VisualizationStack.Screen name="DetailVisualization" component={DetailVisualization}
           options={({ route }) => {
               if (route.params.sensorType == 'bbc-temp') return {title: 'Temperature Data'}

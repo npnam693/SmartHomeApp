@@ -13,7 +13,7 @@ export default function FaceItem({data}) {
                 
                 <Icon name = 'md-ellipsis-vertical' size={24} style={{top: 6}}/>
             </View>
-            <Text style = {{fontSize: 16, fontWeight: '600', color: '#10101'}}>{data.name}</Text>
+            <Text style = {{fontSize: 16, fontWeight: '600', color: '#1010100'}}>{data.name}</Text>
             <Text style = {{fontSize: 12, fontWeight: '400', color: '#666'}}>03/04/2023</Text>
         </View>
     )

@@ -1,9 +1,9 @@
 import { Text, View, Image, TouchableOpacity, StyleSheet, Modal, ScrollView, Dimensions, Pressable } from "react-native"
 import { ScreenWidth } from "@rneui/base"
-import SettingSquare from "../components/setting/SettingSquare"
-import SettingRectangle from "../components/setting/SettingRectangle"
+import SettingSquare from "../../components/setting/SettingSquare"
+import SettingRectangle from "../../components/setting/SettingRectangle"
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AuthContext from "../AuthContext";
+import AuthContext from "../../AuthContext";
 import { useContext, useState } from "react"
 import QRCode from 'react-native-qrcode-svg';
 
@@ -31,9 +31,9 @@ export default function SettingScreen({ navigation }) {
     return (
         <View style = {styles.container}>
             <Image source={{uri:'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png'}} 
-                style = {{width: 100, height: 100, borderRadius: 110, borderWidth: 3, borderColor:'#90B2C4',}}
+                style = {{width: 100, height: 100, borderRadius: 110, borderWidth: 3, borderColor:'#90B2C4'}}
             />
-            <Text style = {{fontSize: 20, fontWeight: '600', color: '#10101'}}>{userData.name}</Text>
+            <Text style = {{fontSize: 20, fontWeight: '600', color: '#101010'}}>{userData.name}</Text>
             <Text style = {{fontSize: 14, fontWeight: '400', color: '#666', marginBottom: 12}}>{userData.email}</Text>
             
             <View style={styles.option}>
@@ -52,7 +52,7 @@ export default function SettingScreen({ navigation }) {
                         setModalVisible(false)}
                     }
                 >
-                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#EBF8FF', 
+                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#EBF8FF', flex: 1
                     }}>
                         <QRCode
                             value={userData.homeID}
