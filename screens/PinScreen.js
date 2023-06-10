@@ -5,7 +5,7 @@ import { Button } from '@rneui/themed';
 import  Icon  from "react-native-vector-icons/Ionicons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import AuthContext from '../../AuthContext';
+import AuthContext from '../AuthContext';
 export default function PinScreen() {
     const navigation = useNavigation();
     const [pinCode, setPinCode] = useState('');

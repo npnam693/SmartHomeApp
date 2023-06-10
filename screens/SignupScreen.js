@@ -18,7 +18,7 @@ export default function SignupScreen({navigation}){
     })
     const [isSending, setIsSending] = useState(false)
 
-    const [hidePass, setHidePass] = useState({
+    const [showPass, setShowPass] = useState({
         pass: true,
         confirm: true,
     })
@@ -119,14 +119,14 @@ export default function SignupScreen({navigation}){
                             }}
                             value = {data.password}
                             onChangeText={(input) => setData({...data, password: input})}
-                            secureTextEntry={hidePass.pass ? true : false}
+                            secureTextEntry={showPass.pass ? true : false}
                         
                         
                         />
                         <Pressable         
-                            onPress={() => setHidePass({...hidePass, pass: !hidePass.pass})}
+                            onPress={() => setShowPass({...showPass, pass: !showPass.pass})}
                         >
-                            <Ionicons name={hidePass.pass ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
+                            <Ionicons name={showPass.pass ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
                         </Pressable>
                     </View>
                 </KeyboardAwareScrollView>
@@ -146,14 +146,14 @@ export default function SignupScreen({navigation}){
                             width:'100%'
                         }}
                         value={data.confirmPassword}
-                        secureTextEntry={hidePass.confirm ? true : false}
+                        secureTextEntry={showPass.confirm ? true : false}
 
                         onChangeText={(input) => setData({...data, confirmPassword: input})}
                     />
                         <Pressable         
-                            onPress={() => setHidePass({...hidePass, confirm: !hidePass.confirm})}
+                            onPress={() => setShowPass({...showPass, confirm: !showPass.confirm})}
                         >
-                            <Ionicons name={hidePass.confirm ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
+                            <Ionicons name={showPass.confirm ? "eye-outline" : "eye-off-outline"} size={24} style={{right: 36, top: 10}} />
                         </Pressable>
                     </View>
 

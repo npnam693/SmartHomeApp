@@ -1,11 +1,11 @@
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from "react-native"
-import { typeDevice } from "../../components/ControlDevice"
+import { typeDevice } from "../components/ControlDevice"
 import { Button } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/AntDesign'
-import Schedule from "../../components/Schedule";
+import Schedule from "../components/Schedule";
 import { useState, useEffect, useContext } from "react";
-import AuthContext from "../../AuthContext";
-import { axiosClient, axiosAdafruit } from '../../api/axiosSetup';
+import AuthContext from "../AuthContext";
+import { axiosClient, axiosAdafruit } from '../api/axiosSetup';
 import { useIsFocused } from "@react-navigation/native";
 
 export default function DeviceScreen({ navigation, route }){
@@ -72,14 +72,14 @@ export default function DeviceScreen({ navigation, route }){
                     <Button
                         radius={50}
                         style={styles.adjustButton}
-                        icon={<Icon name="minus" size={20} color='#EBF8FF' />}
-                        onPress={() => handleChangeValue(value - 10)}
+                        icon={<Icon name="plus" size={20} color='#EBF8FF' />}
+                        onPress = {()=> handleChangeValue(value + 10)}
                     />
                     <Button
                         radius={50}
                         style={styles.adjustButton}
-                        icon={<Icon name="plus" size={20} color='#EBF8FF' />}
-                        onPress = {()=> handleChangeValue(value + 10)}
+                        icon={<Icon name="minus" size={20} color='#EBF8FF' />}
+                        onPress={() => handleChangeValue(value - 10)}
                     />
                 </View>
             )}

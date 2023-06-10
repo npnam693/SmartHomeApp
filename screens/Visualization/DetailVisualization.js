@@ -6,7 +6,7 @@ import TableData from "../../components/TableData";
 import { axiosAdafruit } from "../../api/axiosSetup";
 
 import ModalOption from "../../components/ModalOption";
-const mode = ['DAY', "MONTH", 'WEEK']
+const mode = ["MONTH", 'WEEK', 'YEAR']
 
 
 export default function DetailVisualization({ navigation, route }) {
@@ -19,15 +19,6 @@ export default function DetailVisualization({ navigation, route }) {
     useEffect(() => {
         if (modeSelected === 'MONTH') { 
             axiosAdafruit.get(`${typeSensor}/data/chart?hours=720&resolution=30`)
-                .then((res) => {
-                    setData(res.data.data)
-                    const resValue = res.data.data.map(item => Number(item[1]))
-                    setDataTemp(resValue)
-                })
-                .catch((err) => console.log(err))
-        }
-        else if (modeSelected === 'DAY') { 
-            axiosAdafruit.get(`${typeSensor}/data/chart?hours=24&resolution=1`)
                 .then((res) => {
                     setData(res.data.data)
                     const resValue = res.data.data.map(item => Number(item[1]))
@@ -51,14 +42,14 @@ export default function DetailVisualization({ navigation, route }) {
     ]
 
     const getModeTitle = (mode) => {
-        if (mode === 'DAY') return 'Last 1 day'
+        if (mode === 'MONTH') return 'Last 30 days'
+        else if (mode === 'YEAR') return 'Last 4 months'
         else if (mode === 'WEEK') return 'Last 7 days'
-        else if (mode === 'MONTH') return 'Last 30 days'
     }
 
     const dataModal = [
         {
-            title: 'Last 1 day',
+            title: 'Last 30 days',
             action: () => { 
                 setModeSelected(mode[0])
                 setShowModal(false)
@@ -67,14 +58,14 @@ export default function DetailVisualization({ navigation, route }) {
         {
             title: 'Last 7 days',  
             action: () => { 
-                setModeSelected(mode[2])
+                setModeSelected(mode[1])
                 setShowModal(false)
             }
         },
         {
-            title: 'Last 30 days',  
+            title: 'Last 4 months',  
             action: () => { 
-                setModeSelected(mode[1])
+                setModeSelected(mode[2])
                 setShowModal(false)
             }
         },

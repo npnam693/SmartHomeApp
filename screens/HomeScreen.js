@@ -19,7 +19,9 @@ export default function HomeScreen({navigation}){
 
     return (
         <View style = {{display: 'flex', flexDirection:'column', width: '100%', height: '100%'}} >
+            
             <GeneralInfo navigation={navigation} />
+            
             <ScrollView contentContainerStyle={{ display:'flex', alignItems:'center'}} showsVerticalScrollIndicator={false}>
                 <View style={{marginBottom: 40}}>
                     {
