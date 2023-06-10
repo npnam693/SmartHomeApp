@@ -31,11 +31,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "bb2ba7a8-7d25-4d87-b49f-321a3cc761bd"
-      }
-    },
+    // "extra": {
+    //   "eas": {
+    //     "projectId": "bb2ba7a8-7d25-4d87-b49f-321a3cc761bd"
+    //   }
+    // },
     "runtimeVersion": {
       "policy": "sdkVersion"
     }
